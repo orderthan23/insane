@@ -1,0 +1,434 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="education">
+<resultMap type="com.kh.insane.education.model.vo.Education" id="educationResultSet">
+	
+		<id property="eduScheduleSeq" column="EDU_SCHEDULE_SEQ" />
+		<result property="eduStatus" column="EDU_STATUS" />
+		<result property="changeIssue" column="CHANGE_ISSUE" />
+		<result property="educationSeq" column="EDUCATION_SEQ" />
+		<result property="educationType" column="EDUCATION_TYPE" />
+		<result property="eduTitle" column="EDU_TITLE" />
+		<result property="eduContent" column="EDU_CONTENT" />
+		<result property="eduStartDate" column="EDU_START_DATE" />
+		<result property="eduEndDate" column="EDU_END_DATE" />
+		<result property="eduPlace" column="EDU_PLACE" />
+		<result property="inOfficeYn" column="IN_OFFICE_YN" />
+		<result property="targetAmount" column="TARGET_AMOUNT" />
+		<result property="instrInfo" column="INSTR_INFO" />
+		<result property="eduCost" column="EDU_COST" />
+		<result property="companyNo" column="COMPANY_NO" />
+	
+</resultMap>
+
+<resultMap type="Employee" id="employeeMap">
+		<id property="empNoSeq" column="EMP_NO_SEQ" />
+		<result property="empNo" column="EMP_NO" />
+		<result property="companyNo" column="COMPANY_NO" />
+		<result property="empPwd" column="EMP_PWD" />
+		<result property="empNameKor" column="EMP_NAME_KOR" />
+		<result property="empNameEng" column="EMP_NAME_ENG" />
+		<result property="enrollDate" column="ENROLL_DATE" />
+		<result property="empResidentNo" column="EMP_RESIDENT_NO" />
+		<result property="empLocationCode" column="EMP_LOCATION_CODE" />
+		<result property="locationName" column="LOCATION_NAME" />
+		<result property="empDeptCode" column="EMP_DEPT_CODE" />
+		<result property="deptName" column="DEPT_NAME" />
+		<result property="empPositionCode" column="EMP_POSITION_CODE" />
+		<result property="positionName" column="POSITION_NAME" />
+		<result property="empRspofcCode" column="EMP_RSPOFC_CODE" />
+		<result property="rspofcName" column="RSPOFC_NAME" />
+		<result property="payStepCode" column="EMP_PAY_STEP_CODE" />
+		<result property="payStep" column="PAY_STEP" />
+		<result property="empAddress" column="EMP_ADDRESS" />
+		<result property="retireDate" column="RETIRE_DATE" />
+		<result property="empBirthday" column="EMP_BIRTHDAY" />
+		<result property="lunarSor" column="LUNAR_SOR" />
+		<result property="gender" column="GENDER" />
+		<result property="empHomeTel" column="EMP_HOME_TEL" />
+		<result property="empPhone" column="EMP_PHONE" />
+		<result property="empOfficeTel" column="EMP_OFFICE_TEL" />
+		<result property="empForm" column="EMP_FORM" />
+		<result property="empOccupation" column="EMP_OCCUPATION" />
+		<result property="empSpot" column="EMP_SPOT" />
+		<result property="empProject" column="EMP_PROJECT" />
+		<result property="empStatus" column="EMP_STATUS" />
+	</resultMap>
+
+<resultMap type="com.kh.insane.education.model.vo.Evaluation" id="evaluationMap">
+		<id property="eduScheduleSeq" column="EDU_SCHEDULE_SEQ" />
+		<id property="empNoSeq" column="EMP_NO_SEQ" />
+		<result property="passFail" column="PASS_FAIL" />
+		<result property="remark" column="REMARK" />
+		<result property="company" column="COMPANY" />
+		<result property="empNo" column="EMP_NO"/>
+		<result property="empNameKor" column="EMP_NAME_KOR" />
+		<result property="deptName" column="DEPT_NAME" />
+		<result property="positionName" column="POSITION_NAME" />
+</resultMap>
+
+<resultMap type="HashMap" id="boardResultMap">
+	<result property="boardSeq" column="BOARD_SEQ" />
+	<result property="boardNo" column="BOARD_NO" />
+	<result property="enrollDate" column="ENROLL_DATE" />
+	<result property="boardType" column="BOARD_TYPE" />
+	<result property="boardTitle" column="BOARD_TITLE" />
+	<result property="boardContent" column="BOARD_CONTENT" />
+	<result property="writeEmpNo" column="WRITE_EMP_NO" />
+	<result property="empNameKor" column="EMP_NAME_KOR" />
+	<result property="status"  column="STATUS" />
+	<result property="companyNo"  column="COMPANY_NO" />
+</resultMap>
+<select id="getListCount" parameterType="_int" resultType="_int">
+	SELECT  /*+ 고종현 ::com.kh.insane.education.model.dao.EducationDao.loadEduList*/
+	        COUNT(*)
+	  FROM  EDU_SCHEDULE
+	 WHERE  COMPANY_NO = #{companyNo}       
+</select>
+
+
+<select id="loadEduList" parameterType="_int" resultMap="educationResultSet">
+	SELECT  /*+ 고종현 ::com.kh.insane.education.model.dao.EducationDao.loadEduList*/
+        ES.EDU_SCHEDULE_SEQ,
+        ES.EDU_STATUS,
+        ES.CHANGE_ISSUE,
+        ES.EDUCATION_SEQ,
+        E.EDUCATION_TYPE,
+        ES.EDU_TITLE,
+        ES.EDU_CONTENT,
+        ES.EDU_START_DATE,
+        ES.EDU_END_DATE,
+        ES.EDU_PLACE,
+        ES.IN_OFFICE_YN,
+        ES.TARGET_AMOUNT,
+        ES.INSTR_INFO,
+        ES.EDU_COST,
+        ES.COMPANY_NO
+   FROM EDU_SCHEDULE ES
+   JOIN EDUCATION E ON(ES.EDUCATION_SEQ = E.EDUCATION_SEQ)
+  WHERE ES.COMPANY_NO = #{companyNo}
+  ORDER BY EDU_SCHEDULE_SEQ DESC
+	
+</select>
+
+<update id="updateEduStatus" parameterType="Education">
+	UPDATE  /*+ 고종현 ::com.kh.insane.education.model.dao.EducationDao.updateEduStatus*/
+		    EDU_SCHEDULE
+	   SET  EDU_STATUS = #{eduStatus}
+	 WHERE  EDU_SCHEDULE_SEQ = #{eduScheduleSeq} 
+</update>
+
+<select id="loadEduDetail" parameterType="_int" resultMap="educationResultSet">
+	SELECT  /*+ 고종현 ::com.kh.insane.education.model.dao.EducationDao.loadEduDetail*/
+        ES.EDU_SCHEDULE_SEQ,
+        ES.EDU_STATUS,
+        ES.CHANGE_ISSUE,
+        ES.EDUCATION_SEQ,
+        E.EDUCATION_TYPE,
+        ES.EDU_TITLE,
+        ES.EDU_CONTENT,
+        ES.EDU_START_DATE,
+        ES.EDU_END_DATE,
+        ES.EDU_PLACE,
+        ES.IN_OFFICE_YN,
+        ES.TARGET_AMOUNT,
+        ES.INSTR_INFO,
+        ES.EDU_COST,
+        ES.COMPANY_NO
+   FROM EDU_SCHEDULE ES 
+   JOIN EDUCATION E ON(ES.EDUCATION_SEQ = E.EDUCATION_SEQ)
+  WHERE ES.EDU_SCHEDULE_SEQ =#{eduScheduleSeq}
+    
+</select>
+
+<update id="cancleEdu" parameterType="_int">
+	UPDATE  /*+ 고종현 ::com.kh.insane.education.model.dao.EducationDao.cancleEdu*/
+		    EDU_SCHEDULE
+	   SET  EDU_STATUS = 'CANCLE'
+	 WHERE  EDU_SCHEDULE_SEQ = #{eduScheduleSeq} 
+</update>
+
+<select id="loadCompleteEducation" parameterType="_int" resultMap="educationResultSet">
+	SELECT  /*+ 고종현 ::com.kh.insane.education.model.dao.EducationDao.loadCompleteEducation*/
+        	ES.EDU_SCHEDULE_SEQ,
+       		ES.EDU_STATUS,
+       		ES.CHANGE_ISSUE,
+        	ES.EDUCATION_SEQ,
+        	E.EDUCATION_TYPE,
+        	ES.EDU_TITLE,
+        	ES.EDU_CONTENT,
+        	ES.EDU_START_DATE,
+        	ES.EDU_END_DATE,
+        	ES.EDU_PLACE,
+        	ES.IN_OFFICE_YN,
+        	ES.TARGET_AMOUNT,
+        	ES.INSTR_INFO,
+        	ES.EDU_COST,
+        	ES.COMPANY_NO
+   FROM EDU_SCHEDULE ES
+   JOIN EDUCATION E ON(ES.EDUCATION_SEQ = E.EDUCATION_SEQ)
+  WHERE ES.COMPANY_NO = #{companyNo}
+    AND (ES.EDU_STATUS = 'DONE' 
+    OR  ES.EDU_STATUS = 'RDONE')
+  ORDER BY ES.EDU_SCHEDULE_SEQ
+</select>
+
+
+<select id="loadEvaluation" parameterType="com.kh.insane.education.model.vo.Education" resultMap="evaluationMap">
+	SELECT  /*+ 고종현 ::com.kh.insane.education.model.dao.EducationDao.getLoadOurCompanyEmp*/
+		ESE.EDU_SCHEDULE_SEQ,
+			ESE.EMP_NO_SEQ,
+			ESE.PASS_FAIL,
+			ESE.REMARK,
+			ESE.COMPANY,
+			EM.EMP_NAME_KOR,
+			EM.EMP_NO,
+			D.DEPT_NAME,
+			P.POSITION_NAME
+ 	  FROM  EDU_SCHE_EMP ESE
+ 	  JOIN  EMPLOYEE EM ON(EM.EMP_NO_SEQ = ESE.EMP_NO_SEQ)
+ 	  JOIN  DEPARTMENT D ON(EM.EMP_DEPT_CODE = D.DEPT_CODE_SEQ)
+ 	  JOIN  POSITION P ON(EM.EMP_POSITION_CODE =  P.POSITION_SEQ)
+ 	 WHERE  EDU_SCHEDULE_SEQ = #{eduScheduleSeq}
+       AND  ESE.COMPANY = #{companyNo}
+</select>
+
+<select id="getLoadOurCompanyEmp" parameterType="HashMap" resultMap="employeeMap">
+	SELECT  /*+ 고종현 ::com.kh.insane.education.model.dao.EducationDao.getLoadOurCompanyEmp*/
+		       E.EMP_NO_SEQ
+		     , E.EMP_NO
+		     , E.COMPANY_NO
+		     , E.EMP_PWD
+		     , E.EMP_NAME_KOR
+		     , E.EMP_DEPT_CODE
+		     , D.DEPT_NAME
+		     , E.EMP_POSITION_CODE
+		     , P.POSITION_NAME
+		     , E.EMP_RSPOFC_CODE
+		     , E.EMP_LOCATION_CODE
+		     , L.LOCATION_NAME
+		     , R.RSPOFC_NAME
+		     , E.EMP_STATUS
+		  FROM EMPLOYEE E
+		  LEFT JOIN DEPARTMENT D ON(E.EMP_DEPT_CODE = D.DEPT_CODE_SEQ)
+		  LEFT JOIN POSITION P ON(E.EMP_POSITION_CODE = P.POSITION_SEQ)
+		  LEFT JOIN RSPOFC R ON(E.EMP_RSPOFC_CODE = R.RSPOFC_SEQ)
+		  LEFT JOIN LOCATION L ON(E.EMP_LOCATION_CODE = L.LOCATION_SEQ)
+		 WHERE E.EMP_STATUS = 'Y'
+		   AND E.COMPANY_NO = #{companyNo}
+		   AND( D.DEPT_NAME LIKE  '%' || #{keyword} || '%'
+		   OR P.POSITION_NAME LIKE  '%' || #{keyword} || '%'
+		   OR R.RSPOFC_NAME LIKE '%' || #{keyword} || '%'
+		   OR E.EMP_NAME_KOR LIKE '%' || #{keyword} || '%')
+		 ORDER BY EMP_NO_SEQ DESC
+</select>
+
+<insert id="insertCompleteEmp" parameterType="HashMap">
+	INSERT /*+ 고종현 ::com.kh.insane.education.model.dao.EducationDao.getLoadOurCompanyEmp*/
+	 	   INTO EDU_SCHE_EMP
+	 	   (
+	 		 EDU_SCHEDULE_SEQ,
+	 		 EMP_NO_SEQ,
+	 		 PASS_FAIL,
+	 		 REMARK,
+	 		 COMPANY
+	 ) VALUES(
+	 		  #{eduScheduleSeq},
+	 		  #{empNoSeq},
+	 		  'NONE',
+	 		  null,
+	 		  #{companyNo}
+	 )
+</insert>
+
+
+
+<update id="updateCompleteInfo" parameterType = "com.kh.insane.education.model.vo.Evaluation">
+		UPDATE  /*+ 고종현 ::com.kh.insane.education.model.dao.EducationDao.getLoadOurCompanyEmp*/
+		        EDU_SCHE_EMP
+		   SET  PASS_FAIL = #{passFail},
+		        REMARK = #{remark}
+		 WHERE  COMPANY = #{company}
+		   AND  EDU_SCHEDULE_SEQ = #{eduScheduleSeq}
+		   AND  EMP_NO_SEQ = #{empNoSeq}   		      
+</update>
+
+<delete id="deleteCompleteInfo" parameterType = "com.kh.insane.education.model.vo.Evaluation">
+		DELETE  /*+ 고종현 ::com.kh.insane.education.model.dao.EducationDao.getLoadOurCompanyEmp*/
+		  FROM  EDU_SCHE_EMP
+		 WHERE EDU_SCHEDULE_SEQ = #{eduScheduleSeq}
+		   AND EMP_NO_SEQ = #{empNoSeq}
+		   AND COMPANY = #{company} 
+</delete>
+
+<update id="updateChangeIssue" parameterType = "com.kh.insane.education.model.vo.Education">
+		UPDATE  /*+ 고종현 ::com.kh.insane.education.model.dao.EducationDao.getLoadOurCompanyEmp*/
+		        EDU_SCHEDULE
+		   SET  CHANGE_ISSUE = #{changeIssue},
+		        EDU_STATUS = 'RDONE'
+		 WHERE  COMPANY_NO = #{companyNo}
+		   AND  EDU_SCHEDULE_SEQ = #{eduScheduleSeq}
+</update>
+
+<select id="loadNoticeEduInfo" parameterType="_int" resultMap="boardResultMap">
+			SELECT /*+ 고종현 ::com.kh.insane.education.model.dao.EducationDao.getLoadOurCompanyEmp*/
+       				   B.BOARD_SEQ,
+        			   B.BOARD_NO,
+        			   B.ENROLL_DATE,
+				       B.BOARD_TYPE,
+				       B.BOARD_TITLE,
+				       B.BOARD_CONTENT,
+				       B.WRITE_EMP_NO,
+				       E.EMP_NAME_KOR,
+				       B.STATUS,
+				       B.COMPANY_NO
+   				  FROM BOARD B
+   				  JOIN EMPLOYEE E ON(B.WRITE_EMP_NO = E.EMP_NO_SEQ)
+  				 WHERE B.COMPANY_NO = #{companyNo}
+    			   AND B.BOARD_TYPE = '교육'
+    			   AND( B.STATUS = '공개'
+    			    OR B.STATUS = '비공개')
+  				 ORDER BY B.BOARD_NO DESC 
+</select>
+
+<select id="getNoticeEduListCount" parameterType="_int" resultType="_int">
+		SELECT /*+ 고종현 ::com.kh.insane.education.model.dao.EducationDao.getLoadOurCompanyEmp*/
+		        COUNT(*)
+	  FROM  BOARD
+	 WHERE  COMPANY_NO = #{companyNo}
+	   AND  BOARD_TYPE = '교육'
+	   AND  (STATUS = '공개'
+	    OR  STATUS = '비공개')        
+</select>
+
+<select id="loadEduNoticeDetail" parameterType="_int" resultMap="boardResultMap">
+	SELECT /*+ 고종현 ::com.kh.insane.education.model.dao.EducationDao.getLoadOurCompanyEmp*/
+       				   B.BOARD_SEQ,
+        			   B.BOARD_NO,
+        			   B.ENROLL_DATE,
+				       B.BOARD_TYPE,
+				       B.BOARD_TITLE,
+				       B.BOARD_CONTENT,
+				       B.WRITE_EMP_NO,
+				       E.EMP_NAME_KOR,
+				       B.STATUS,
+				       B.COMPANY_NO
+   				  FROM BOARD B
+   				  JOIN EMPLOYEE E ON(B.WRITE_EMP_NO = E.EMP_NO_SEQ)
+  				 WHERE B.BOARD_SEQ = #{boardSeq}
+</select>
+
+<update id="updateEduNotice" parameterType="HashMap">
+	UPDATE  /*+ 고종현 ::com.kh.insane.education.model.dao.EducationDao.getLoadOurCompanyEmp*/
+			BOARD
+	   SET  BOARD_TITLE = #{boardTitle},
+	        BOARD_CONTENT = #{boardContent},
+	        STATUS = #{status}	
+	 WHERE  BOARD_SEQ = #{boardSeq}      			
+
+ </update>
+ 
+ <update id="removeEduNotice" parameterType="_int">
+ 	UPDATE  /*+ 고종현 ::com.kh.insane.education.model.dao.EducationDao.getLoadOurCompanyEmp*/
+			BOARD
+	   SET  STATUS = '삭제'	
+	 WHERE  BOARD_SEQ = #{boardSeq}      		
+ </update>
+ 
+ <select id="loadAllEducationCode" parameterType="_int" resultMap="educationResultSet">
+ 	SELECT /*+ 고종현 ::com.kh.insane.education.model.dao.EducationDao.getLoadOurCompanyEmp*/
+ 			EDUCATION_SEQ,
+ 			EDUCATION_TYPE
+ 	  FROM  EDUCATION
+ 	 WHERE  USAGE_STATUS = 'Y'
+ 	   AND  COMPANY_NO = #{companyNo} 		
+ </select>
+ 
+ <insert id="insertEduNotice" parameterType="HashMap">
+ 	INSERT /*+ 고종현 ::com.kh.insane.education.model.dao.EducationDao.getLoadOurCompanyEmp*/
+ 	  INTO BOARD
+ 		   ( 	   
+ 	  	  	 BOARD_SEQ,
+ 	  	  	 BOARD_NO,
+ 	  	  	 ENROLL_DATE,
+ 	  	  	 BOARD_TYPE,
+ 	  	  	 BOARD_TITLE,
+ 	  	  	 BOARD_CONTENT,
+ 	  	  	 WRITE_EMP_NO,
+ 	  	  	 STATUS,
+ 	  	  	 COMPANY_NO
+ 	  	   )
+ 	  VALUES
+ 	  	   (
+ 	  		 BOARD_SEQ.NEXTVAL,
+ 	  		 #{boardNo},
+ 	  		 SYSDATE,
+ 	  		 '교육',
+ 	  		 #{title},
+ 	  		 #{content},
+ 	  		 #{empNoSeq},
+ 	  		 #{status},
+ 	  		 #{companyNo}
+ 	  	   )
+ </insert>
+ 
+ <select id="findLastNum" parameterType="_int" resultType="_int">
+ 	SELECT/*+ 고종현 ::com.kh.insane.education.model.dao.EducationDao.getLoadOurCompanyEmp*/
+ 	       MAX(BOARD_NO)
+ 	  FROM BOARD
+ 	 WHERE COMPANY_NO = #{companyNo}     
+ 	   AND BOARD_TYPE = '교육'
+ 	
+ </select>
+ 
+ <insert id="insertEducationPlan" parameterType="com.kh.insane.education.model.vo.Education">
+ 	INSERT /*+ 고종현 ::com.kh.insane.education.model.dao.EducationDao.getLoadOurCompanyEmp*/
+ 	  INTO EDU_SCHEDULE
+ 	  	   (
+ 	  		 EDU_SCHEDULE_SEQ,
+ 	  		 COMPANY_NO,
+ 	  		 EDU_STATUS,
+ 	  		 EDUCATION_SEQ,
+ 	  		 EDU_TITLE,
+ 	  		 EDU_CONTENT,
+ 	  		 EDU_START_DATE,
+ 	  		 EDU_END_DATE,
+ 	  		 EDU_PLACE,
+ 	  		 IN_OFFICE_YN,
+ 	  		 TARGET_AMOUNT,
+ 	  		 INSTR_INFO,
+ 	  		 EDU_COST	
+ 	  	   )
+    VALUES (
+    		 EDU_SCHEDULE_SEQ.NEXTVAL,
+    		 #{companyNo},
+    		 'YET',
+    		 #{educationSeq},
+    		 #{eduTitle},
+    		 #{eduContent},
+    		 #{eduStartDate},
+    		 #{eduEndDate},
+    		 #{eduPlace},
+    		 #{inOfficeYn},
+    		 #{targetAmount},
+    		 #{instrInfo},
+    		 #{eduCost}	
+    	   )
+    	   		
+ </insert>
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="Deduction">
+	<resultMap type="com.kh.insane.salary.model.vo.Deduction"
+		id="deductionResultSet">
+		<id property="deductionSeq" column="DEDUCTION_SEQ" />
+		<result property="deductionName" column="DEDUCTION_NAME" />
+		<result property="deductionType" column="DEDUCTION_TYPE" />
+		<result property="divSalary" column="DIV_SALARY" />
+		<result property="deductionPt" column="DEDUCTION_PT" />
+		<result property="autoRegist" column="AUTO_REGIST" />
+		<result property="usageStatus" column="USAGE_STATUS" />
+		<result property="remark" column="REMARK" />
+		<result property="companyNo" column="COMPANY_NO" />
+		<!-- 위는 DEDUCTION 테이블 아래는 DEDUCTION_HISTORY 테이블 -->
+		<result property="deductionHistorySeq"
+			column="DEDUCTION_HISTORY_SEQ" />
+		<result property="payDate" column="PAY_DATE" />
+		<result property="amount" column="AMOUNT" />
+		<result property="empNoSeq" column="EMP_NO_SEQ" />
+	</resultMap>
+	
+	<resultMap type="com.kh.insane.salary.model.vo.Deduction" id="DeductionResult">
+		<id property="deductionSeq" column="DEDUCTION_SEQ"/>
+		<result property="deductionName" column="DEDUCTION_NAME"/>
+		<result property="deductionType" column="DEDUCTION_TYPE"/>
+		<result property="divSalary" column="DIV_SALARY"/>
+		<result property="deductionPt" column="DEDUCTION_PT"/>
+		<result property="autoRegist" column="AUTO_REGIST"/>
+		<result property="usageStatus" column="USAGE_STATUS"/>
+		<result property="remark" column="REMARK"/>
+		<result property="companyNo" column="COMPANY_NO"/>
+	</resultMap>
+
+	<select id="showDeduction" resultMap="deductionResultSet"
+		parameterType="Deduction">
+		SELECT * /*+ 정상현::com.kh.insane.salary.model.dao.SalaryDaoImpl.showDeduction*/
+		  FROM DEDUCTION
+		 WHERE COMPANY_NO = ${value}
+		   AND USAGE_STATUS = 'Y'
+	</select>
+
+</mapper>

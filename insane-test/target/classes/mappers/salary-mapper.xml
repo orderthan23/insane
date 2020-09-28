@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="Salary">
+	<resultMap type="com.kh.insane.salary.model.vo.Salary"
+		id="salaryResultSet">
+		<id property="salaryHistorySeq" column="SALARY_HISTORY_SEQ" />
+		<result property="empNoSeq" column="EMP_NO_SEQ" />
+		<result property="salaryCodeSeq" column="SALARY_CODE_SEQ" />
+		<result property="payDate" column="PAY_DATE" />
+		<result property="companyNo" column="COMPANY_NO" />
+		<!-- 위는 SALARY_HISTORY 테이블 아래는 SALARY_CODE 테이블 -->
+		<result property="positionCode" column="POSITION_CODE" />
+		<result property="paymentHour" column="PAYMENT_HOUR" />
+		<result property="payStopPayment" column="PAY_STOP_PAYMENT" />
+		<result property="payType" column="PAY_TYPE" />
+		<result property="usageStatus" column="USAGE_STATUS" />
+		<result property="remark" column="REMARK" />
+		<result property="salaryCodeName" column="SALARY_CODE_NAME" />
+	</resultMap>
+
+	<resultMap type="com.kh.insane.salary.model.vo.SalaryHistory"
+		id="salaryHistory">
+		<id property="salaryHistorySeq" column="SALARY_HISTORY_SEQ" />
+		<result property="empNoSeq" column="EMP_NO_SEQ" />
+		<result property="salaryCodeSeq" column="SALARY_CODE_SEQ" />
+		<result property="payDate" column="PAY_DATE" />
+		<result property="companyNo" column="COMPANY_NO" />
+	</resultMap>
+
+	<resultMap type="com.kh.insane.salary.model.vo.SalaryCode"
+		id="salaryCode">
+		<id property="salaryCodeSeq" column="SALARY_CODE_SEQ" />
+		<result property="positionCode" column="POSITION_CODE" />
+		<result property="salaryCodeName" column="SALARY_CODE_NAME" />
+		<result property="paymentHour" column="PAYMENT_HOUR" />
+		<result property="payStopPayment" column="PAY_STOP_PAYMENT" />
+		<result property="payType" column="PAY_TYPE" />
+		<result property="remark" column="REMARK" />
+		<result property="usageStatus" column="USAGE_STATUS" />
+		<result property="companyNo" column="COMPANY_NO" />
+	</resultMap>
+
+	<select id="showSalary" resultMap="salaryResultSet"
+		parameterType="Salary">
+		SELECT * /*+
+		정상현::com.kh.insane.salary.model.dao.SalaryDaoImpl.showSalary*/
+		FROM
+		SALARY_HISTORY
+		LEFT JOIN SALARY_CODE USING(SALARY_CODE_SEQ)
+		WHERE
+		EMP_NO_SEQ = #{empNoSeq}
+		ORDER BY EXTRACT(YEAR FROM PAY_DATE)
+	</select>
+
+	<!-- <select id="selectByYearMonth" resultMap="salaryResultSet" parameterType="Salary"> 
+		SELECT * /*+ 정상현::com.kh.insane.salary.model.dao.SalaryDaoImpl.selectYearMonth*/ 
+		FROM SALARY_HISTORY LEFT JOIN SALARY_CODE USING(SALARY_CODE_SEQ) WHERE EMP_NO_SEQ 
+		= #{salary.empNoSeq} AND TO_CHAR(EXTRACT(YEAR FROM PAY_DATE)) = #{salary.payDate.substring 
+		(0,4)} AND TO_CHAR(EXTRACT(MONTH FROM PAY_DATE)) = #{salary.payDate.substring 
+		(5,2)} </select> -->
+
+ 	 <select id="selectYear" resultType="java.lang.String" parameterType="_int">
+		SELECT DISTINCT TO_CHAR(EXTRACT(YEAR FROM PAY_DATE)) /*+ 정상현::com.kh.insane.salary.model.dao.SalaryDaoImpl.selectYear*/
+		FROM
+		SALARY_HISTORY
+		LEFT JOIN SALARY_CODE USING(SALARY_CODE_SEQ)
+		WHERE
+		EMP_NO_SEQ = #{empNoSeq}
+		ORDER BY EXTRACT(YEAR FROM PAY_DATE)
+	</select>
+
+<!--  parameterType="string" resultType="string" -->
+
+	<!-- 임시용 -->
+	<insert id="insertSalaryCode" parameterType="SalaryCode">
+		INSERT INTO
+		SALARY_CODE(SALARY_CODE_SEQ,POSITION_CODE,PAYMENT_HOUR,
+		PAY_STEP_PAYMENT,PAY_TYPE,USAGE_STATUS,REMARK,COMPANY_NO,SALARY_CODE_NAME)
+		VALUES(SALARY_CODE_SEQ.NEXTVAL, 1, 14959, 1000, '월급', 'Y', '-',
+		1001,
+		'예시')
+	</insert>
+
+	<insert id="insertSalaryHistory" parameterType="SalaryHistory">
+		INSERT INTO
+		SALARY_HISTORY(SALARY_HISTORY_SEQ,EMP_NO_SEQ,
+		SALARY_CODE_SEQ,PAY_DATE,COMPANY_NO)
+		VALUES(SALARY_HISTORY_SEQ.NEXTVAL, 1,
+		SALARY_CODE_SEQ.CURRVAL,
+		TO_DATE(#{date}),1001)
+	</insert>
+
+	<delete id="deleteSalaryCode" parameterType="SalaryCode">
+		DELETE SALARY_CODE
+	</delete>
+
+	<delete id="deleteSalaryHistory" parameterType="SalaryHistory">
+		DELETE SALARY_HISTORY
+	</delete>
+	
+</mapper>

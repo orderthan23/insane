@@ -1,0 +1,389 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Organization">
+
+	<resultMap type="Department" id="departmentSettingResultSet">
+		<id property="deptCodeSeq" column="DEPT_CODE_SEQ"/>
+		<result property="deptName" column="DEPT_NAME"/>
+		<result property="companyNo" column="COMPANY_NO"/>
+		<result property="deptStep" column="DEPT_STEP"/>
+		<result property="upperDeptCode" column="UPPER_DEPT_CODE"/>
+		<result property="upperDeptName" column="UPPER_DEPT_NAME"/>
+		<result property="deptTel" column="DEPT_TEL"/>
+		<result property="usageStatus" column="USAGE_STATUS"/>
+		<result property="genDate" column="GEN_DATE"/>
+		<result property="delDate" column="DEL_DATE"/>
+		<result property="deptLimit" column="DEPT_LIMIT"/>
+		<result property="deptPresent" column="DEPT_PRESENT"/>
+		<result property="cngDate" column="CNG_DATE"/>
+	</resultMap>
+	
+	<resultMap type="OrganizationChart" id="organizationChartResultSet">
+		<id property="deptCodeSeq" column="DEPT_CODE_SEQ"/>
+		<result property="levelName" column="LEVEL_NAME"/>
+		<result property="levelSpace" column="LEVEL_SPACE"/>
+		<result property="deptName" column="DEPT_NAME"/>
+		<result property="upperDeptCode" column="UPPER_DEPT_CODE"/>
+		<result property="upperDeptName" column="UPPER_DEPT_NAME"/>
+		<result property="deptPresent" column="DEPT_PRESENT"/>
+		<result property="level" column="LEVEL"/>
+		<result property="sumPresent" column="SUM_PRESENT"/>
+	</resultMap>
+	
+	<resultMap type="Employee" id="employeeResultSet">
+		<id property="empNoSeq" column="EMP_NO_SEQ" />
+		<result property="empNo" column="EMP_NO" />
+		<result property="companyNo" column="COMPANY_NO" />
+		<result property="empPwd" column="EMP_PWD" />
+		<result property="empNameKor" column="EMP_NAME_KOR" />
+		<result property="empNameEng" column="EMP_NAME_ENG" />
+		<result property="enrollDate" column="ENROLL_DATE" />
+		<result property="empResidentNo" column="EMP_RESIDENT_NO" />
+		<result property="empLocationCode" column="EMP_LOCATION_CODE" />
+		<result property="locationName" column="LOCATION_NAME" />
+		<result property="empDeptCode" column="EMP_DEPT_CODE" />
+		<result property="deptName" column="DEPT_NAME" />
+		<result property="empPositionCode" column="EMP_POSITION_CODE" />
+		<result property="positionName" column="POSITION_NAME" />
+		<result property="empRspofcCode" column="EMP_RSPOFC_CODE" />
+		<result property="rspofcName" column="RSPOFC_NAME" />
+		<result property="payStepCode" column="EMP_PAY_STEP_CODE" />
+		<result property="payStep" column="PAY_STEP" />
+		<result property="empAddress" column="EMP_ADDRESS" />
+		<result property="retireDate" column="RETIRE_DATE" />
+		<result property="empBirthday" column="EMP_BIRTHDAY" />
+		<result property="lunarSor" column="LUNAR_SOR" />
+		<result property="gender" column="GENDER" />
+		<result property="empHomeTel" column="EMP_HOME_TEL" />
+		<result property="empPhone" column="EMP_PHONE" />
+		<result property="empOfficeTel" column="EMP_OFFICE_TEL" />
+		<result property="empForm" column="EMP_FORM" />
+		<result property="empOccupation" column="EMP_OCCUPATION" />
+		<result property="empSpot" column="EMP_SPOT" />
+		<result property="empProject" column="EMP_PROJECT" />
+		<result property="empStatus" column="EMP_STATUS" />
+	</resultMap>
+
+	<insert id="insertDept" parameterType="Department">
+		INSERT /*+ 이재형::com.kh.insane.organization.dao.OrganizationDaoImpl.insertDept*/
+		  INTO DEPARTMENT
+		(
+		  DEPT_CODE_SEQ
+		, DEPT_NAME
+		, COMPANY_NO
+		, DEPT_STEP
+		, UPPER_DEPT_CODE
+		, DEPT_TEL
+		, USAGE_STATUS
+		, GEN_DATE
+		, DEPT_LIMIT
+		, DEPT_PRESENT
+		)
+		VALUES
+		(
+		  DEPT_CODE_SEQ.NEXTVAL
+		, #{deptName}
+		, #{companyNo}
+		, #{deptStep}
+		, #{upperDeptCode}
+		, #{deptTel}
+		, #{usageStatus}
+		, #{genDate}
+		, #{deptLimit}
+		, #{deptPresent}
+		)
+	</insert>
+	
+	<select id="selectDeptSetList" parameterType="_int" resultMap="departmentSettingResultSet">
+		SELECT /*+ 이재형::com.kh.insane.organization.dao.OrganizationDaoImpl.selectDeptSetList*/
+		       D1.DEPT_CODE_SEQ
+		     , D1.DEPT_NAME
+		     , D1.COMPANY_NO
+		     , D1.DEPT_STEP
+		     , D1.UPPER_DEPT_CODE
+		     , D2.DEPT_NAME AS UPPER_DEPT_NAME
+		     , D1.DEPT_TEL
+		     , D1.USAGE_STATUS
+		     , TO_CHAR(D1.GEN_DATE, 'YYYY-MM-DD') AS GEN_DATE
+		     , TO_CHAR(D1.DEL_DATE, 'YYYY-MM-DD') AS DEL_DATE
+		     , D1.DEPT_LIMIT
+		     , D1.DEPT_PRESENT
+		     , TO_CHAR(D1.CNG_DATE, 'YYYY-MM-DD') AS CNG_DATE
+		  FROM DEPARTMENT D1
+		  LEFT JOIN DEPARTMENT D2 ON(D2.DEPT_CODE_SEQ = D1.UPPER_DEPT_CODE)
+		 WHERE D1.COMPANY_NO = #{companyNo}
+		 ORDER BY D1.USAGE_STATUS DESC
+		     , D1.DEPT_NAME ASC
+	</select>
+	
+	<select id="selectOneDept" parameterType="Department" resultMap="departmentSettingResultSet">
+		SELECT /*+ 이재형::com.kh.insane.organization.dao.OrganizationDaoImpl.selectOneDept*/
+		       D1.DEPT_CODE_SEQ
+		     , D1.DEPT_NAME
+		     , D1.COMPANY_NO
+		     , D1.DEPT_STEP
+		     , D1.UPPER_DEPT_CODE
+		     , D2.DEPT_NAME AS UPPER_DEPT_NAME
+		     , D1.DEPT_TEL
+		     , D1.USAGE_STATUS
+		     , TO_CHAR(D1.GEN_DATE, 'YYYY-MM-DD') AS GEN_DATE
+		     , TO_CHAR(D1.DEL_DATE, 'YYYY-MM-DD') AS DEL_DATE
+		     , D1.DEPT_LIMIT
+		     , D1.DEPT_PRESENT
+		     , TO_CHAR(D1.CNG_DATE, 'YYYY-MM-DD') AS CNG_DATE
+		  FROM DEPARTMENT D1
+		  LEFT JOIN DEPARTMENT D2 ON(D2.DEPT_CODE_SEQ = D1.UPPER_DEPT_CODE)
+		 WHERE D1.COMPANY_NO = #{companyNo}
+		   AND D1.DEPT_CODE_SEQ = #{deptCodeSeq}
+	</select>
+	
+	<update id="updateDeptInfo" parameterType="Department">
+		UPDATE /*+ 이재형::com.kh.insane.organization.dao.OrganizationDaoImpl.updateDeptInfo*/
+		       DEPARTMENT
+		   SET DEPT_NAME = #{deptName}
+		     , UPPER_DEPT_CODE = #{upperDeptCode}
+		     , DEPT_TEL = #{deptTel}
+		     , USAGE_STATUS = #{usageStatus}
+		     , DEPT_LIMIT = #{deptLimit}
+		     , CNG_DATE = SYSDATE
+		 WHERE DEPT_CODE_SEQ = #{deptCodeSeq}
+	</update>
+	
+	<select id="showOrganizationChart" parameterType="_int" resultMap="organizationChartResultSet">
+		SELECT /*+ 이재형::com.kh.insane.organization.dao.OrganizationDaoImpl.showOrganizationChart*/
+		       LPAD(' ', 2*(LEVEL - 1)) || DEPT_NAME AS LEVEL_NAME
+		     , LPAD(' ', 2*(LEVEL - 1)) AS LEVEL_SPACE
+		     , DEPT_NAME
+		     , DEPT_CODE_SEQ
+		     , UPPER_DEPT_CODE
+		     , UPPER_DEPT_NAME
+		     , DEPT_PRESENT
+		     , LEVEL
+		     , (
+		        SELECT SUM(DEPT_PRESENT)
+		          FROM DEPARTMENT
+		         START WITH DEPT_CODE_SEQ = D.DEPT_CODE_SEQ
+		         CONNECT BY PRIOR DEPT_CODE_SEQ = UPPER_DEPT_CODE
+		       ) AS SUM_PRESENT
+		  FROM (
+		        SELECT D1.DEPT_CODE_SEQ
+		             , D1.DEPT_NAME
+		             , D1.COMPANY_NO
+		             , D1.UPPER_DEPT_CODE
+		             , D2.DEPT_NAME AS UPPER_DEPT_NAME
+		             , D1.DEPT_PRESENT
+		          FROM DEPARTMENT D1
+		          LEFT JOIN DEPARTMENT D2 ON(D2.DEPT_CODE_SEQ = D1.UPPER_DEPT_CODE)
+		         WHERE D1.USAGE_STATUS = 'Y'
+		       ) D
+		 WHERE COMPANY_NO = #{companyNo}
+		 START WITH UPPER_DEPT_CODE IS NULL
+		 CONNECT BY PRIOR DEPT_CODE_SEQ = UPPER_DEPT_CODE
+		 ORDER SIBLINGS BY DEPT_CODE_SEQ
+	</select>
+	
+	<select id="selectOneOrChart" parameterType="Department" resultMap="organizationChartResultSet">
+		SELECT /*+ 이재형::com.kh.insane.organization.dao.OrganizationDaoImpl.selectOneOrChart*/
+		       LPAD(' ', 2*(LEVEL - 1)) || DEPT_NAME AS LEVEL_NAME
+		     , LPAD(' ', 2*(LEVEL - 1)) AS LEVEL_SPACE
+		     , DEPT_NAME
+		     , DEPT_CODE_SEQ
+		     , UPPER_DEPT_CODE
+		     , UPPER_DEPT_NAME
+		     , DEPT_PRESENT
+		     , LEVEL
+		     , (
+		        SELECT SUM(DEPT_PRESENT)
+		          FROM DEPARTMENT
+		         START WITH DEPT_CODE_SEQ = D.DEPT_CODE_SEQ
+		         CONNECT BY PRIOR DEPT_CODE_SEQ = UPPER_DEPT_CODE
+		       ) AS SUM_PRESENT
+		  FROM (
+		        SELECT D1.DEPT_CODE_SEQ
+		             , D1.DEPT_NAME
+		             , D1.COMPANY_NO
+		             , D1.UPPER_DEPT_CODE
+		             , D2.DEPT_NAME AS UPPER_DEPT_NAME
+		             , D1.DEPT_PRESENT
+		          FROM DEPARTMENT D1
+		          LEFT JOIN DEPARTMENT D2 ON(D2.DEPT_CODE_SEQ = D1.UPPER_DEPT_CODE)
+		         WHERE D1.USAGE_STATUS = 'Y'
+		       ) D
+		 WHERE COMPANY_NO = #{companyNo}
+		 <if test="upperDeptCode == null">
+		   AND DEPT_CODE_SEQ = #{deptCodeSeq}
+		 </if>
+		 <if test="upperDeptCode != null">
+		   AND (DEPT_CODE_SEQ = #{deptCodeSeq}
+		        OR UPPER_DEPT_CODE = #{deptCodeSeq})
+		 </if>
+		 START WITH UPPER_DEPT_CODE IS NULL
+		 CONNECT BY PRIOR DEPT_CODE_SEQ = UPPER_DEPT_CODE
+		 ORDER SIBLINGS BY DEPT_CODE_SEQ
+	</select>
+	
+	<select id="selectOneDirector" parameterType="Department" resultMap="employeeResultSet">
+		SELECT /*+ 이재형::com.kh.insane.organization.dao.OrganizationDaoImpl.selectOneDirector*/
+		       E.EMP_NO_SEQ
+		     , E.EMP_NO
+		     , E.COMPANY_NO
+		     , E.EMP_PWD
+		     , E.EMP_NAME_KOR
+		     , E.EMP_NAME_ENG
+		     , TO_CHAR(E.ENROLL_DATE, 'YYYY-MM-DD') AS ENROLL_DATE
+		     , E.EMP_RESIDENT_NO
+		     , E.EMP_LOCATION_CODE
+		     , L.LOCATION_NAME
+		     , E.EMP_DEPT_CODE
+		     , D.DEPT_NAME
+		     , E.EMP_POSITION_CODE
+		     , P.POSITION_NAME
+		     , E.EMP_RSPOFC_CODE
+		     , R.RSPOFC_NAME
+		     , E.EMP_PAY_STEP_CODE
+		     , S.PAY_STEP
+		     , E.EMP_ADDRESS
+		     , E.RETIRE_DATE
+		     , E.EMP_BIRTHDAY
+		     , E.LUNAR_SOR
+		     , E.GENDER
+		     , E.EMP_HOME_TEL
+		     , E.EMP_PHONE
+		     , E.EMP_OFFICE_TEL
+		     , E.EMP_FORM
+		     , E.EMP_OCCUPATION
+		     , E.EMP_SPOT
+		     , E.EMP_PROJECT
+		     , E.EMP_STATUS
+		  FROM EMPLOYEE E
+		  LEFT JOIN LOCATION L ON(E.EMP_LOCATION_CODE = L.LOCATION_SEQ)
+		  LEFT JOIN DEPARTMENT D ON(E.EMP_DEPT_CODE = D.DEPT_CODE_SEQ)
+		  LEFT JOIN POSITION P ON(E.EMP_POSITION_CODE = P.POSITION_SEQ)
+		  LEFT JOIN RSPOFC R ON(E.EMP_RSPOFC_CODE = R.RSPOFC_SEQ)
+		  LEFT JOIN PAY_STEP S ON(E.EMP_PAY_STEP_CODE = S.PAY_STEP_SEQ)
+		 WHERE EMP_STATUS = 'Y'
+		   AND EMP_NO_SEQ = (
+		                     SELECT EMP_NO_SEQ
+		                       FROM DIRECTOR_HISTORY
+		                      WHERE DEPT_CODE_SEQ = #{deptCodeSeq}
+		                    )
+	</select>
+	
+	<select id="selectDeptEmpList" parameterType="java.util.ArrayList" resultMap="employeeResultSet">
+		SELECT /*+ 이재형::com.kh.insane.organization.dao.OrganizationDaoImpl.selectDeptEmpList*/
+		       E.EMP_NO_SEQ
+		     , E.EMP_NO
+		     , E.COMPANY_NO
+		     , E.EMP_PWD
+		     , E.EMP_NAME_KOR
+		     , E.EMP_NAME_ENG
+		     , TO_CHAR(E.ENROLL_DATE, 'YYYY-MM-DD') AS ENROLL_DATE
+		     , E.EMP_RESIDENT_NO
+		     , E.EMP_LOCATION_CODE
+		     , L.LOCATION_NAME
+		     , E.EMP_DEPT_CODE
+		     , D.DEPT_NAME
+		     , E.EMP_POSITION_CODE
+		     , P.POSITION_NAME
+		     , E.EMP_RSPOFC_CODE
+		     , R.RSPOFC_NAME
+		     , E.EMP_PAY_STEP_CODE
+		     , S.PAY_STEP
+		     , E.EMP_ADDRESS
+		     , E.RETIRE_DATE
+		     , E.EMP_BIRTHDAY
+		     , E.LUNAR_SOR
+		     , E.GENDER
+		     , E.EMP_HOME_TEL
+		     , E.EMP_PHONE
+		     , E.EMP_OFFICE_TEL
+		     , E.EMP_FORM
+		     , E.EMP_OCCUPATION
+		     , E.EMP_SPOT
+		     , E.EMP_PROJECT
+		     , E.EMP_STATUS
+		  FROM EMPLOYEE E
+		  JOIN LOCATION L ON(E.EMP_LOCATION_CODE = L.LOCATION_SEQ)
+		  JOIN (
+		        SELECT DEPT_NAME
+		             , DEPT_CODE_SEQ
+		             , LEVEL AS DEPT_LEVEL
+		          FROM DEPARTMENT
+		         START WITH UPPER_DEPT_CODE IS NULL
+		       CONNECT BY PRIOR DEPT_CODE_SEQ = UPPER_DEPT_CODE
+		         ORDER SIBLINGS BY DEPT_CODE_SEQ
+		       ) D ON(E.EMP_DEPT_CODE = D.DEPT_CODE_SEQ)
+		  JOIN POSITION P ON(E.EMP_POSITION_CODE = P.POSITION_SEQ)
+		  LEFT JOIN RSPOFC R ON(E.EMP_RSPOFC_CODE = R.RSPOFC_SEQ)
+		  JOIN PAY_STEP S ON(E.EMP_PAY_STEP_CODE = S.PAY_STEP_SEQ)
+		 WHERE EMP_STATUS = 'Y'
+		   AND
+		<foreach collection="list" item="item" open="(" close=")" separator="OR">
+		       EMP_DEPT_CODE = #{item.deptCodeSeq}
+		</foreach>
+		 ORDER BY D.DEPT_LEVEL ASC
+		        , D.DEPT_NAME ASC
+		        , E.EMP_RSPOFC_CODE ASC
+		        , E.EMP_POSITION_CODE DESC
+	</select>
+	
+	<select id="selectAllOrChart" parameterType="_int" resultMap="employeeResultSet">
+		SELECT /*+ 이재형::com.kh.insane.organization.dao.OrganizationDaoImpl.selectAllOrChart*/
+		       E.EMP_NO_SEQ
+		     , E.EMP_NO
+		     , E.COMPANY_NO
+		     , E.EMP_PWD
+		     , E.EMP_NAME_KOR
+		     , E.EMP_NAME_ENG
+		     , TO_CHAR(E.ENROLL_DATE, 'YYYY-MM-DD') AS ENROLL_DATE
+		     , E.EMP_RESIDENT_NO
+		     , E.EMP_LOCATION_CODE
+		     , L.LOCATION_NAME
+		     , E.EMP_DEPT_CODE
+		     , D.DEPT_NAME
+		     , E.EMP_POSITION_CODE
+		     , P.POSITION_NAME
+		     , E.EMP_RSPOFC_CODE
+		     , R.RSPOFC_NAME
+		     , E.EMP_PAY_STEP_CODE
+		     , S.PAY_STEP
+		     , E.EMP_ADDRESS
+		     , E.RETIRE_DATE
+		     , E.EMP_BIRTHDAY
+		     , E.LUNAR_SOR
+		     , E.GENDER
+		     , E.EMP_HOME_TEL
+		     , E.EMP_PHONE
+		     , E.EMP_OFFICE_TEL
+		     , E.EMP_FORM
+		     , E.EMP_OCCUPATION
+		     , E.EMP_SPOT
+		     , E.EMP_PROJECT
+		     , E.EMP_STATUS
+		  FROM EMPLOYEE E
+		  JOIN LOCATION L ON(E.EMP_LOCATION_CODE = L.LOCATION_SEQ)
+		  JOIN (
+		        SELECT ROWNUM RNUM
+		             , DEPT_NAME
+		             , DEPT_CODE_SEQ
+		             , LEVEL AS DEPT_LEVEL
+		          FROM DEPARTMENT
+		         START WITH UPPER_DEPT_CODE IS NULL
+		       CONNECT BY PRIOR DEPT_CODE_SEQ = UPPER_DEPT_CODE
+		         ORDER SIBLINGS BY DEPT_CODE_SEQ
+		       ) D ON(E.EMP_DEPT_CODE = D.DEPT_CODE_SEQ)
+		  JOIN POSITION P ON(E.EMP_POSITION_CODE = P.POSITION_SEQ)
+		  LEFT JOIN RSPOFC R ON(E.EMP_RSPOFC_CODE = R.RSPOFC_SEQ)
+		  JOIN PAY_STEP S ON(E.EMP_PAY_STEP_CODE = S.PAY_STEP_SEQ)
+		 WHERE EMP_STATUS = 'Y'
+		   AND E.COMPANY_NO = #{companyNo}
+		 ORDER BY D.RNUM
+		        , D.DEPT_LEVEL ASC
+		        , D.DEPT_NAME ASC
+		        , E.EMP_RSPOFC_CODE ASC
+		        , E.EMP_POSITION_CODE DESC
+	</select>
+	
+</mapper>

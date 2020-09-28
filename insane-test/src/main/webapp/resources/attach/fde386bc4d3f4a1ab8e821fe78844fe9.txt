@@ -1,0 +1,14 @@
+var content = document.getElementById('content').innerHTML; // html 안에 'content'라는 아이디를 content 라는 변수로 정의한다.
+
+var splitedArray = content.split(' '); // 공백을 기준으로 문자열을 자른다.
+var linkedContent = '';
+for(var word in splitedArray)
+{
+  word = splitedArray[word];
+   if(word.indexOf('#') == 0) // # 문자를 찾는다.
+   {
+      word = '<a href=\링크>'+word+'</a>'; 
+   }
+   linkedContent += word+' ';
+}
+document.getElementById('content').innerHTML = linkedContent;

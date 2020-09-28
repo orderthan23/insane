@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Reward">
+
+	<resultMap type="ProvisionSetting" id="ProvisionSettingResult">
+		<id property="provisionSeq" column="PROVISION_SEQ"/>
+		<result property="provisionName" column="PROVISION_NAME"/>
+		<result property="taxYn" column="TAX_YN"/>
+		<result property="provisionType" column="PROVISION_TYPE"/>
+		<result property="provisionLimit" column="PROVISION_LIMIT"/>
+		<result property="npnYn" column="NPN_YN"/>
+		<result property="hlthinsYn" column="HLTHINS_YN"/>
+		<result property="empInsuranceYn" column="EMP_INSURANCE_YN"/>
+		<result property="incomeTaxYn" column="INCOME_TAX_YN"/>
+		<result property="usageStatus" column="USAGE_STATUS"/>
+		<result property="companyNo" column="COMPANY_NO"/>
+	</resultMap>
+	
+	<resultMap type="DeductionSetting" id="DeductionSettingResult">
+		<id property="deductionSeq" column="DEDUCTION_SEQ"/>
+		<result property="deductionName" column="DEDUCTION_NAME"/>
+		<result property="deductionType" column="DEDUCTION_TYPE"/>
+		<result property="divSalary" column="DIV_SALARY"/>
+		<result property="deductionPt" column="DEDUCTION_PT"/>
+		<result property="autoRegist" column="AUTO_REGIST"/>
+		<result property="usageStatus" column="USAGE_STATUS"/>
+		<result property="remark" column="REMARK"/>
+		<result property="companyNo" column="COMPANY_NO"/>
+	</resultMap>
+	
+	<select id="selectProvisionSetting" parameterType="_int" resultMap="ProvisionSettingResult">
+		SELECT *
+		  FROM PROVISION
+		 WHERE COMPANY_NO = #{companyNo}
+		   AND USAGE_STATUS = 'Y'
+		 ORDER BY PROVISION_SEQ DESC
+	</select>
+
+	<select id="selectDeductionSetting" parameterType="_int" resultMap="DeductionSettingResult">
+		SELECT *
+		  FROM DEDUCTION
+		 WHERE COMPANY_NO = #{companyNo}
+		   AND USAGE_STATUS = 'Y'
+		 ORDER BY DEDUCTION_SEQ DESC
+	</select>
+
+	<insert id="insertProvisionSetting" parameterType="ProvisionSetting">
+		INSERT INTO PROVISION
+		VALUES (PROVISION_SEQ.NEXTVAL, #{provisionName}, #{taxYn},
+				#{provisionType}, #{provisionLimit}, #{npnYn},
+				#{hlthinsYn}, #{empInsuranceYn}, #{incomeTaxYn},
+				'Y', #{companyNo})
+
+	</insert>
+	
+	<insert id="insertDeductionSetting" parameterType="DeductionSetting">
+		INSERT INTO DEDUCTION
+		VALUES (DEDUCTION_SEQ.NEXTVAL, #{deductionName}, #{deductionType},
+				#{divSalary}, #{deductionPt}, 'N',
+				'Y', #{remark}, #{companyNo})
+	</insert>
+	
+	<update id="deleteProvision" parameterType="_int">
+		UPDATE PROVISION
+		   SET USAGE_STATUS = 'N'
+		 WHERE PROVISION_SEQ = #{i}
+	</update>
+	
+	<update id="deleteDeduction" parameterType="_int">
+		UPDATE DEDUCTION
+		   SET USAGE_STATUS = 'N'
+		 WHERE DEDUCTION_SEQ = #{i}
+	</update>
+	
+	<resultMap type="SalarySetting" id="SalarySettingResult">
+		<id property="salarySeq" column="SALARY_CODE_SEQ"/>
+		<result property="positionName" column="POSITION_NAME"/>
+		<result property="salaryCodeName" column="SALARY_CODE_NAME"/>
+		<result property="paymentHour" column="PAYMENT_HOUR"/>
+		<result property="payStepPayment" column="PAY_STEP_PAYMENT"/>
+		<result property="payType" column="PAY_TYPE"/>
+		<result property="remark" column="REMARK"/>
+		<result property="usageStatus" column="USAGE_STATUS"/>
+		<result property="companyNo" column="COMPANY_NO"/>
+	</resultMap>
+	
+	<resultMap type="SalarySetting" id="PositionResult">
+		<id property="positionSeq" column="POSITION_SEQ"/>
+		<result property="positionName" column="POSITION_NAME"/>
+	</resultMap>
+	
+	<select id="selectSalarySetting" parameterType="_int" resultMap="SalarySettingResult">
+		SELECT
+		       S.SALARY_CODE_SEQ
+		     , P.POSITION_NAME
+		     , S.SALARY_CODE_NAME
+		     , S.PAYMENT_HOUR
+		     , S.PAY_STEP_PAYMENT
+		     , S.PAY_TYPE
+		     , S.REMARK
+		     , S.USAGE_STATUS
+		  FROM SALARY_CODE S
+		  LEFT JOIN POSITION P ON (S.POSITION_CODE = P.POSITION_SEQ)
+		 WHERE S.COMPANY_NO = #{companyNo}
+		   AND S.USAGE_STATUS = 'Y'
+		 ORDER BY 1 DESC
+	</select>
+	
+	<select id="selectPosition" parameterType="_int" resultMap="PositionResult">
+		SELECT
+		       POSITION_SEQ
+		     , POSITION_NAME
+		  FROM POSITION
+		 WHERE COMPANY_NO = #{companyNo}
+		   AND USAGE_STATUS = 'Y'
+	</select>
+	
+	<insert id="insertSalarySetting" parameterType="SalarySetting">
+		INSERT INTO SALARY_CODE
+		VALUES (SALARY_CODE_SEQ.NEXTVAL, #{positionSeq}, #{salaryCodeName},
+				#{paymentHour}, #{payStepPayment}, #{payType},
+				#{remark}, 'Y', #{companyNo})
+	</insert>
+	
+	<update id="deleteSalary" parameterType="_int">
+		UPDATE SALARY_CODE
+		   SET USAGE_STATUS = 'N'
+		 WHERE SALARY_CODE_SEQ = #{i}
+	</update>
+	
+</mapper>

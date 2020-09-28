@@ -1,0 +1,385 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="basicCode">
+	<resultMap type="HashMap" id="eduCodeMap">
+
+		<id property="educationSeq" column="EDUCATION_SEQ" />
+		<id property="educationType" column="EDUCATION_TYPE" />
+		<id property="usageStatus" column="USAGE_STATUS" />
+
+	</resultMap>
+
+	<resultMap type="HashMap" id="locationCodeMap">
+
+		<id property="locationSeq" column="LOCATION_SEQ" />
+		<id property="locationName" column="LOCATION_NAME" />
+		<id property="officeAddress" column="OFFICE_ADDRESS" />
+		<id property="status" column="USAGE_STATUS" />
+
+	</resultMap>
+
+	<resultMap type="HashMap" id="licenseCodeMap">
+
+		<id property="licenseCompanySeq" column="LICENSE_COMPANY_SEQ" />
+		<id property="licenseName" column="LICENSE_NAME" />
+		<id property="usageStatus" column="USAGE_STATUS" />
+		<id property="provisionAmount" column="PROVISION_AMOUNT" />
+
+	</resultMap>
+
+	<resultMap type="HashMap" id="rspofcCodeMap">
+
+		<id property="rspofcSeq" column="RSPOFC_SEQ" />
+		<id property="rspofcName" column="RSPOFC_NAME" />
+		<id property="useageStatus" column="USAGE_STATUS" />
+
+	</resultMap>
+
+
+	<resultMap type="HashMap" id="payStepCodeMap">
+
+		<id property="payStepSeq" column="PAY_STEP_SEQ" />
+		<id property="payStep" column="PAY_STEP" />
+		<id property="useageStatus" column="USAGE_STATUS" />
+
+	</resultMap>
+
+
+	<resultMap type="HashMap" id="positionCodeMap">
+
+		<id property="positionSeq" column="POSITION_SEQ" />
+		<id property="positionName" column="POSITION_NAME" />
+		<id property="addYearlyVacAmount" column="ADD_YEARLY_VAC_AMOUNT" />
+		<id property="limitPayStep" column="LIMIT_PAY_STEP" />
+		<id property="payStep" column="PAY_STEP" />
+		<id property="useageStatus" column="USEAGE_STATUS" />
+
+	</resultMap>
+
+
+
+	<insert id="insertEduCode" parameterType="hashMap">
+		INSERT /*+ 고종현::
+		com.kh.insane.company.model.dao.BasicCodeDao.insertEduCode*/
+		INTO EDUCATION(
+		EDUCATION_SEQ,
+		EDUCATION_TYPE,
+		USAGE_STATUS,
+		COMPANY_NO
+		)VALUES(
+		EDUCATION_SEQ.NEXTVAL,
+		#{codeName},
+		'Y',
+		#{companyNo}
+		)
+
+	</insert>
+
+	<select id="loadEduList" parameterType="_int"
+		resultMap="eduCodeMap">
+		SELECT /*+ 고종현:: com.kh.insane.company.model.dao.BasicCodeDao.loadEduList*/
+		EDUCATION_SEQ,
+		EDUCATION_TYPE,
+		USAGE_STATUS
+		FROM EDUCATION
+		WHERE COMPANY_NO = #{companyNo}
+		ORDER BY EDUCATION_SEQ
+	</select>
+
+	<update id="updateEduStatus" parameterType="HashMap">
+		UPDATE /*+ 고종현::
+		com.kh.insane.company.model.dao.BasicCodeDao.updateEduStatus*/
+		EDUCATION
+		SET USAGE_STATUS = #{status}
+		WHERE EDUCATION_SEQ = #{code}
+	</update>
+
+	<select id="loadLocationList" parameterType="_int"
+		resultMap="locationCodeMap">
+		SELECT /*+ 고종현::
+		com.kh.insane.company.model.dao.BasicCodeDao.loadLoctionList*/
+		LOCATION_SEQ,
+		LOCATION_NAME,
+		OFFICE_ADDRESS,
+		USAGE_STATUS
+		FROM LOCATION
+		WHERE COMPANY_NO = #{companyNo}
+		ORDER BY LOCATION_SEQ
+	</select>
+
+	<insert id="insertLocationCode" parameterType="hashMap">
+		INSERT /*+ 고종현::
+		com.kh.insane.company.model.dao.BasicCodeDao.insertLoctaionCode*/
+		INTO LOCATION(
+		LOCATION_SEQ,
+		LOCATION_NAME,
+		OFFICE_ADDRESS,
+		COMPANY_NO,
+		USAGE_STATUS
+		)VALUES(
+		LOCATION_SEQ.NEXTVAL,
+		#{codeName},
+		#{address},
+		#{companyNo},
+		'Y'
+		)
+	</insert>
+
+	<update id="updateLocationCode" parameterType="HashMap">
+		UPDATE /*+ 고종현::
+		com.kh.insane.company.model.dao.BasicCodeDao.updateLocationCode*/
+		LOCATION
+		SET USAGE_STATUS = #{status}
+		WHERE LOCATION_SEQ = #{code}
+	</update>
+
+	<select id="loadLicenseList" parameterType="_int"
+		resultMap="licenseCodeMap">
+		SELECT /*+ 고종현::
+		com.kh.insane.company.model.dao.BasicCodeDao.loadLicenseList*/
+		LICENSE_COMPANY_SEQ,
+		LICENSE_NAME,
+		USAGE_STATUS,
+		PROVISION_AMOUNT
+		FROM LICENSE_COMPANY
+		WHERE COMPANY_NO = #{companyNo}
+		ORDER BY LICENSE_COMPANY_SEQ
+
+	</select>
+
+	<insert id="insertLicenseCode" parameterType="hashMap">
+		INSERT /*+ 고종현::
+		com.kh.insane.company.model.dao.BasicCodeDao.insertLicenseCode*/
+		INTO LICENSE_COMPANY(
+		LICENSE_COMPANY_SEQ,
+		LICENSE_NAME,
+		USAGE_STATUS,
+		PROVISION_AMOUNT,
+		COMPANY_NO
+		)VALUES(
+		LICENSE_COMPANY_SEQ.NEXTVAL,
+		#{codeName},
+		'Y',
+		#{amount},
+		#{companyNo}
+		)
+
+	</insert>
+
+	<update id="updateLicenseCode" parameterType="HashMap">
+		UPDATE /*+ 고종현::
+		com.kh.insane.company.model.dao.BasicCodeDao.updateLicenseCode*/
+		LICENSE_COMPANY
+		SET USAGE_STATUS = #{status}
+		WHERE LICENSE_COMPANY_SEQ = #{code}
+	</update>
+
+	<select id="loadRspofcList" parameterType="_int"
+		resultMap="rspofcCodeMap">
+		SELECT /*+ 고종현::
+		com.kh.insane.company.model.dao.BasicCodeDao.loadRspofcList*/
+		RSPOFC_SEQ,
+		RSPOFC_NAME,
+		USAGE_STATUS
+		FROM RSPOFC
+		WHERE COMPANY_NO = #{companyNo}
+		ORDER BY RSPOFC_SEQ
+	</select>
+
+	<insert id="insertRspofcCode" parameterType="hashMap">
+		INSERT /*+ 고종현::
+		com.kh.insane.company.model.dao.BasicCodeDao.insertRspofcCode*/
+		INTO RSPOFC(
+		RSPOFC_SEQ,
+		RSPOFC_NAME,
+		COMPANY_NO,
+		USAGE_STATUS
+		)
+		VALUES(
+		RSPOFC_SEQ.NEXTVAL,
+		#{codeName},
+		#{companyNo},
+		'Y'
+		)
+
+	</insert>
+
+	<update id="updateRspofcCode" parameterType="HashMap">
+		UPDATE /*+ 고종현::
+		com.kh.insane.company.model.dao.BasicCodeDao.updateRspofcCode*/
+		RSPOFC
+		SET USAGE_STATUS = #{status}
+		WHERE RSPOFC_SEQ = #{code}
+
+	</update>
+
+	<select id="loadPayStepList" parameterType="_int"
+		resultMap="payStepCodeMap">
+		SELECT /*+ 고종현::
+		com.kh.insane.company.model.dao.BasicCodeDao.loadPayStepList*/
+		PAY_STEP_SEQ,
+		PAY_STEP,
+		USAGE_STATUS
+		FROM PAY_STEP
+		WHERE COMPANY_NO = #{companyNo}
+		ORDER BY PAY_STEP_SEQ
+	</select>
+
+	<select id="findMaxPayStep" parameterType="_int"
+		resultType="_int">
+		SELECT /*+ 고종현::
+		com.kh.insane.company.model.dao.BasicCodeDao.findMaxPayStep*/
+		NVL(MAX(PAY_STEP),0)
+		FROM PAY_STEP
+		WHERE COMPANY_NO = #{companyNo}
+	</select>
+
+
+	<insert id="insertPayStepCode" parameterType="HashMap">
+		INSERT /*+ 고종현::
+		com.kh.insane.company.model.dao.BasicCodeDao.insertPayStepCode*/
+		INTO PAY_STEP(
+		PAY_STEP_SEQ,
+		PAY_STEP,
+		USAGE_STATUS,
+		COMPANY_NO
+		)
+		VALUES(
+		PAY_STEP_SEQ.NEXTVAL,
+		#{codeName},
+		'Y',
+		#{companyNo}
+		)
+	</insert>
+
+
+
+
+	<select id="howManyDecreaseUpdateCount" parameterType="HashMap"
+		resultType="_int">
+		SELECT /*+ 고종현::
+		com.kh.insane.company.model.dao.BasicCodeDao.howManyUpdateCount*/
+		COUNT(PAY_STEP)
+		FROM PAY_STEP
+		WHERE COMPANY_NO = #{companyNo}
+		AND PAY_STEP > #{maximum}
+	</select>
+
+	<select id="howManyIncreaseUpdateCount" parameterType="HashMap"
+		resultType="_int">
+		SELECT /*+ 고종현::
+		com.kh.insane.company.model.dao.BasicCodeDao.howManyUpdateCount*/
+		COUNT(PAY_STEP)
+		FROM PAY_STEP
+		WHERE COMPANY_NO = #{companyNo}
+		AND PAY_STEP <![CDATA[ <= ]]>
+		#{maximum}
+	</select>
+
+
+
+
+	<update id="updateIncreasePayStepCode" parameterType="HashMap">
+		UPDATE /*+ 고종현::
+		com.kh.insane.company.model.dao.BasicCodeDao.updatePayStepCode*/
+		PAY_STEP
+		SET USAGE_STATUS = 'Y'
+		WHERE COMPANY_NO = #{companyNo}
+		AND PAY_STEP <![CDATA[ <= ]]>
+		#{maximum}
+	</update>
+
+
+
+	<update id="updateDecreasePayStepCode" parameterType="HashMap">
+		UPDATE /*+ 고종현::
+		com.kh.insane.company.model.dao.BasicCodeDao.updatePayStepCode*/
+		PAY_STEP
+		SET USAGE_STATUS = 'N'
+		WHERE COMPANY_NO = #{companyNo}
+		AND PAY_STEP > #{maximum}
+	</update>
+
+
+	<select id="findRealMax" parameterType="_int" resultType="_int">
+		SELECT /*+ 고종현:: com.kh.insane.company.model.dao.BasicCodeDao.findRealMax*/
+		MAX(PAY_STEP)
+		FROM PAY_STEP
+		WHERE COMPANY_NO = #{companyNo}
+		AND USAGE_STATUS = 'Y'
+
+	</select>
+
+	<select id="loadRealPayStepList" parameterType="_int"
+		resultMap="payStepCodeMap">
+		SELECT /*+ 고종현::
+		com.kh.insane.company.model.dao.BasicCodeDao.loadRealPayStepList*/
+		PAY_STEP_SEQ,
+		PAY_STEP
+		FROM PAY_STEP
+		WHERE COMPANY_NO = #{companyNo}
+		AND USAGE_STATUS = 'Y'
+		ORDER BY PAY_STEP_SEQ
+	</select>
+
+	<select id="loadPositionList" parameterType="_int"
+		resultMap="positionCodeMap">
+		SELECT /*+ 고종현::
+		com.kh.insane.company.model.dao.BasicCodeDao.loadPositionList*/
+		P.POSITION_SEQ,
+		P.POSITION_NAME,
+		P.ADD_YEARLY_VAC_AMOUNT,
+		P.LIMIT_PAY_STEP,
+		PS.PAY_STEP,
+		P.USAGE_STATUS
+		FROM POSITION P
+		JOIN PAY_STEP PS ON (P.LIMIT_PAY_STEP = PS.PAY_STEP_SEQ)
+		WHERE P.COMPANY_NO = #{companyNo}
+		ORDER BY P.POSITION_SEQ
+	</select>
+
+	<insert id="insertPositionCode" parameterType="HashMap">
+		INSERT /*+ 고종현::
+		com.kh.insane.company.model.dao.BasicCodeDao.insertPositionCode*/
+		INTO POSITION(
+		POSITION_SEQ,
+		POSITION_NAME,
+		ADD_YEARLY_VAC_AMOUNT,
+		LIMIT_PAY_STEP,
+		USAGE_STATUS,
+		COMPANY_NO
+		)
+		VALUES(
+		POSITION_SEQ.NEXTVAL,
+		#{positionName},
+		#{addYearlyVacAmount},
+		#{limitPayStep},
+		'Y',
+		#{companyNo}
+		)
+	</insert>
+
+
+	<update id="updatePositionCode" parameterType="HashMap">
+		UPDATE /*+ 고종현::
+		com.kh.insane.company.model.dao.BasicCodeDao.updatePositionCode*/
+		POSITION
+		SET USAGE_STATUS = #{status}
+		WHERE POSITION_SEQ = #{code}
+
+	</update>
+
+
+	<select id="countPayStep" parameterType="_int" resultType="_int">
+		SELECT /*+ 고종현::
+		com.kh.insane.company.model.dao.BasicCodeDao.updatePositionCode*/
+		COUNT(*)
+		FROM PAY_STEP
+		WHERE COMPANY_NO = #{companyNo}
+		AND USAGE_STATUS = 'Y'
+	</select>
+
+</mapper>

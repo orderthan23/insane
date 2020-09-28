@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="approval">
+
+<resultMap type="com.kh.insane.approval.model.vo.Document" id="documentResultSet">
+		<id property="documentHistorySeq" column="DOCUMENT_HISTORY_SEQ" />
+		<result property="empNoSeq" column="EMP_NO_SEQ" />
+		<result property="documentType" column="DOCUMENT_TYPE" />
+		<result property="documentName" column="DOCUMENT_NAME" />
+		<result property="documentSubmitDate" column="DOCUMENT_SUBMIT_DATE" />		
+		<result property="sanctners" column="SANCTNERS" />		
+		<result property="cooperators" column="COOPERATORS" />		
+		<result property="referrers" column="REFERRERS" />		
+		<result property="companyNo" column="COMPANY_NO" />		
+		<result property="sanctionLogSeq" column="SANCTION_LOG_SEQ" />		
+		<result property="sanctionStatus" column="SANCTION_STATUS" />		
+
+</resultMap>
+
+<select id="loadDocumentTypeList" parameterType="_int" resultMap="documentResultSet">
+	  SELECT  /*+ 고종현 ::com.kh.insane.approval.model.dao.ApprovalDao.loadDocumentTypeList*/
+	          DOCUMENT_TYPE,
+	          DOCUMENT_NAME,
+	          COMPANY_NO
+	    FROM  DOCUMENT_TYPE
+	   WHERE  COMPANY_NO = #{companyNo}       
+
+</select>
+
+<select id="loadOutgoingApprovalList" parameterType="_int" resultMap = "documentResultSet">
+	  SELECT /*+ 고종현 ::com.kh.insane.approval.model.dao.ApprovalDao.loadDocumentTypeList*/
+	  		 DOCUMENT_HISTORY_SEQ,
+	  		 EMP_NO_SEQ,
+	  		 DOCUMENT_TYPE,
+	  		 DOCUMENT_NAME,
+	  		 DOCUMENT_SUBMIT_DATE,
+	  		 SANCTNERS,
+	  		 
+	  		 COOPERATORS,
+	  		 REFERRERS,
+	  		 
+	  		 
+	  		
+</select>
+</mapper>

@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ChatRoomVo">
+	<resultMap type="ChatRoomVo" id="roomResultSet">
+		<id property="chatSeq" column="CHAT_ROOM_SEQ"></id>
+		<result property="companyNo" column="COMPANY_NO" />
+		<result property="password" column="ROOM_PWD" />
+		<result property="chatRoomName" column="ROOM_NAME" />
+		<result property="makeUserSeq" column="MAKE_USER_SEQ" />
+		<result property="status" column="ROOM_STATUS" />
+		<result property="makerName" column="MAKE_USER_NAME"/>
+		<result property="userNum" column="CNT"/>
+	</resultMap>
+	
+	<resultMap type="ChatUser" id="userResultSet">
+		<id property="userSeq" column="EMP_NO_SEQ"/>
+		<id property="roomSeq" column="CHAT_ROOM_SEQ" />
+		<result property="status" column="USER_STATUS" />
+		<result property="joinDate" column="JOIN_DATE" />
+		<result property="userNo" column="EMP_NO"/>
+		<result property="userName" column="EMP_NAME_KOR"/>
+		<result property="joinDateStr" column="JOIN_DATE_STR"/>
+	</resultMap>
+	
+	<resultMap type="HistoryVo" id="historyResultSet">
+		<id property="historySeq" column="HISTORY_SEQ"></id>
+		<result property="empSeq" column="EMP_NO_SEQ" />
+		<result property="chatMsg" column="CHAT_MSG" />
+		<result property="msgTime" column="MSG_TIME" />
+		<result property="companyNo" column="COMPANY_NO" />
+		<result property="chatRoomSeq" column="CHAT_ROOM_SEQ" />
+		<result property="empName" column="EMP_NAME_KOR" />
+	</resultMap>
+	
+	<resultMap type="ChatRoomVo" id="roomResultSet2">
+		<id property="chatSeq" column="CHAT_ROOM_SEQ"></id>
+		<result property="companyNo" column="COMPANY_NO" />
+		<result property="password" column="ROOM_PWD" />
+		<result property="chatRoomName" column="ROOM_NAME" />
+		<result property="makeUserSeq" column="MAKE_USER_SEQ" />
+		<result property="status" column="ROOM_STATUS" />
+		<result property="makerName" column="MAKE_USER_NAME"/>
+		<result property="userNum" column="CNT"/>
+		<collection property="userList" javaType="java.util.ArrayList" resultMap="userResultSet" />
+	</resultMap>
+	
+	<insert id="insertChatRoom">
+		INSERT INTO TB_CHAT_ROOM VALUES(CHAT_ROOM_SEQ.NEXTVAL, #{companyNo}, #{chatRoomName}, #{makeUserSeq}, #{password}, 'Y')
+	</insert>
+	
+	<select id="selectLastRoomSeq" resultType="_int">
+		SELECT MAX(CHAT_ROOM_SEQ) FROM TB_CHAT_ROOM
+	</select>	
+	
+	<select id="selectLastRoom" resultMap="roomResultSet">
+		SELECT * FROM TB_CHAT_ROOM WHERE CHAT_ROOM_SEQ = CHAT_ROOM_SEQ.CURRVAL
+	</select>
+	
+	<select id="selectAll" resultMap="roomResultSet">
+		SELECT * FROM TB_CHAT_ROOM
+	</select>
+	
+	<!-- <select id="selectCompanyChatList" resultMap="roomResultSet">
+		SELECT * FROM TB_CHAT_ROOM WHERE COMPANY_NO = #{companyNo} AND ROOM_STATUS = 'Y'
+	</select> -->
+	
+	<!-- <select id="selectCompanyChatList" resultMap="roomResultSet">
+		SELECT E.EMP_NAME_KOR AS MAKE_USER_NAME,
+			   R.CHAT_ROOM_SEQ,
+			   R.COMPANY_NO,
+			   R.ROOM_NAME,
+			   R.MAKE_USER_SEQ,
+			   R.ROOM_PWD,
+			   R.ROOM_STATUS
+		 FROM TB_CHAT_ROOM R
+		 JOIN EMPLOYEE E ON(R.MAKE_USER_SEQ = E.EMP_NO_SEQ)
+		WHERE R.COMPANY_NO = #{companyNo} AND R.ROOM_STATUS = 'Y'
+		
+		SELECT R.CHAT_ROOM_SEQ,
+		       R.COMPANY_NO,
+		       R.ROOM_PWD,
+		       R.ROOM_NAME,
+		       R.MAKE_USER_SEQ,
+		       R.ROOM_STATUS,
+		       U.EMP_NO_SEQ,
+		       U.CHAT_ROOM_SEQ,
+		       U.USER_STATUS,
+		       U.JOIN_DATE,
+		       TO_CHAR(U.JOIN_DATE, 'YYYY.MM.DD HH24:MI:SS') AS JOIN_DATE_STR
+		  FROM TB_CHAT_ROOM R
+          LEFT JOIN TB_JOIN_USER U ON(R.CHAT_ROOM_SEQ = U.CHAT_ROOM_SEQ)
+          WHERE R.CHAT_ROOM_SEQ = #{chatSeq}
+	</select> -->
+	
+	<select id="selectCompanyChatList" resultMap="roomResultSet2">
+   		SELECT E.EMP_NAME_KOR AS MAKE_USER_NAME,
+			   R.CHAT_ROOM_SEQ,
+			   R.COMPANY_NO,
+			   R.ROOM_NAME,
+			   R.MAKE_USER_SEQ,
+			   R.ROOM_PWD,
+			   R.ROOM_STATUS,
+               COUNT(U.EMP_NO_SEQ) AS CNT
+		 FROM TB_CHAT_ROOM R
+		 JOIN EMPLOYEE E ON(R.MAKE_USER_SEQ = E.EMP_NO_SEQ)
+		 LEFT JOIN TB_JOIN_USER U ON(R.CHAT_ROOM_SEQ = U.CHAT_ROOM_SEQ)
+		WHERE R.COMPANY_NO = #{companyNo} AND R.ROOM_STATUS = 'Y' AND U.USER_STATUS = 'Y'
+        GROUP BY E.EMP_NAME_KOR, R.CHAT_ROOM_SEQ, R.COMPANY_NO, R.ROOM_NAME, R.MAKE_USER_SEQ, R.ROOM_PWD, R.ROOM_STATUS
+		</select>
+	
+	<select id="selectJoinUser" parameterType="ChatUser" resultMap="userResultSet">
+		SELECT U.EMP_NO_SEQ,
+		       U.CHAT_ROOM_SEQ,
+		       U.USER_STATUS,
+		       U.JOIN_DATE,
+		       E.EMP_NAME_KOR,
+		       TO_CHAR(U.JOIN_DATE, 'YYYY.MM.DD HH24:MI:SS') AS JOIN_DATE_STR
+		  FROM TB_JOIN_USER U
+		  JOIN EMPLOYEE E ON(U.EMP_NO_SEQ = E.EMP_NO_SEQ) WHERE U.EMP_NO_SEQ = #{userSeq} AND U.CHAT_ROOM_SEQ = #{roomSeq}
+	</select>
+	
+	<insert id="insertJoinUser" parameterType="ChatUser">
+		INSERT INTO TB_JOIN_USER VALUES(#{userSeq}, #{roomSeq}, 'Y', SYSDATE)
+	</insert>
+	
+	<update id="updateJoinUser" parameterType="ChatUser">
+		UPDATE TB_JOIN_USER SET USER_STATUS = 'Y', JOIN_DATE = SYSDATE WHERE CHAT_ROOM_SEQ = #{roomSeq} AND EMP_NO_SEQ = #{userSeq}
+		<!-- UPDATE TB_JOIN_USER SET USER_STATUS = 'Y', JOIN_DATE = #{joinDate} WHERE CHAT_ROOM_SEQ = #{roomSeq} AND EMP_NO_SEQ = #{userSeq} -->
+	</update>
+	
+	<update id="updateOutUser" parameterType="ChatUser">
+		UPDATE TB_JOIN_USER SET USER_STATUS = 'N' WHERE CHAT_ROOM_SEQ = #{roomSeq} AND EMP_NO_SEQ = #{userSeq}
+	</update>
+	
+	<select id="selectOneRoom" parameterType="_int" resultMap="roomResultSet2">
+		SELECT R.CHAT_ROOM_SEQ,
+		       R.COMPANY_NO,
+		       R.ROOM_PWD,
+		       R.ROOM_NAME,
+		       R.MAKE_USER_SEQ,
+		       R.ROOM_STATUS,
+		       U.EMP_NO_SEQ,
+		       U.CHAT_ROOM_SEQ,
+		       U.USER_STATUS,
+		       U.JOIN_DATE,
+		       TO_CHAR(U.JOIN_DATE, 'YYYY.MM.DD HH24:MI:SS') AS JOIN_DATE_STR
+		  FROM TB_CHAT_ROOM R
+          LEFT JOIN TB_JOIN_USER U ON(R.CHAT_ROOM_SEQ = U.CHAT_ROOM_SEQ)
+          WHERE R.CHAT_ROOM_SEQ = #{chatSeq}
+	</select>
+	
+	<insert id="insertChatHistory" parameterType="HistoryVo">
+		INSERT INTO TB_CHAT_HISTORY VALUES(HISTORY_SEQ.NEXTVAL, #{empSeq}, #{chatMsg}, SYSDATE, #{companyNo}, #{chatRoomSeq})
+		<!-- INSERT INTO TB_CHAT_HISTORY VALUES(CHAT_HISTORY_SEQ.NEXTVAL, #{empSeq}, #{chatMsg}, #{msgTime}, #{companyNo}, #{chatRoomSeq}) -->
+	</insert>
+	
+	<select id="selectChatHistory" parameterType="ChatUser" resultMap="historyResultSet">
+	SELECT H.HISTORY_SEQ,
+	       H.EMP_NO_SEQ,
+	       H.CHAT_MSG,
+	       H.MSG_TIME,
+	       H.COMPANY_NO,
+	       H.CHAT_ROOM_SEQ,
+	       E.EMP_NAME_KOR
+	 FROM TB_CHAT_HISTORY H
+	 JOIN EMPLOYEE E ON(H.EMP_NO_SEQ = E.EMP_NO_SEQ)
+	WHERE H.CHAT_ROOM_SEQ = #{roomSeq} AND MSG_TIME <![CDATA[>]]> TO_DATE(#{joinDateStr}, 'YYYY-MM-DD HH24:MI:SS')
+	ORDER BY MSG_TIME ASC
+	</select>
+	<!-- <select id="selectChatHistory" parameterType="ChatUser" resultMap="historyResultSet">
+	SELECT H.HISTORY_SEQ,
+	       H.EMP_NO_SEQ,
+	       H.CHAT_MSG,
+	       H.MSG_TIME,
+	       H.COMPANY_NO,
+	       H.CHAT_ROOM_SEQ,
+	       E.EMP_NO
+	 FROM TB_CHAT_HISTORY H
+	 JOIN EMPLOYEE E ON(H.EMP_NO_SEQ = E.EMP_NO_SEQ)
+	WHERE H.CHAT_ROOM_SEQ = #{roomSeq} AND MSG_TIME <![CDATA[>]]> #{joinDate}
+	</select> -->
+	
+	<select id="selectChatUserCount" parameterType="ChatUser" resultType="_int">
+		SELECT 
+               COUNT(U.EMP_NO_SEQ) AS CNT
+		 FROM TB_CHAT_ROOM R
+		 LEFT JOIN TB_JOIN_USER U ON(R.CHAT_ROOM_SEQ = U.CHAT_ROOM_SEQ)
+		WHERE R.CHAT_ROOM_SEQ = #{roomSeq}  AND R.ROOM_STATUS = 'Y' AND U.USER_STATUS = 'Y'
+	</select>
+	
+	<update id="updateEmptyRoom" parameterType="_int">
+		UPDATE TB_CHAT_ROOM SET ROOM_STATUS = 'N' WHERE CHAT_ROOM_SEQ = #{roomSeq}
+	</update>
+	
+	<select id="selectOneRoomPwd" parameterType="ChatRoomVo" resultMap="roomResultSet2">
+		SELECT R.CHAT_ROOM_SEQ,
+		       R.COMPANY_NO,
+		       R.ROOM_PWD,
+		       R.ROOM_NAME,
+		       R.MAKE_USER_SEQ,
+		       R.ROOM_STATUS,
+		       U.EMP_NO_SEQ,
+		       U.CHAT_ROOM_SEQ,
+		       U.USER_STATUS,
+		       U.JOIN_DATE,
+		       TO_CHAR(U.JOIN_DATE, 'YYYY.MM.DD HH24:MI:SS') AS JOIN_DATE_STR
+		  FROM TB_CHAT_ROOM R
+          LEFT JOIN TB_JOIN_USER U ON(R.CHAT_ROOM_SEQ = U.CHAT_ROOM_SEQ)
+          WHERE R.CHAT_ROOM_SEQ = #{roomSeq} AND ROOM_PWD = #{password}
+	</select>
+	
+</mapper>

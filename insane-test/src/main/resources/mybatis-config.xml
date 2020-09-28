@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-config.dtd">
+ <configuration>
+
+ 	
+ 	<!-- ORACLE NULL 발생시 처리 -->
+ 	<settings>
+ 	     <setting name="cacheEnabled" value="false" />
+ 		 <setting name="jdbcTypeForNull" value="NULL" />
+ 	</settings>
+ 
+
+	 <typeAliases>
+ 		<typeAlias type="com.kh.insane.employee.model.vo.Employee" alias="Employee"/>
+ 		<typeAlias type="com.kh.insane.company.model.vo.CompanyAccount" alias="CompanyAccount"/>
+        <typeAlias type="com.kh.insane.attendance.model.vo.AttendancePolicy" alias="AttendancePolicy"/>
+        <typeAlias type="com.kh.insane.employee.model.vo.ProfileAttachment" alias="ProfileAttachment"/>
+        <typeAlias type="com.kh.insane.employee.model.vo.Location" alias="Location"/>
+        <typeAlias type="com.kh.insane.organization.model.vo.Department" alias="Department"/>
+        <typeAlias type="com.kh.insane.employee.model.vo.Position" alias="Position"/>
+        <typeAlias type="com.kh.insane.employee.model.vo.Rspofc" alias="Rspofc"/>
+        <typeAlias type="com.kh.insane.employee.model.vo.PayStep" alias="PayStep"/>
+        <typeAlias type="com.kh.insane.attendance.model.vo.VacationSetting" alias="VacationSetting"/>
+        <typeAlias type="com.kh.insane.attendance.model.vo.HolidaySetting" alias="HolidaySetting"/>
+        <typeAlias type="com.kh.insane.attendance.model.vo.EmpAttHistory" alias="EmpAttHistory"/>
+        <typeAlias type="com.kh.insane.reward.model.vo.ProvisionSetting" alias="ProvisionSetting"/>
+        <typeAlias type="com.kh.insane.reward.model.vo.DeductionSetting" alias="DeductionSetting"/>
+        <typeAlias type="com.kh.insane.reward.model.vo.SalarySetting" alias="SalarySetting"/>
+        <typeAlias type="com.kh.insane.organization.model.vo.OrganizationChart" alias="OrganizationChart"/>
+        <typeAlias type="com.kh.insane.crtfc.model.vo.CrtfcVo" alias="CrtfcVo"/>
+        <typeAlias type="com.kh.insane.notice.model.vo.NoticeVo" alias="NoticeVo"/>
+		<typeAlias type="com.kh.insane.common.model.vo.Attachment" alias="Attachment"/>
+        <typeAlias type="com.kh.insane.salary.model.vo.Salary" alias="Salary"/>
+        <typeAlias type="com.kh.insane.education.model.vo.Education" alias="Education"/>
+        <typeAlias type="com.kh.insane.approval.model.vo.Document" alias="Document"/>
+		<typeAlias type="com.kh.insane.chat.model.vo.ChatRoomVo" alias="ChatRoomVo"/>
+		<typeAlias type="com.kh.insane.chat.model.vo.ChatUser" alias="ChatUser"/>
+        <typeAlias type="com.kh.insane.chat.model.vo.HistoryVo" alias="HistoryVo"/>
+        <typeAlias type="com.kh.insane.employee.model.vo.FourInsurance" alias="FourInsurance"/>
+        <typeAlias type="com.kh.insane.employee.model.vo.Family" alias="Family"/>
+        <typeAlias type="com.kh.insane.employee.model.vo.AcademicCareer" alias="AcademicCareer"/>
+        <typeAlias type="com.kh.insane.employee.model.vo.Health" alias="Health"/>
+        <typeAlias type="com.kh.insane.employee.model.vo.Career" alias="Career"/>
+        <typeAlias type="com.kh.insane.employee.model.vo.License" alias="License"/>
+        <typeAlias type="com.kh.insane.employee.model.vo.Appointment" alias="Appointment"/>
+        <typeAlias type="com.kh.insane.employee.model.vo.RewardPunish" alias="RewardPunish"/>
+        <typeAlias type="com.kh.insane.employee.model.vo.HRReview" alias="HRReview"/>
+        <typeAlias type="com.kh.insane.employee.model.vo.PayStepHistory" alias="PayStepHistory"/>
+        <typeAlias type="com.kh.insane.employee.model.vo.Military" alias="Military"/>
+        <typeAlias type="com.kh.insane.employee.model.vo.LicenseCompany" alias="LicenseCompany"/>
+        <typeAlias type="com.kh.insane.employee.model.vo.EducationEmployee" alias="EducationEmployee"/>
+        <typeAlias type="com.kh.insane.employee.model.vo.SearchEmployee" alias="SearchEmployee"/>
+        <typeAlias type="com.kh.insane.salary.model.vo.SalaryHistory" alias="SalaryHistory"/>
+        <typeAlias type="com.kh.insane.salary.model.vo.SalaryCode" alias="SalaryCode"/>
+        <typeAlias type="com.kh.insane.salary.model.vo.Deduction" alias="Deduction"/>
+        <typeAlias type="com.kh.insane.salary.model.vo.Provision" alias="Provision"/>
+ 	</typeAliases>
+ 	
+ 	
+ 	<environments default="firstDev">
+		<environment id="firstDev">			
+			<!-- 트렌잭션 매니저는 JDBC와 MANAGED 둘 중 하나를 선택할 수 있음. -->
+			<!-- JDBC는 JDBC가 commit과 rollback의 기능을 직접 사용자가 사용할 수 있게 하는 옵션이다. 수동 commit -->
+			<!-- MANAGED는 사용자가 트랜잭션에 대해 어떠한 영향력도 행사하지 않겠다는 의미이다. 자동 commit -->
+			<transactionManager type="JDBC"/>
+			<dataSource type="POOLED">
+				<!-- 연결에 필요한 정보들을 입력. -->
+				<property name="driver" value="oracle.jdbc.driver.OracleDriver"/>
+				<property name="url" value="jdbc:oracle:thin:@database-1.cmrin7dz6flj.ap-northeast-2.rds.amazonaws.com:1521:orcl"/>
+				<property name="username" value="insane"/>
+				<property name="password" value="kjh30523!"/>
+			</dataSource>
+		</environment>
+	</environments>
+ 	
+ 	<mappers>
+ 		<mapper resource="mappers/employee-mapper.xml"/>
+ 		<mapper resource="mappers/attendance-mapper.xml"/>
+ 		<mapper resource="mappers/company-mapper.xml"/>
+ 		<mapper resource="mappers/basicCode-mapper.xml"/>
+		<mapper resource="mappers/reward-mapper.xml"/>
+		<mapper resource="mappers/crtfc-mapper.xml"/>
+		<mapper resource="mappers/organization-mapper.xml"/>
+		<mapper resource="mappers/notice-mapper.xml"/>
+		<mapper resource="mappers/connector-mapper.xml"/>
+		<mapper resource="mappers/salary-mapper.xml"/>
+		<mapper resource="mappers/education-mapper.xml"/>
+		<mapper resource="mappers/approval-mapper.xml"/>
+		<mapper resource="mappers/chat-mapper.xml"/>
+		<mapper resource="mappers/deduction-mapper.xml"/>
+		<mapper resource="mappers/provision-mapper.xml"/>
+ 	</mappers>
+ 
+ </configuration>

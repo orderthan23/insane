@@ -1,0 +1,691 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="companyAccount">
+	<resultMap type="com.kh.insane.company.model.vo.CompanyAccount" id="companyAccountResultSet">
+
+		<id property="companyNo" column="COMPANY_NO" />
+		<result property="companyName" column="COMPANY_NAME" />
+		<result property="cadminId" column="C_ADMIN_ID" />
+		<result property="cadminPwd" column="C_ADMIN_PWD" />
+		<result property="companyStatus" column="COMPANY_STATUS" />
+		
+	</resultMap>
+	
+	<resultMap type="com.kh.insane.employee.model.vo.Employee" id="employeeResultSet">
+
+		<id property="empNoSeq" column="EMP_NO_SEQ" />
+		<result property="empNo" column="EMP_NO" />
+		<result property="companyNo" column="COMPANY_NO" />
+		<result property="empPwd" column="EMP_PWD" />
+		<result property="empNameKor" column="EMP_NAME_KOR" />
+		<result property="empNameEng" column="EMP_NAME_ENG" />
+		<result property="enrollDate" column="ENROLL_DATE" />
+		<result property="empResidentNo" column="EMP_RESIDENT_NO" />
+		<result property="empLocationCode" column="EMP_LOCATION_CODE" />
+		<result property="empDeptCode" column="EMP_DEPT_CDOE" />
+		<result property="empPositionCode" column="EMP_POSITION_CODE" />
+		<result property="empRspofcCode" column="EMP_RSPOFC_CODE" />
+		<result property="payStepCode" column="EMP_PAY_STEP_CODE" />
+		<result property="empAddress" column="EMP_ADDRESS" />
+		<result property="retireDate" column="RETIRE_DATE" />
+		<result property="empBirthday" column="EMP_BIRTHDAY" />
+		<result property="lunarSor" column="LUNAR_SOR" />
+		<result property="gender" column="GENDER" />
+		<result property="empHomeTel" column="EMP_HOME_TEL" />
+		<result property="empPhone" column="EMP_PHONE" />
+		<result property="empOfficeTel" column="EMP_OFFICE_TEL" />
+		<result property="empForm" column="EMP_FORM" />
+		<result property="empOccupation" column="EMP_OCCUPATION" />
+		<result property="empSpot" column="EMP_SPOT" />
+		<result property="empProject" column="EMP_PROJECT" />
+		<result property="empStatus" column="EMP_STATUS" />
+	</resultMap>
+		
+	<resultMap type="com.kh.insane.company.model.vo.Upjong" id="upjongResultMap">
+		<result property="years" column="YEAR"/>
+		<result property="upjongCode" column="JOBTYPE_CODE"/>
+		<result property="bigSep" column="BIG_SEP"/>
+		<result property="mediumSep" column="MEDIUM_SEP"/>
+		<result property="smallSep" column="SMALL_SEP"/>
+		<result property="microSep" column="MICRO_SEP"/>
+	</resultMap>
+	
+	<resultMap type="com.kh.insane.company.model.vo.CompanyInfo" id="basicInfoMap">
+		<id property ="companyNo" column="COMPANY_NO"/>
+		<result property= "hrYear" column= "HR_YEAR"/>
+		<result property= "corpPers" column= "CORP_PERS"/>
+		<result property= "businessLicenseNo" column= "BUSINESS_LICENSE_NO"/>
+		<result property= "corparateRegistNo" column= "CORPORATE_REGISTRATION_NO"/>
+		<result property= "representName" column= "REPRESENT_NAME"/>
+		<result property= "representResidentNo" column= "REPRESENT_RESIDENT_NO"/>
+		<result property= "representLocalForegin" column= "REPRESENT_LOCAL_FOREIGN"/>
+		<result property= "businessAddress" column= "BUSINESS_ADDRESS"/>
+		<result property= "businessTel" column= "BUSINESS_TEL"/>
+		<result property= "businessFax" column= "BUSINESS_FAX"/>
+		<result property= "businessTypeCode" column= "BUSINESS_TYPE_CODE"/>
+		<result property= "businessOpenDate" column= "BUSINESS_OPEN_DATE"/>
+		<result property= "businessEndDate" column= "BUSINESS_CLOSE_DATE"/>
+		<result property= "companyStatus" column= "COMPANY_STATUS"/>
+		<result property= "beobJeongCode" column= "BEOPJEONG_CODE"/>
+	</resultMap>
+	
+	<resultMap type="com.kh.insane.company.model.vo.CommonCode" id="commonCodeMap">
+		<id property ="commonCodeSeq" column="COMMON_CODE_SEQ"/>
+		<result property= "relatedColumn" column= "RELATED_COLUMN"/>
+		<result property= "commonCode" column= "COMMON_CODE"/>
+		<result property= "codeName" column= "CODE_NAME"/>
+		<result property= "usageStatus" column= "USAGE_STATUS"/>
+	</resultMap>
+	
+	<resultMap type="com.kh.insane.company.model.vo.CompanyInfo" id="additionalInfoMap">
+		<result property= "corpType" column= "CORP_TYPE"/>
+		<result property= "smallBusinessYn" column= "SMALL_BUSINESS_YN"/>
+		<result property= "nonSmallType" column= "NON_SMALL_TYPE"/>
+		<result property= "companyType" column= "COMPANY_TYPE"/>
+		<result property= "operateStartDate" column= "OPERATE_START_DATE"/>
+		<result property= "headOfficeAddress" column= "HEAD_OFFICE_ADDRESS"/>
+		<result property= "taxationType" column= "TAXATION_TYPE"/>
+		<result property= "incomeClassification" column= "INCOME_CLASSIFICATION"/>
+		<result property= "representType" column= "REPRESENT_TYPE"/>
+		<result property= "jointOfficeYn" column= "JOINT_OFFICE_YN"/>
+		<result property= "mainResidentNo" column= "MAIN_RESIDENT_NO"/>
+		<result property= "mainResidentType" column= "MAIN_RESIDENT_TYPE"/>
+		<result property= "companyLogoImgPath" column= "COMPANY_LOGO_IMG_PATH"/>
+	
+	</resultMap>
+	
+	<resultMap type="com.kh.insane.organization.model.vo.Department" id="deptPopMap">
+		<id property= "deptCodeSeq" column= "DEPT_CODE_SEQ"/>
+		<result property= "deptName" column= "DEPT_NAME"/>
+	
+	</resultMap>
+	
+	<resultMap type="com.kh.insane.company.model.vo.CompanyInfo" id="managerInfoMap">
+		<result property= "adminName" column= "ADMIN_NAME"/>
+		<result property= "adminDepartment" column= "ADMIN_DEPARTMENT"/>
+		<result property= "adminPhone" column= "ADMIN_PHONE"/>
+		<result property= "adminEmail" column= "ADMIN_EMAIL"/>
+		<result property= "adminAuthorizedEmail" column= "ADMIN_AUTHORIZED_EMAIL"/>
+	</resultMap>
+	
+	<resultMap type="com.kh.insane.company.model.vo.CompanyInfo" id="freeCompanyInfoMap">
+		<result property= "companyName" column="COMPANY_NAME"/>
+		<result property= "businessBigType" column="BIG_SEP"/>
+		<result property="companyLogoImgPath" column="COMPANY_LOGO_IMG_PATH"/>
+	</resultMap>
+	
+	<resultMap type="HashMap" id="authMap">
+		<result property= "authCode" column= "AUTH_CODE"/>
+		<result property= "authName" column= "AUTH_NAME"/>
+	</resultMap>
+	
+	
+	<resultMap type="HashMap" id="customAuthMap">
+		<result property= "authorityCodeSeq" column= "AUTHORITY_CODE_SEQ"/>
+		<result property= "authorityTypeName" column= "AUTHORITY_TYPE_NAME"/>
+		<result property= "authCode" column= "AUTH_CODE"/>
+		<result property= "companyNo" column= "COMPANY_NO"/>
+	</resultMap>
+	<select id="countCompany" resultType="_int">
+		SELECT  /*+ 고종현 ::com.kh.insane.company.model.dao.CompanyDao.countCompany*/
+			  COUNT(*)
+		FROM COMPANY_TB
+	</select>
+	
+	<select id="findLastNumber" resultType="_int">
+		SELECT /*+ 고종현:: com.kh.insane.company.model.dao.CompanyDao.findLastNumber*/
+		       MAX(COMPANY_NO) 
+		  FROM COMPANY_TB
+	</select>
+	
+	<insert id="insertCompany" parameterType="CompanyAccount">
+		INSERT /*+ 고종현 ::com.kh.insane.company.model.dao.CompanyDao.insertCompany*/
+		INTO COMPANY_TB
+		(
+		COMPANY_NO,
+		COMPANY_NAME,
+		C_ADMIN_ID,
+		C_ADMIN_PWD
+		)	
+		VALUES
+		(
+		 #{companyNo},
+		 #{companyName},
+		 #{cadminId},
+		 #{cadminPwd}
+		 )
+	</insert>
+	
+	<select id="countAccount" resultType="_int" parameterType="_int">
+		SELECT  /*+ 고종현 ::com.kh.insane.company.model.dao.CompanyDao.countAccount*/
+			   COUNT(*)
+		  FROM EMPLOYEE
+		 WHERE COMPANY_NO = #{companyNo}
+		  
+	</select>
+	
+	<select id="findLastAccountNumber" resultType="_int" parameterType="_int">
+		SELECT /*+ 고종현:: com.kh.insane.company.model.dao.CompanyDao.findLastAccountNumber*/
+		       MAX(EMP_NO) 
+		  FROM EMPLOYEE
+		 WHERE COMPANY_NO = #{companyNo} 
+	
+	</select>
+	
+	<insert id="insertAccount" parameterType="Employee">
+		INSERT /*+ 고종현 ::com.kh.insane.company.model.dao.CompanyDao.insertAccount*/
+		  INTO EMPLOYEE(
+						EMP_NO_SEQ,
+						EMP_NO,
+						COMPANY_NO,
+						EMP_PWD,
+						EMP_STATUS
+		)	
+		VALUES(
+		 		EMP_NO_SEQ.NEXTVAL,
+		 		#{empNo},
+				#{companyNo},
+		 		#{empPwd},
+		 		'N'
+		 	  )
+	</insert>
+	
+	<select id="showAllAccountForMyCompany" resultMap="employeeResultSet" parameterType="_int">
+		SELECT /*+ 고종현 ::com.kh.insane.company.model.dao.CompanyDao.showAllAccountForMyCompany*/
+			   *			       
+		  FROM EMPLOYEE
+		 WHERE COMPANY_NO = #{companyNo} 
+		 ORDER BY CASE WHEN EMP_STATUS ='N' THEN 0 
+		 			   ELSE 1 END,
+		 			   EMP_NO_SEQ
+		 		
+	</select>
+	
+	<select id="searchUpjongList" resultMap="upjongResultMap" parameterType="java.lang.String">
+		SELECT /*+ 고종현 ::com.kh.insane.company.model.dao.CompanyDao.selectAllUpjongList*/
+		       TO_CHAR(YEARS, 'YYYY') AS YEAR,
+		       JOBTYPE_CODE,
+		       BIG_SEP,
+		       MEDIUM_SEP,
+		       SMALL_SEP,
+		       MICRO_SEP
+		  FROM INDUSTRY 
+		 WHERE BIG_SEP LIKE '%' || #{keyword} || '%'
+		    OR MEDIUM_SEP LIKE '%' || #{keyword} || '%'  
+		    OR SMALL_SEP LIKE '%' || #{keyword} || '%'    
+		    OR MICRO_SEP LIKE '%' || #{keyword} || '%'      
+	</select>
+	
+	<insert id="insertCompanyInfo" parameterType ="com.kh.insane.company.model.vo.CompanyInfo">
+		INSERT /*+ 고종현 ::com.kh.insane.company.model.dao.CompanyDao.insertCompanyInfo*/
+	      INTO COMPANY_INFO(
+	                         COMPANY_NO,
+	                         HR_YEAR,
+	                         CORP_PERS,
+	                         BUSINESS_LICENSE_NO,
+	                         CORPORATE_REGISTRATION_NO,
+	                         REPRESENT_NAME,
+	                         REPRESENT_RESIDENT_NO,
+	                         REPRESENT_LOCAL_FOREIGN,
+	                         BUSINESS_ADDRESS,
+	                         BEOPJEONG_CODE,
+	                         BUSINESS_TEL,
+	                         BUSINESS_FAX,
+	                         BUSINESS_TYPE_CODE,
+	                         BUSINESS_OPEN_DATE,
+	                         BUSINESS_CLOSE_DATE,
+	                         COMPANY_STATUS
+	      				   )
+	    VALUES (
+	    		#{companyNo},
+	    		#{hrYear},
+	    		#{corpPers},
+	    		#{businessLicenseNo},
+	    		#{corparateRegistNo},
+	    		#{representName},
+	    		#{representResidentNo},
+	    		#{representLocalForegin},
+	    		#{businessAddress},
+	    		#{beobJeongCode},
+	    		#{businessTel},
+	    		#{businessFax},
+	    		#{businessTypeCode},
+	    		#{businessOpenDate},
+	    		#{businessEndDate},
+	    		#{companyStatus}
+	    		)
+	</insert>
+	
+	<select id="checkStatus" resultType="string" parameterType="_int">
+			SELECT /*+ 고종현 ::com.kh.insane.company.model.dao.CompanyDao.checkStatus*/
+			       COMPANY_STATUS
+			  FROM COMPANY_INFO
+			 WHERE COMPANY_NO = #{companyNo}       
+	</select>
+	
+	<select id="loadBasicInfo" resultMap = "basicInfoMap" parameterType="_int">
+			SELECT /*+ 고종현 ::com.kh.insane.company.model.dao.CompanyDao.loadBasicInfo*/
+			       COMPANY_NO,
+	               HR_YEAR,
+	               CORP_PERS,
+	               BUSINESS_LICENSE_NO,
+	               CORPORATE_REGISTRATION_NO,
+	               REPRESENT_NAME,
+	               REPRESENT_RESIDENT_NO,
+	               REPRESENT_LOCAL_FOREIGN,
+	               BUSINESS_ADDRESS,
+	               BEOPJEONG_CODE,
+	               BUSINESS_TEL,
+	               BUSINESS_FAX,
+	               BUSINESS_TYPE_CODE,
+	               BUSINESS_OPEN_DATE,
+	               BUSINESS_CLOSE_DATE,
+	               COMPANY_STATUS
+	         FROM  COMPANY_INFO
+	        WHERE  COMPANY_NO = #{companyNo}       
+	</select>
+	
+	<update id="updateBasicInfo" parameterType = "com.kh.insane.company.model.vo.CompanyInfo">
+		UPDATE /*+ 고종현 ::com.kh.insane.company.model.dao.CompanyDao.updateBasicInfo*/
+		  	   COMPANY_INFO
+		   SET 
+	           HR_YEAR = #{hrYear},
+	           CORP_PERS = #{corpPers},
+	           BUSINESS_LICENSE_NO = #{businessLicenseNo},
+	           CORPORATE_REGISTRATION_NO = #{corparateRegistNo} ,
+	           REPRESENT_NAME = #{representName},
+	           REPRESENT_RESIDENT_NO = #{representResidentNo},
+	           REPRESENT_LOCAL_FOREIGN = #{representLocalForegin},
+	           BUSINESS_ADDRESS = #{businessAddress},
+	           BEOPJEONG_CODE = #{beobJeongCode},
+	           BUSINESS_TEL = #{businessTel},
+	           BUSINESS_FAX = #{businessFax},
+	           BUSINESS_TYPE_CODE = #{businessTypeCode},
+	           BUSINESS_OPEN_DATE = #{businessOpenDate},
+	           BUSINESS_CLOSE_DATE = #{businessEndDate}
+	     WHERE COMPANY_NO = #{companyNo}
+	    	
+	    		
+	</update>
+	
+	<select id="selectAllList" parameterType="Employee" resultMap="companyAccountResultSet">
+		SELECT 
+		       COMPANY_NO
+		     , COMPANY_NAME
+		  FROM COMPANY_TB
+		  ORDER BY COMPANY_NO
+	</select>
+	
+	<select id="selectLoginUser" resultMap="companyAccountResultSet"
+		parameterType="CompanyAccount">
+		SELECT /*+ 정상현 ::com.kh.insane.company.model.dao.CompanyDaoImpl.selectLoginUser 0904 고종현에 의해 수정*/
+			   CT.*,
+			   CI.COMPANY_STATUS	
+		FROM COMPANY_TB CT
+		LEFT JOIN COMPANY_INFO CI ON(CT.COMPANY_NO = CI.COMPANY_NO)
+		WHERE C_ADMIN_ID = #{empNo}
+	</select>
+	
+	<select id="selectPwd" resultType="java.lang.String"
+		parameterType="java.lang.String">
+		SELECT C_ADMIN_PWD /*+ 정상현 ::com.kh.insane.company.model.dao.CompanyDaoImpl.selectEncPassword*/
+		FROM COMPANY_TB
+		WHERE C_ADMIN_ID = #{empNo}
+	</select>
+	
+
+	<select id="selectCommonCodes" resultMap="commonCodeMap" parameterType="java.lang.String">
+		SELECT /*+ 고종현 ::com.kh.insane.company.model.dao.CompanyDao.updateBasicInfo*/
+			   COMMON_CODE_SEQ,
+			   RELATED_COLUMN,
+			   COMMON_CODE,
+			   CODE_NAME,
+			   USAGE_STATUS
+		  FROM COMMON_CODE
+		 WHERE RELATED_COLUMN = #{column}
+		   AND USAGE_STATUS = 'Y' 	   
+	</select>
+	
+	<update id="updateAdditionalInfo" parameterType ="com.kh.insane.company.model.vo.CompanyInfo">
+		 UPDATE /*+ 고종현 ::com.kh.insane.company.model.dao.CompanyDao.insertAdditionalInfo*/
+		   	    COMPANY_INFO
+		   	SET   
+		   		CORP_TYPE = #{corpType},
+				SMALL_BUSINESS_YN = #{smallBusinessYn},
+				NON_SMALL_TYPE = #{nonSmallType},
+				COMPANY_TYPE = #{companyType},
+				OPERATE_START_DATE = #{operateStartDate},
+				OPERATE_END_DATE = #{operateEndDate},
+				HEAD_OFFICE_ADDRESS = #{headOfficeAddress},
+				TAXATION_TYPE = #{taxationType},
+				INCOME_CLASSIFICATION = #{incomeClassification},
+				REPRESENT_TYPE = #{representType},
+				JOINT_OFFICE_YN = #{jointOfficeYn},
+				MAIN_RESIDENT_NO = #{mainResidentNo},
+				MAIN_RESIDENT_TYPE = #{mainResidentType},
+				COMPANY_LOGO_IMG_PATH = #{companyLogoImgPath}
+				
+		 WHERE  COMPANY_NO = #{companyNo}			
+	</update>
+		
+	<select id="loadAdditionalInfo" resultMap="additionalInfoMap" parameterType ="_int">
+		SELECT /*+ 고종현 ::com.kh.insane.company.model.dao.CompanyDao.loadAdditionalInfo*/
+			   CORP_TYPE,
+			   SMALL_BUSINESS_YN,
+			   NON_SMALL_TYPE,
+			   COMPANY_TYPE,
+			   OPERATE_START_DATE,
+			   OPERATE_END_DATE,
+			   HEAD_OFFICE_ADDRESS,
+			   TAXATION_TYPE,
+			   INCOME_CLASSIFICATION,
+			   REPRESENT_TYPE,
+			   JOINT_OFFICE_YN,
+			   MAIN_RESIDENT_NO,
+			   MAIN_RESIDENT_TYPE,
+			   COMPANY_LOGO_IMG_PATH
+		 FROM  COMPANY_INFO
+		WHERE  COMPANY_NO = #{companyNo}   	   		
+	</select>	
+	
+	<select id="loadAllDeptList" resultMap ="deptPopMap" parameterType = "_int">
+	 	SELECT  /*+ 고종현 ::com.kh.insane.company.model.dao.CompanyDao.loadAllDeptList*/
+	 	 		DEPT_CODE_SEQ,
+	 	 		DEPT_NAME
+	 	  FROM  DEPARTMENT
+	 	 WHERE  COMPANY_NO =  #{companyNo}
+	 	   AND  USAGE_STATUS = 'Y'  		
+	</select>
+	
+	<update id="updateManagerInfo" parameterType ="com.kh.insane.company.model.vo.CompanyInfo">
+		UPDATE /*+ 고종현 ::com.kh.insane.company.model.dao.CompanyDao.updateManagerInfo*/
+			   COMPANY_INFO
+		   SET ADMIN_NAME = #{adminName},
+		       ADMIN_DEPARTMENT = #{adminDepartment},
+		       ADMIN_PHONE = #{adminPhone},
+		       ADMIN_EMAIL = #{adminEmail},
+		       ADMIN_AUTHORIZED_EMAIL = #{adminAuthorizedEmail}	   	
+		 WHERE COMPANY_NO = #{companyNo}
+	</update>
+	
+	<select id="loadManagerInfo" resultMap="managerInfoMap" parameterType="_int">
+		SELECT /*+ 고종현 ::com.kh.insane.company.model.dao.CompanyDao.loadManagerInfo*/
+				ADMIN_NAME,
+				ADMIN_DEPARTMENT,
+				ADMIN_PHONE,
+				ADMIN_EMAIL,
+				ADMIN_AUTHORIZED_EMAIL
+		  FROM  COMPANY_INFO
+		 WHERE  COMPANY_NO = #{companyNo} 		
+	</select>
+	
+	<select id="needBeginningPwd" resultType="_int" parameterType="_int">
+		SELECT /*+ 고종현 ::com.kh.insane.company.model.dao.CompanyDao.needBeginningPwd*/
+			   COUNT(START_PWD)
+		  FROM COMPANY_INFO
+		 WHERE COMPANY_NO = #{companyNo} 	   	
+	</select>
+	
+	<update id="updateStartPassword" parameterType="HashMap">
+		 UPDATE /*+ 고종현:: com.kh.insane.company.model.dao.CompanyDao.updateStartPassword*/
+  	        COMPANY_INFO
+  	    SET START_PWD = #{password}
+  	  WHERE COMPANY_NO = #{companyNo}     
+	</update>
+	
+	<select id="loadStartPwd" parameterType="_int" resultType="java.lang.String">
+		SELECT /*+ 고종현 ::com.kh.insane.company.model.dao.CompanyDao.loadStartPwd*/
+			   START_PWD
+		  FROM COMPANY_INFO
+		 WHERE COMPANY_NO = #{companyNo} 	   	
+	</select>
+
+	<update id="updateAccountStatus" parameterType="HashMap">
+	   UPDATE /*+ 고종현 ::com.kh.insane.company.model.dao.CompanyDao.updateAccountStatus*/
+			  EMPLOYEE
+		  SET EMP_STATUS = #{status}
+		WHERE COMPANY_NO = #{companyNo}
+		  AND EMP_NO = #{account}  
+	</update>
+	
+	<update id="updateSystemPwd" parameterType = "CompanyAccount">
+	  UPDATE /*+ 고종현 ::com.kh.insane.company.model.dao.CompanyDao.updateAccountStatus*/
+	  		 COMPANY_TB
+	  	 SET C_ADMIN_PWD = #{cadminPwd}
+	   WHERE COMPANY_NO = #{companyNo}  	
+	     AND C_ADMIN_ID = #{cadminId}
+	</update>
+
+	<!-- 로그인한 관리자의 나머지 정보 가져오기 -->
+	<select id="selectLoginMangerInfo" parameterType ="com.kh.insane.company.model.vo.CompanyInfo"
+	resultMap="companyAccountResultSet" >
+		SELECT CT.*,
+			   CI.COMPANY_STATUS	
+		FROM COMPANY_TB CT
+		LEFT JOIN COMPANY_INFO CI ON(CT.COMPANY_NO = CI.COMPANY_NO)
+		WHERE C_ADMIN_ID = #{cadminId}
+	  	  AND C_ADMIN_PWD = #{cadminPwd}
+	</select>
+
+
+	<!-- 회사 이름 검색 -->
+	<select id="searchNameList" resultMap="companyAccountResultSet"
+		parameterType="CompanyAccount">
+		SELECT  /*+ 정상현 ::com.kh.insane.company.model.dao.CompanyDaoImpl.searchNameList*/
+		       COMPANY_NAME
+		     , COMPANY_NO
+		  FROM COMPANY_TB
+		 WHERE COMPANY_NAME LIKE '%${value}%' 
+		 
+	</select>
+	
+	<!-- 전체 회사 리스트 수 조회 -->
+	<select id="selectAllListCount" resultType="_int">
+		SELECT COUNT(*) FROM COMPANY_TB
+	</select>
+	
+	
+	
+	<select id="loadMyCompanyInfo" parameterType="Employee" resultMap="freeCompanyInfoMap">
+	 SELECT /*+ 고종현 ::com.kh.insane.company.model.dao.CompanyDaoImpl.loadMyCompanyInfo*/
+           TB.COMPANY_NAME,
+           IND.BIG_SEP,
+           CI.COMPANY_LOGO_IMG_PATH
+      FROM COMPANY_INFO CI
+      JOIN INDUSTRY IND ON (CI.BUSINESS_TYPE_CODE = IND.JOBTYPE_CODE)
+      JOIN COMPANY_TB TB ON(CI.COMPANY_NO = TB.COMPANY_NO)
+      WHERE CI.COMPANY_NO = #{companyNo}
+	
+	</select>
+	
+	<select id="loadAllAuth" resultMap="authMap">
+		SELECT /*+ 고종현 ::com.kh.insane.company.model.dao.CompanyDaoImpl.loadMyCompanyInfo*/
+				*
+		  FROM  AUTHORITY
+		 ORDER BY AUTH_LEVEL 
+		  		
+	</select>
+	
+	<select id="loadUsefulDeptAuth" resultType="java.lang.String" parameterType="_int">
+		SELECT  /*+ 고종현 ::com.kh.insane.company.model.dao.CompanyDaoImpl.loadMyCompanyInfo*/
+			  	AUTH_CODE
+		  FROM  AUTHORITY_DEPT
+		 WHERE  DEPT_CODE = #{seq} 	  
+		
+	</select>	
+	
+	<select id="checkDeptAuth" resultType="_int" parameterType="_int">
+		SELECT  /*+ 고종현 ::com.kh.insane.company.model.dao.CompanyDaoImpl.loadMyCompanyInfo*/
+		        COUNT(*)
+		  FROM  AUTHORITY_DEPT
+		 WHERE  DEPT_CODE = #{seq}      
+		
+	</select>
+	
+	<insert id="insertDeptAuth" parameterType="HashMap">
+		INSERT /*+ 고종현 ::com.kh.insane.company.model.dao.CompanyDaoImpl.insertDeptAuth*/
+		  	   
+		  INTO AUTHORITY_DEPT
+		  	   (
+		  	   	AUTHORITY_DEPT_SEQ,
+		  	   	DEPT_CODE,
+		  	   	AUTH_CODE,
+		  	   	COMPANY_NO
+		  	   )
+		
+		 VALUES(
+				AUTHORITY_DEPT_SEQ.NEXTVAL,
+				#{seq},
+				#{authCode},
+				#{companyNo}		 
+		 	   )
+	</insert>
+	
+	
+	<update id="updateDeptAuth" parameterType="HashMap">
+		UPDATE /*+ 고종현 ::com.kh.insane.company.model.dao.CompanyDaoImpl.updateDeptAuth*/
+			   AUTHORITY_DEPT
+		   SET AUTH_CODE = #{authCode}
+		   	  
+		 WHERE COMPANY_NO = #{companyNo}
+		   AND DEPT_CODE = #{seq} 	  	   
+	</update>
+	
+	<update id="updateEmpAuth" parameterType="HashMap">
+		UPDATE /*+ 고종현 ::com.kh.insane.company.model.dao.CompanyDaoImpl.loadMyCompanyInfo*/
+			   EMP_AUTH
+		   SET AUTH_CODE = #{authCode}
+		   	  
+		 WHERE COMPANY_NO = #{companyNo}
+		   AND EMP_NO_SEQ = #{seq} 	  	   
+	</update>
+	
+	<update id="updateCustomAuth" parameterType="HashMap">
+			UPDATE /*+ 고종현 ::com.kh.insane.company.model.dao.CompanyDaoImpl.loadMyCompanyInfo*/
+			   AUTHORY_TYPE
+		   SET AUTH_CODE = #{authCode}
+		   	  
+		 WHERE COMPANY_NO = #{companyNo}
+		   AND AUTHORITY_CODE_SEQ = #{seq} 	  	   
+	
+	</update>
+	
+	
+	
+	
+	<select id="loadUsefulEmpAuth" parameterType="_int" resultType="java.lang.String">
+			SELECT  /*+ 고종현 ::com.kh.insane.company.model.dao.CompanyDaoImpl.loadMyCompanyInfo*/
+			  	AUTH_CODE
+		  FROM  EMP_AUTH
+		 WHERE  EMP_NO_SEQ = #{seq} 	  	
+	</select>
+	
+	<select id="checkEmpAuth" parameterType="_int" resultType="_int">
+			SELECT  /*+ 고종현 ::com.kh.insane.company.model.dao.CompanyDaoImpl.loadMyCompanyInfo*/
+		        COUNT(*)
+		  FROM  EMP_AUTH
+		 WHERE  EMP_NO_SEQ = #{seq}       
+	</select>
+	
+	<insert id="insertEmpAuth" parameterType="HashMap">
+		INSERT /*+ 고종현 ::com.kh.insane.company.model.dao.CompanyDaoImpl.loadMyCompanyInfo*/
+		  	   
+		  INTO EMP_AUTH
+		  	   (
+		  	   	EMP_AUTH_SEQ,
+		  	   	EMP_NO_SEQ,
+		  	   	AUTH_CODE,
+		  	   	COMPANY_NO
+		  	   )
+		
+		 VALUES(
+				EMP_AUTH_SEQ.NEXTVAL,
+				#{seq},
+				#{authCode},
+				#{companyNo}		 
+		 	   )
+	</insert>
+	
+	
+	
+	
+	<select id="loadMyDeptAuth" parameterType="_int" resultType="java.lang.String">
+		SELECT /*+ 고종현 ::com.kh.insane.company.model.dao.CompanyDaoImpl.loadMyDeptAuth*/
+		       AUTH_CODE
+		  FROM AUTHORITY_DEPT
+		 WHERE DEPT_CODE = #{empDeptCode}      
+	</select>
+	
+	
+	<select id="loadMyEmpAuth" parameterType="_int" resultType="java.lang.String">
+		SELECT /*+ 고종현 ::com.kh.insane.company.model.dao.CompanyDaoImpl.loadMyEmpAuth*/
+		       AUTH_CODE
+		  FROM EMP_AUTH
+		 WHERE EMP_NO_SEQ = #{empNoSeq}      
+	</select>
+	
+	
+	
+	<select id="showAllCustomAuthName" parameterType="_int" resultMap="customAuthMap">
+		SELECT /*+ 고종현 ::com.kh.insane.company.model.dao.CompanyDaoImpl.showAllCustomAuthName*/
+		       AUTHORITY_CODE_SEQ,
+		       AUTHORITY_TYPE_NAME,
+		       AUTH_CODE,
+		       COMPANY_NO
+	      FROM AUTHORY_TYPE
+	     WHERE COMPANY_NO = #{companyNo}
+	</select>
+	
+	
+	<select id="duplicateCheck" parameterType="HashMap" resultType="_int">
+		SELECT /*+ 고종현 ::com.kh.insane.company.model.dao.CompanyDaoImpl.loadMyCompanyInfo*/
+				COUNT(*)
+		  FROM  AUTHORY_TYPE
+		 WHERE  COMPANY_NO = #{companyNo} 
+		   AND  AUTHORITY_TYPE_NAME = #{name}   		
+	
+	</select>
+	
+	<insert id="insertCustomAuth" parameterType="HashMap">
+		INSERT /*+ 고종현 ::com.kh.insane.company.model.dao.CompanyDaoImpl.loadMyCompanyInfo*/
+		  	   
+		  INTO AUTHORY_TYPE
+		  	   (
+		  	   	AUTHORITY_CODE_SEQ,
+		  	   	AUTHORITY_TYPE_NAME,
+		  	   	AUTH_CODE,
+		  	   	COMPANY_NO
+		  	   )
+		
+		 VALUES(
+				AUTHORITY_CODE_SEQ.NEXTVAL,
+				#{name},
+				NULL,
+				#{companyNo}		 
+		 	   )
+	
+	</insert>
+	
+	<select id="loadUsefulCustomAuth" parameterType="_int" resultType="java.lang.String">
+		SELECT  /*+ 고종현 ::com.kh.insane.company.model.dao.CompanyDaoImpl.loadMyCompanyInfo*/
+			  	AUTH_CODE
+		  FROM  AUTHORY_TYPE
+		 WHERE  AUTHORITY_CODE_SEQ = #{seq} 	  		
+	
+	</select>
+	
+	
+	
+	
+	
+	<delete id="deleteCustomCode" parameterType="_int">
+		DELETE /*+ 고종현 ::com.kh.insane.company.model.dao.CompanyDaoImpl.loadMyCompanyInfo*/
+			   AUTHORY_TYPE
+	     WHERE AUTHORITY_CODE_SEQ = #{customNumber}	  
+	</delete>
+	
+	
+	
+</mapper>

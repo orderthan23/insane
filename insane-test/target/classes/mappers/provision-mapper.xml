@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="Provision">
+	<resultMap type="com.kh.insane.salary.model.vo.Provision"
+		id="provisionResultSet">
+		<id property="provisionSeq" column="PROVISION_SEQ" />
+		<result property="provisionName" column="PROVISION_NAME" />
+		<result property="taxYn" column="TAX_YN" />
+		<result property="provisionType" column="PROVISION_TYPE" />
+		<result property="provisionLimit" column="PROVISION_LIMIT" />
+		<result property="npnYn" column="NPN_YN" />
+		<result property="hlthinsYn" column="HLTHINS_YN" />
+		<result property="empInsuranceYn" column="EMP_INSURANCE_YN" />
+		<result property="incomeTaxYn" column="INCOME_TAX_YN" />
+		<result property="usageStatus" column="USAGE_STATUS" />
+		<result property="companyNo" column="COMPANY_NO" />
+		<!-- 위는 PROVISION 테이블 아래는 PROVISION_HISTORY 테이블 -->
+		<result property="provisionHistorySeq"
+			column="PROVISION_HISTORY_SEQ" />
+		<result property="empNoSeq" column="EMP_NO_SEQ" />
+		<result property="amount" column="AMOUNT" />
+		<result property="payDate" column="PAY_DATE" />
+	</resultMap>
+
+	<resultMap type="com.kh.insane.salary.model.vo.Provision"
+		id="provisionResult">
+		<id property="provisionSeq" column="PROVISION_SEQ" />
+		<result property="provisionName" column="PROVISION_NAME" />
+		<result property="taxYn" column="TAX_YN" />
+		<result property="provisionType" column="PROVISION_TYPE" />
+		<result property="provisionLimit" column="PROVISION_LIMIT" />
+		<result property="npnYn" column="NPN_YN" />
+		<result property="hlthinsYn" column="HLTHINS_YN" />
+		<result property="empInsuranceYn" column="EMP_INSURANCE_YN" />
+		<result property="incomeTaxYn" column="INCOME_TAX_YN" />
+		<result property="usageStatus" column="USAGE_STATUS" />
+		<result property="companyNo" column="COMPANY_NO" />
+	</resultMap>
+
+	<resultMap type="com.kh.insane.salary.model.vo.Provision"
+		id="provisionHistory">
+		<id property="provisionHistorySeq" column="PROVISION_HISTORY_SEQ" />
+		<result property="empNoSeq" column="EMP_NO_SEQ" />
+		<result property="amount" column="AMOUNT" />
+		<result property="companyNo" column="COMPANY_NO" />
+		<result property="payDate" column="PAY_DATE" />
+		<result property="provisionSeq" column="PROVISION_SEQ" />
+	</resultMap>
+
+	<select id="showProvision" resultMap="provisionResult"
+		parameterType="Provision">
+		<!-- SELECT *
+		FROM PROVISION
+		WHERE COMPANY_NO = ${value}
+		AND USAGE_STATUS = 'Y' -->
+		SELECT /*+정상현::com.kh.insane.salary.model.dao.SalaryDaoImpl.showProvision*/
+        P.PROVISION_SEQ,
+        P.PROVISION_NAME,
+        P.TAX_YN,
+        P.PROVISION_TYPE,
+        P.PROVISION_LIMIT,
+        P.NPN_YN,
+        P.HLTHINS_YN,
+        P.EMP_INSURANCE_YN,
+        P.INCOME_TAX_YN,
+        P.COMPANY_NO,
+        PH.PROVISION_HISTORY_SEQ,
+        PH.EMP_NO_SEQ,
+        PH.AMOUNT,
+        PH.PAY_DATE
+        FROM PROVISION P
+        JOIN PROVISION_HISTORY PH ON (P.PROVISION_SEQ = PH.PROVISION_SEQ)
+        WHERE  P.COMPANY_NO = PH.COMPANY_NO
+        AND PH.EMP_NO_SEQ = ${value}
+	</select>
+
+	<!-- <select id="showProvision" resultMap="provisionResultSet" parameterType="Provision"> 
+		SELECT * /*+ 정상현::com.kh.insane.salary.model.dao.SalaryDaoImpl.showProvision*/ 
+		FROM PROVISION LEFT JOIN PROVISION_HISTORY USING(PROVISION_SEQ) WHERE EMP_NO_SEQ 
+		= #{empNoSeq} </select> -->
+
+	<select id="selectProvisionList" resultMap="provisionResult">
+		SELECT * /*+
+		정상현::com.kh.insane.salary.model.dao.SalaryDaoImpl.selectProvisionList*/
+		FROM PROVISION
+		WHERE COMPANY_NO = ${value}
+		AND USAGE_STATUS = 'Y'
+	</select>
+
+	<select id="selectProvisionHistoryList"
+		resultMap="provisionResultSet" parameterType="java.util.List">
+		SELECT /*+정상현::com.kh.insane.salary.model.dao.SalaryDaoImpl.selectProvisionHistoryList*/
+        P.PROVISION_SEQ,
+        P.PROVISION_NAME,
+        P.TAX_YN,
+        P.PROVISION_TYPE,
+        P.PROVISION_LIMIT,
+        P.NPN_YN,
+        P.HLTHINS_YN,
+        P.EMP_INSURANCE_YN,
+        P.INCOME_TAX_YN,
+        P.COMPANY_NO,
+        PH.PROVISION_HISTORY_SEQ,
+        PH.EMP_NO_SEQ,
+        PH.AMOUNT,
+        PH.PAY_DATE
+        FROM PROVISION_HISTORY PH
+        JOIN PROVISION P ON (P.PROVISION_SEQ = PH.PROVISION_SEQ)
+        WHERE <!-- P.COMPANY_NO = #{list.companyNo}
+        AND --> P.COMPANY_NO = PH.COMPANY_NO
+        AND PH.EMP_NO_SEQ = #{empNoSeq}
+	</select>
+
+	<insert id="insertProvHistory" parameterType="Provision">
+		INSERT INTO PROVISION_HISTORY
+		VALUES(PROVISION_HISTORY_SEQ.NEXTVAL,
+		 #{empNoSeq}, #{amount}, #{companyNo}, 
+		 TO_DATE(#{payDate}), #{provisionSeq})
+	</insert>
+	
+	<select id="selectListYear" resultType="java.lang.String" parameterType="_int">
+		SELECT DISTINCT TO_CHAR(EXTRACT(YEAR FROM PAY_DATE)) /*+ 정상현::com.kh.insane.salary.model.dao.SalaryDaoImpl.selectYear*/
+		FROM
+		PROVISION_HISTORY
+	</select>
+	
+	<!-- parameterType="java.lang.String" resultType="java.lang.String"> -->
+	<select id="selectProvHistDateList" 
+		resultMap="provisionResultSet" parameterType="hashmap">
+		SELECT /*+정상현::com.kh.insane.salary.model.dao.SalaryDaoImpl.selectProvisionHistoryList*/
+        P.PROVISION_SEQ,
+        P.PROVISION_NAME,
+        P.TAX_YN,
+        P.PROVISION_TYPE,
+        P.PROVISION_LIMIT,
+        P.NPN_YN,
+        P.HLTHINS_YN,
+        P.EMP_INSURANCE_YN,
+        P.INCOME_TAX_YN,
+        P.COMPANY_NO,
+        PH.PROVISION_HISTORY_SEQ,
+        PH.EMP_NO_SEQ,
+        PH.AMOUNT,
+        PH.PAY_DATE
+        FROM PROVISION_HISTORY PH
+        JOIN PROVISION P ON (P.PROVISION_SEQ = PH.PROVISION_SEQ)
+        WHERE  P.COMPANY_NO = PH.COMPANY_NO
+        AND PH.EMP_NO_SEQ = #{1.empNoSeq}
+        AND EXTRACT(YEAR FROM PH.PAY_DATE) = #{2.year}
+        AND EXTRACT(MONTH FROM PH.PAY_DATE) = #{3.month}
+        <!-- SUBSTR(TO_CHAR(PH.PAY_DATE), 1, 7) = #{map.payDate} -->
+	</select>
+	
+	<select id="showTotalProvision" resultMap="provisionResult"
+		parameterType="Provision">
+		SELECT * /*+정상현::com.kh.insane.salary.model.dao.SalaryDaoImpl.showProvision*/
+		FROM PROVISION
+		WHERE COMPANY_NO = ${value}
+		AND USAGE_STATUS = 'Y'
+		<!-- SELECT /*+정상현::com.kh.insane.salary.model.dao.SalaryDaoImpl.showProvision*/
+        P.PROVISION_SEQ,
+        P.PROVISION_NAME,
+        P.TAX_YN,
+        P.PROVISION_TYPE,
+        P.PROVISION_LIMIT,
+        P.NPN_YN,
+        P.HLTHINS_YN,
+        P.EMP_INSURANCE_YN,
+        P.INCOME_TAX_YN,
+        P.COMPANY_NO,
+        PH.PROVISION_HISTORY_SEQ,
+        PH.EMP_NO_SEQ,
+        PH.AMOUNT,
+        PH.PAY_DATE
+        FROM PROVISION_HISTORY PH
+        JOIN PROVISION P ON (P.PROVISION_SEQ = PH.PROVISION_SEQ)
+        WHERE  P.COMPANY_NO = PH.COMPANY_NO
+        AND COMPANY_NO = ${value} -->
+	</select>
+</mapper>

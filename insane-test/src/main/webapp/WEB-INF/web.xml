@@ -1,0 +1,226 @@
+<web-app xmlns="http://java.sun.com/xml/ns/javaee"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="2.5"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee https://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
+	<!-- The definition of the Root Spring Container shared by all Servlets 
+		and Filters -->
+	<context-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>
+			classpath:root-context.xml
+			/WEB-INF/config/employee-servlet.xml 
+			/WEB-INF/config/spring-security.xml
+		    /WEB-INF/config/crtfc-servlet.xml
+		    /WEB-INF/config/attendance-servlet.xml
+		    /WEB-INF/config/reward-servlet.xml
+		</param-value>
+	</context-param>
+	<!-- Creates the Spring Container shared by all Servlets and Filters -->
+	<listener>
+		<listener-class>org.springframework.web.context.ContextLoaderListener
+		</listener-class>
+	</listener>
+	
+	<servlet>
+		<servlet-name>employee</servlet-name>
+		<servlet-class>org.springframework.web.servlet.DispatcherServlet
+		</servlet-class>
+		<init-param>
+			<param-name>contextConfigLocation</param-name>
+			<param-value>/WEB-INF/config/employee-servlet.xml</param-value>
+		</init-param>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>employee</servlet-name>
+		<url-pattern>*.em</url-pattern>
+	</servlet-mapping>
+	
+	
+	<servlet>
+		<servlet-name>company</servlet-name>
+		<servlet-class>org.springframework.web.servlet.DispatcherServlet
+		</servlet-class>
+		<init-param>
+			<param-name>contextConfigLocation</param-name>
+			<param-value>/WEB-INF/config/employee-servlet.xml</param-value>
+		</init-param>
+	</servlet>
+	
+	<servlet-mapping>
+		<servlet-name>company</servlet-name>
+		<url-pattern>*.cp</url-pattern>
+	</servlet-mapping>	
+    
+    
+      <servlet>
+        <servlet-name>attendance</servlet-name>
+        <servlet-class>org.springframework.web.servlet.DispatcherServlet
+        </servlet-class>
+        <init-param>
+            <param-name>contextConfigLocation</param-name>
+            <param-value>/WEB-INF/config/attendance-servlet.xml</param-value>
+        </init-param>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>attendance</servlet-name>
+        <url-pattern>*.att</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+		<servlet-name>basicCode</servlet-name>
+		<servlet-class>org.springframework.web.servlet.DispatcherServlet
+		</servlet-class>
+		<init-param>
+			<param-name>contextConfigLocation</param-name>
+			<param-value>/WEB-INF/config/employee-servlet.xml</param-value>
+		</init-param>
+	
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>basicCode</servlet-name>
+		<url-pattern>*.bc</url-pattern>
+	</servlet-mapping>
+    
+
+      <servlet>
+        <servlet-name>reward</servlet-name>
+        <servlet-class>org.springframework.web.servlet.DispatcherServlet
+        </servlet-class>
+        <init-param>
+            <param-name>contextConfigLocation</param-name>
+            <param-value>/WEB-INF/config/reward-servlet.xml</param-value>
+        </init-param>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>reward</servlet-name>
+        <url-pattern>*.rwd</url-pattern>
+    </servlet-mapping>
+	
+	<servlet>
+        <servlet-name>crtfc</servlet-name>
+        <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+        <init-param>
+            <param-name>contextConfigLocation</param-name>
+            <param-value>/WEB-INF/config/crtfc-servlet.xml</param-value>
+        </init-param>
+    </servlet>
+      <servlet-mapping>
+        <servlet-name>crtfc</servlet-name>
+        <url-pattern>*.cr</url-pattern>
+    </servlet-mapping>
+    
+     <servlet>
+    	<servlet-name>organization</servlet-name>
+    	<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+    	<init-param>
+    		<param-name>contextConfigLocation</param-name>
+    		<param-value>/WEB-INF/config/organization-servlet.xml</param-value>
+    	</init-param>
+    </servlet>
+	<servlet-mapping>
+		<servlet-name>organization</servlet-name>
+		<url-pattern>*.or</url-pattern>
+	</servlet-mapping>
+	
+	     <servlet>
+    	<servlet-name>salary</servlet-name>
+    	<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+    	<init-param>
+    		<param-name>contextConfigLocation</param-name>
+    		<!-- <param-value>/WEB-INF/config/salary-servlet.xml</param-value> -->
+    		<param-value>/WEB-INF/config/employee-servlet.xml</param-value>
+    	</init-param>
+    </servlet>
+	<servlet-mapping>
+		<servlet-name>salary</servlet-name>
+		<url-pattern>*.sal</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+        <servlet-name>notice</servlet-name>
+        <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+        <init-param>
+            <param-name>contextConfigLocation</param-name>
+            <param-value>/WEB-INF/config/notice-servlet.xml</param-value>
+        </init-param>
+    </servlet>
+      <servlet-mapping>
+        <servlet-name>notice</servlet-name>
+        <url-pattern>*.no</url-pattern>
+    </servlet-mapping>
+		
+	<servlet>
+		<servlet-name>mainPage</servlet-name>
+		<servlet-class>org.springframework.web.servlet.DispatcherServlet
+		</servlet-class>
+		<init-param>
+			<param-name>contextConfigLocation</param-name>
+			<param-value>/WEB-INF/config/employee-servlet.xml</param-value>
+		</init-param>
+	</servlet>
+	
+	<servlet-mapping>
+		<servlet-name>mainPage</servlet-name>
+		<url-pattern>*.mp</url-pattern>
+	</servlet-mapping>	
+	
+	<servlet>
+		<servlet-name>education</servlet-name>
+		<servlet-class>org.springframework.web.servlet.DispatcherServlet
+		</servlet-class>
+		<init-param>
+			<param-name>contextConfigLocation</param-name>
+			<param-value>/WEB-INF/config/employee-servlet.xml</param-value>
+		</init-param>
+	</servlet>
+	
+	<servlet-mapping>
+		<servlet-name>education</servlet-name>
+		<url-pattern>*.edu</url-pattern>
+	</servlet-mapping>	
+	
+	<servlet>
+		<servlet-name>approval</servlet-name>
+		<servlet-class>org.springframework.web.servlet.DispatcherServlet
+		</servlet-class>
+		<init-param>
+			<param-name>contextConfigLocation</param-name>
+			<param-value>/WEB-INF/config/employee-servlet.xml</param-value>
+		</init-param>
+	</servlet>
+	
+	<servlet-mapping>
+		<servlet-name>approval</servlet-name>
+		<url-pattern>*.app</url-pattern>
+	</servlet-mapping>	
+	
+	<servlet>
+        <servlet-name>chat</servlet-name>
+        <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+        <init-param>
+            <param-name>contextConfigLocation</param-name>
+            <param-value>/WEB-INF/config/chat-servlet.xml</param-value>
+        </init-param>
+    </servlet>
+    
+      <servlet-mapping>
+        <servlet-name>chat</servlet-name>
+        <url-pattern>*.ch</url-pattern>
+    </servlet-mapping>
+	
+	<filter>
+		<filter-name>encodingFilter</filter-name>
+		<filter-class>org.springframework.web.filter.CharacterEncodingFilter
+		</filter-class>
+		<init-param>
+			<param-name>encoding</param-name>
+			<param-value>UTF-8</param-value>
+		</init-param>
+	</filter>
+
+	<filter-mapping>
+		<filter-name>encodingFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+
+</web-app>

@@ -1,0 +1,487 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="CrtfcVo">
+	<resultMap type="com.kh.insane.crtfc.model.vo.CrtfcVo" id="crtfcResultSet">
+		<id property="crtfcSeq" column="CRTFC_HISTORY_SEQ"></id>
+		<result property="crtfcType" column="CRTFC_TYPE" />
+		<result property="empNoSeq" column="EMP_NO_SEQ" />
+		<result property="applyDate" column="APPLY_DATE" />
+		<result property="issueEmpNo" column="ISSUE_EMP_NO" />
+		<result property="issueDate" column="ISSUE_DATE" />
+		<result property="issueReason" column="ISSUE_REASON" />
+		<result property="processStatus" column="PROCESS_STATUS" />
+		<result property="companyNo" column="COMPANY_NO" />
+		<result property="crtfcNo" column="CRTFC_NO" />		
+		<result property="empDeptCode" column="EMP_DEPT_CODE" />
+		<result property="empPositionCode" column="EMP_POSITION_CODE" />
+	</resultMap>
+	
+	<resultMap type="com.kh.insane.crtfc.model.vo.CrtfcVo" id="crtfcResultSet2">
+		<id property="crtfcNo" column="CRTFC_NO"></id>
+		<result property="crtfcType" column="CRTFC_TYPE" />
+		<result property="companyNo" column="COMPANY_NO" />
+		<result property="ceoEmpNo" column="CEO_EMP_NO" />
+		<result property="crtfcEnrollDate" column="CRTFC_ENROLL_DATE" />		
+	</resultMap>
+	
+	<resultMap type="com.kh.insane.crtfc.model.vo.CrtfcVo" id="crtfcListResultSet">
+		<id property="crtfcSeq" column="CRTFC_HISTORY_SEQ"></id>
+		<result property="empNoSeq" column="EMP_NO_SEQ" />
+		<result property="applyDate" column="APPLY_DATE" />
+		<result property="issueEmpNo" column="ISSUE_EMP_NO" />
+		<result property="issueDate" column="ISSUE_DATE" />
+		<result property="issueReason" column="ISSUE_REASON" />
+		<result property="processStatus" column="PROCESS_STATUS" />
+		<result property="companyNo" column="COMPANY_NO" />
+		<result property="crtfcNo" column="CRTFC_NO" />
+		<result property="crtfcType" column="CRTFC_TYPE" />
+		<result property="companyNo" column="COMPANY_NO" />
+		<result property="ceoEmpNo" column="CEO_EMP_NO" />
+		<result property="crtfcEnrollDate" column="CRTFC_ENROLL_DATE" />
+		<result property="ceoName" column="CEO_NAME" />
+		<result property="empName" column="REQUESTOR_NAME" />
+		<result property="issueName" column="ISSUE_NAME" />
+		<result property="empDeptCode" column="EMP_DEPT_CODE" />
+		<result property="empPositionCode" column="EMP_POSITION_CODE" />
+	</resultMap>
+	
+	<resultMap type="com.kh.insane.crtfc.model.vo.CrtfcVo" id="crtfcResultSet3">
+		<id property="crtfcSeq" column="CRTFC_HISTORY_SEQ"></id>
+		<result property="crtfcNo" column="CRTFC_NO" />
+		<result property="crtfcType" column="CRTFC_TYPE" />
+		<result property="applyDate" column="APPLY_DATE" />
+		<result property="crtfcEnrollDate" column="CRTFC_ENROLL_DATE" />
+		<result property="empNoSeq" column="EMP_NO_SEQ" />
+		<result property="empName" column="REQUESTOR_NAME" />
+		<result property="residentNo" column="EMP_RESIDENT_NO" />
+		<!-- 직급코드, 직급명 -->
+		<result property="address" column="EMP_ADDRESS" />
+		<result property="phone" column="EMP_PHONE" />
+		<result property="empEnrollDate" column="ENROLL_DATE" />
+		<result property="empRetireDate" column="RETIRE_DATE" />
+		<result property="empEnrollDate" column="ENROLL_DATE" />
+		<result property="empRetireDate" column="RETIRE_DATE" />
+		<result property="empDeptCode" column="EMP_DEPT_CODE" />
+		<result property="empPositionCode" column="EMP_POSITION_CODE" />
+		<result property="empDeptName" column="EMP_DEPT_NAME" />
+		<result property="positionName" column="EMP_POSITION_NAME" />
+		
+		
+		<result property="issueEmpSeq" column="ISSUE_EMP_SEQ" />
+		<result property="issueEmpNo" column="ISSUE_EMP_NO" />
+		<result property="issueDate" column="ISSUE_DATE" />
+		<result property="issueReason" column="ISSUE_REASON" />		
+		<result property="issueName" column="ISSUE_NAME" />
+		<result property="issuePhone" column="ISSUE_PHONE" />
+		<result property="issueEmpRspofc" column="ISSUE_EMP_RSPOFC" />
+		<result property="issueDeptNo" column="ISSUE_DEPT_NO" />
+		<result property="issueDeptName" column="ISSUE_DEPT_NAME" />
+		<result property="issuePositionCode" column="ISSUE_POSITION_CODE" />
+		<result property="issuePositionName" column="ISSUE_POSITION_NAME" />
+				
+		<result property="companyNo" column="COMPANY_NO" />
+		<result property="companyName" column="COMPANY_NAME" />
+		<result property="businessAddress" column="BUSINESS_ADDRESS" />
+		
+		<result property="ceoSeq" column="CEO_SEQ" />
+		<result property="ceoEmpNo" column="CEO_NO" />		
+		<result property="ceoName" column="CEO_NAME" />		
+		<result property="ceoPhone" column="CEO_PHONE" />	
+		
+		<result property="processStatus" column="PROCESS_STATUS" />	
+	</resultMap>
+	
+	<resultMap type="Employee" id="retireEmpResultSet">
+		<id property="empNoSeq" column="EMP_NO_SEQ" />
+		<result property="empNo" column="EMP_NO" />
+		<result property="companyNo" column="COMPANY_NO" />
+		<result property="empPwd" column="EMP_PWD" />
+		<result property="empNameKor" column="EMP_NAME_KOR" />
+		<result property="empNameEng" column="EMP_NAME_ENG" />
+		<result property="enrollDate" column="ENROLL_DATE" />
+		<result property="empResidentNo" column="EMP_RESIDENT_NO" />
+		<result property="empLocationCode" column="EMP_LOCATION_CODE" />
+		<result property="locationName" column="LOCATION_NAME" />
+		<result property="empDeptCode" column="EMP_DEPT_CODE" />
+		<result property="deptName" column="DEPT_NAME" />
+		<result property="empPositionCode" column="EMP_POSITION_CODE" />
+		<result property="positionName" column="POSITION_NAME" />
+		<result property="empRspofcCode" column="EMP_RSPOFC_CODE" />
+		<result property="rspofcName" column="RSPOFC_NAME" />
+		<result property="payStepCode" column="EMP_PAY_STEP_CODE" />
+		<result property="payStep" column="PAY_STEP" />
+		<result property="empAddress" column="EMP_ADDRESS" />
+		<result property="retireDate" column="RETIRE_DATE" />
+		<result property="empBirthday" column="EMP_BIRTHDAY" />
+		<result property="lunarSor" column="LUNAR_SOR" />
+		<result property="gender" column="GENDER" />
+		<result property="empHomeTel" column="EMP_HOME_TEL" />
+		<result property="empPhone" column="EMP_PHONE" />
+		<result property="empOfficeTel" column="EMP_OFFICE_TEL" />
+		<result property="empForm" column="EMP_FORM" />
+		<result property="empOccupation" column="EMP_OCCUPATION" />
+		<result property="empSpot" column="EMP_SPOT" />
+		<result property="empProject" column="EMP_PROJECT" />
+		<result property="empStatus" column="EMP_STATUS" />
+	</resultMap>
+	
+	<!-- 증명서 번호 : 구분. -->
+	<insert id="insertCareer" parameterType="CrtfcVo">
+		INSERT INTO CRTFC_HISTORY VALUES(CRTFC_SEQ.NEXTVAL, #{empNoSeq}, SYSDATE, NULL, NULL, #{issueReason}, 'N', #{companyNo}, #{crtfcNo},
+		#{empDeptCode},
+		#{empPositionCode})
+	</insert>
+	
+	<!-- 증명서 번호 : 구분. -->
+	<insert id="insertEmployment" parameterType="CrtfcVo">
+		INSERT INTO CRTFC_HISTORY VALUES(CRTFC_SEQ.NEXTVAL, #{empNoSeq}, SYSDATE, NULL, NULL, #{issueReason}, 'N', #{companyNo}, #{crtfcNo}, #{empDeptCode}, #{empPositionCode})
+	</insert>
+	
+	<select id="selectCrtfcRequest" parameterType="CrtfcVo" resultMap="crtfcResultSet3">
+		SELECT E1.EMP_NO_SEQ AS EMP_NO_SEQ,
+		       CI.REPRESENT_NAME AS CEO_NAME, 
+		       SYSDATE AS APPLY_DATE, 
+		       CP.COMPANY_NAME,
+		       CI.BUSINESS_ADDRESS, 
+		       E1.EMP_NAME_KOR AS REQUESTOR_NAME,
+		       E1.EMP_RESIDENT_NO,
+     	       E1.EMP_ADDRESS, 
+     	       E1.EMP_PHONE, 
+     	       E1.ENROLL_DATE, 
+     	       E1.RETIRE_DATE,
+     	       E1.EMP_DEPT_CODE AS EMP_DEPT_CODE,
+			   E1.EMP_POSITION_CODE AS EMP_POSITION_CODE,
+			   D1.DEPT_NAME AS EMP_DEPT_NAME,
+			   P1.POSITION_NAME AS EMP_POSITION_NAME
+	     FROM EMPLOYEE E1
+	     JOIN POSITION P1 ON(E1.EMP_POSITION_CODE = P1.POSITION_SEQ)
+         JOIN DEPARTMENT D1 ON(E1.EMP_DEPT_CODE = D1.DEPT_CODE_SEQ)
+         JOIN COMPANY_INFO CI ON(E1.COMPANY_NO = CI.COMPANY_NO)
+         JOIN COMPANY_TB CP ON(CI.COMPANY_NO = CP.COMPANY_NO)
+        WHERE E1.EMP_NO_SEQ = #{empNoSeq}
+	</select>
+	
+	<!-- <insert id="insertLeaving">
+		INSERT INTO CRTFC_HISTORY 
+		VALUES(CRTFC_SEQ.NEXTVAL, 
+		       #{empNoSeq}, 
+		       SYSDATE, 
+		       #{issueEmpNo}, 
+		       SYSDATE, 
+		       #{issueReason}, 
+		       'Y', 
+		       #{companyNo}, 
+		       #{crtfcNo})
+	</insert> -->
+	
+	<insert id="insertLeaving">
+		INSERT INTO CRTFC_HISTORY 
+		VALUES(CRTFC_SEQ.NEXTVAL, 
+		       #{empNoSeq}, 
+		       #{applyDate}, 
+		       #{issueEmpNo}, 
+		       SYSDATE, 
+		       #{issueReason}, 
+		       'Y', 
+		       #{companyNo}, 
+		       #{crtfcNo},
+		       #{empDeptCode},
+		       #{empPositionCode})
+	</insert>
+	
+	<!-- <insert id="insertLeaving" parameterType="CrtfcVo">
+		INSERT INTO CRTFC_HISTORY VALUES(CRTFC_SEQ.NEXTVAL, #{empNoSeq}, SYSDATE, NULL, NULL, #{issueReason}, 'N', #{companyNo}, 3)
+	</insert> -->
+	
+	<select id="selectCrtfcType" parameterType="CrtfcVo" resultMap="crtfcResultSet3">
+		SELECT MAX(C.CRTFC_NO) AS CRTFC_NO
+  		  FROM CRTFC C
+         WHERE C.COMPANY_NO = #{companyNo} AND C.CRTFC_TYPE = #{crtfcType}
+	</select>
+	
+	<select id="selectList" resultMap="crtfcListResultSet">
+		<!-- SELECT * FROM CRTFC_HISTORY WHERE COMPANY_NO = #{companyNo} -->
+		SELECT CH.CRTFC_HISTORY_SEQ, CH.EMP_NO_SEQ, CH.APPLY_DATE, CH.ISSUE_EMP_NO, CH.ISSUE_DATE, CH.ISSUE_REASON, CH.PROCESS_STATUS, 
+               CH.COMPANY_NO, CH.CRTFC_NO, C.CRTFC_TYPE, C.COMPANY_NO, C.CEO_EMP_NO, C.CRTFC_ENROLL_DATE, 
+               E1.EMP_NAME_KOR AS REQUESTOR_NAME, E2.EMP_NAME_KOR AS ISSUE_NAME
+  		  FROM CRTFC_HISTORY CH
+          JOIN CRTFC C ON (CH.CRTFC_NO = C.CRTFC_NO)
+          JOIN EMPLOYEE E1 ON(CH.EMP_NO_SEQ = E1.EMP_NO_SEQ)          
+          LEFT JOIN EMPLOYEE E2 ON(CH.ISSUE_EMP_NO = E2.EMP_NO_SEQ)
+         WHERE CH.COMPANY_NO = #{companyNo}
+         ORDER BY CH.CRTFC_HISTORY_SEQ DESC
+	</select>
+	
+	<!-- <select id="selectSpecificList" resultMap="crtfcResultSet">
+		SELECT * FROM CRTFC_HISTORY WHERE COMPANY_NO = #{companyNo} AND CRTFC_NO = #{crtfcNo}
+		SELECT CH.CRTFC_HISTORY_SEQ, CH.EMP_NO_SEQ, CH.APPLY_DATE, CH.ISSUE_EMP_NO, CH.ISSUE_DATE, CH.ISSUE_REASON, CH.PROCESS_STATUS, 
+               CH.COMPANY_NO, CH.CRTFC_NO, C.CRTFC_TYPE, C.COMPANY_NO, C.CEO_EMP_NO, C.CRTFC_ENROLL_DATE, 
+               E1.EMP_NAME_KOR AS REQUESTOR_NAME, E2.EMP_NAME_KOR AS ISSUE_NAME
+  		  FROM CRTFC_HISTORY CH
+          JOIN CRTFC C ON (CH.CRTFC_NO = C.CRTFC_NO)
+          JOIN EMPLOYEE E1 ON(CH.EMP_NO_SEQ = E1.EMP_NO_SEQ)
+          LEFT JOIN EMPLOYEE E2 ON(CH.ISSUE_EMP_NO = E2.EMP_NO_SEQ)
+         WHERE CH.COMPANY_NO = #{companyNo} AND CH.CRTFC_NO = #{crtfcNo}
+	</select> -->
+	
+	<!-- <select id="selectSpecificList" resultMap="crtfcResultSet">
+		SELECT * FROM CRTFC_HISTORY WHERE COMPANY_NO = #{companyNo} AND CRTFC_NO = #{crtfcNo}
+		SELECT CH.CRTFC_HISTORY_SEQ, CH.EMP_NO_SEQ, CH.APPLY_DATE, CH.ISSUE_EMP_NO, CH.ISSUE_DATE, CH.ISSUE_REASON, CH.PROCESS_STATUS, 
+               CH.COMPANY_NO, CH.CRTFC_NO, C.CRTFC_TYPE, C.COMPANY_NO, C.CEO_EMP_NO, C.CRTFC_ENROLL_DATE, 
+               E1.EMP_NAME_KOR AS REQUESTOR_NAME, E2.EMP_NAME_KOR AS ISSUE_NAME
+  		  FROM CRTFC_HISTORY CH
+          JOIN CRTFC C ON (CH.CRTFC_NO = C.CRTFC_NO)
+          JOIN EMPLOYEE E1 ON(CH.EMP_NO_SEQ = E1.EMP_NO_SEQ)
+          LEFT JOIN EMPLOYEE E2 ON(CH.ISSUE_EMP_NO = E2.EMP_NO_SEQ)
+         WHERE CH.COMPANY_NO = #{companyNo} AND C.CRTFC_TYPE = #{crtfcType}
+	</select> -->
+	
+	<select id="selectSpecificList" parameterType="com.kh.insane.crtfc.model.vo.SearchCondition" resultMap="crtfcResultSet3">
+		SELECT CH.CRTFC_HISTORY_SEQ, CH.EMP_NO_SEQ, CH.APPLY_DATE, CH.ISSUE_EMP_NO, CH.ISSUE_DATE, CH.ISSUE_REASON, CH.PROCESS_STATUS, 
+               CH.COMPANY_NO, CH.CRTFC_NO, C.CRTFC_TYPE, C.COMPANY_NO, C.CEO_EMP_NO, C.CRTFC_ENROLL_DATE, 
+               E1.EMP_NAME_KOR AS REQUESTOR_NAME, E2.EMP_NAME_KOR AS ISSUE_NAME
+  		  FROM CRTFC_HISTORY CH
+          JOIN CRTFC C ON (CH.CRTFC_NO = C.CRTFC_NO)
+          JOIN EMPLOYEE E1 ON(CH.EMP_NO_SEQ = E1.EMP_NO_SEQ)          
+          LEFT JOIN EMPLOYEE E2 ON(CH.ISSUE_EMP_NO = E2.EMP_NO_SEQ)
+         WHERE CH.COMPANY_NO = #{companyNo} AND C.CRTFC_TYPE = #{crtfcType}
+	</select>
+	
+	<select id="selectListCount" resultType="_int">
+		SELECT COUNT(*) FROM CRTFC_HISTORY WHERE COMPANY_NO = #{companyNo}
+	</select>
+	
+	<select id="selectSpecificListCount" resultType="_int">
+		SELECT COUNT(*) FROM CRTFC_HISTORY WHERE COMPANY_NO = #{companyNo} AND CRTFC_NO = #{crtfcNo}
+	</select>
+	
+	<select id="selectListCountEmp" resultType="_int">
+		SELECT COUNT(*) FROM CRTFC_HISTORY WHERE COMPANY_NO = #{companyNo} AND EMP_NO_SEQ = #{empNoSeq}
+	</select>
+	
+	<select id="selectSpecificListCountEmp" resultType="_int">
+		SELECT COUNT(*) FROM CRTFC_HISTORY WHERE COMPANY_NO = #{companyNo} AND CRTFC_NO = #{crtfcNo} AND EMP_NO_SEQ = #{empNoSeq}
+	</select>
+	
+	<select id="selectOneCrtfc" resultMap="crtfcResultSet">
+		SELECT * FROM CRTFC_HISTORY WHERE CRTFC_HISTORY_SEQ = #{crtfcSeq}
+	</select>
+	
+	<select id="selectOneLevaingFirst" resultMap="crtfcResultSet3">
+		SELECT E1.EMP_NO_SEQ AS EMP_NO_SEQ,
+		       E2.EMP_NO_SEQ AS ISSUE_EMP_SEQ, 
+		       CI.REPRESENT_NAME AS CEO_NAME,
+		       CI.BUSINESS_TEL AS CEO_PHONE,
+		       SYSDATE AS APPLY_DATE, 
+		       CP.COMPANY_NAME,
+		       CI.BUSINESS_ADDRESS,
+		       E1.EMP_NAME_KOR AS REQUESTOR_NAME,
+		       E1.EMP_RESIDENT_NO,
+     	       E1.EMP_ADDRESS, 
+     	       E1.EMP_PHONE, 
+     	       E1.ENROLL_DATE, 
+     	       E1.RETIRE_DATE,
+     	       E1.EMP_DEPT_CODE AS EMP_DEPT_CODE,
+			   E1.EMP_POSITION_CODE AS EMP_POSITION_CODE,
+			   E2.EMP_NAME_KOR AS ISSUE_NAME,
+			   E2.EMP_PHONE AS ISSUE_PHONE,
+			   D1.DEPT_NAME AS EMP_DEPT_NAME,
+			   P1.POSITION_NAME AS EMP_POSITION_NAME,
+			   D2.DEPT_NAME AS ISSUE_DEPT_NAME,
+			   P2.POSITION_NAME AS ISSUE_POSITION_NAME,
+     	       CP.COMPANY_NAME, 
+     	       SYSDATE AS CRTFC_ENROLL_DATE,
+     	       'N' AS PROCESS_STATUS
+	     FROM EMPLOYEE E1
+	     JOIN POSITION P1 ON(E1.EMP_POSITION_CODE = P1.POSITION_SEQ)
+         JOIN DEPARTMENT D1 ON(E1.EMP_DEPT_CODE = D1.DEPT_CODE_SEQ),
+              EMPLOYEE E2
+         JOIN COMPANY_INFO CI ON(E2.COMPANY_NO = CI.COMPANY_NO)
+         JOIN COMPANY_TB CP ON(CI.COMPANY_NO = CP.COMPANY_NO)
+         JOIN POSITION P2 ON(E2.EMP_POSITION_CODE = P2.POSITION_SEQ)
+         JOIN DEPARTMENT D2 ON(E2.EMP_DEPT_CODE = D2.DEPT_CODE_SEQ)
+        WHERE E1.EMP_NO_SEQ = #{empNoSeq} AND E2.EMP_NO_SEQ = #{issueEmpNo}
+	</select>	
+	
+	<!-- <result property="issueDeptNo" column="ISSUE_DEPT_NO" />
+		<result property="issueDeptName" column="ISSUE_DEPT_NAME" />
+		<result property="issuePositionCode" column="ISSUE_POSITION_CODE" />
+		<result property="issuePositionName" column="ISSUE_POSITION_NAME" />
+		
+		<result property="empDeptCode" column="EMP_DEPT_CODE" />
+		<result property="positionCode" column="EMP_POSITION_CODE" />
+		<result property="empDeptName" column="EMP_DEPT_NAME" />
+		<result property="positionName" column="EMP_POSITION_NAME" /> -->
+	
+	<!-- 회사명, 회사주소까지 따와야 됨. -->
+	<select id="selectOneCrtfcDetail" resultMap="crtfcResultSet3">
+		SELECT CH.CRTFC_HISTORY_SEQ, CH.EMP_NO_SEQ, CH.APPLY_DATE, CH.ISSUE_EMP_NO, CH.ISSUE_DATE, CH.ISSUE_REASON, CH.PROCESS_STATUS, 
+               CH.COMPANY_NO, CH.CRTFC_NO, C.CRTFC_TYPE, C.COMPANY_NO, C.CEO_EMP_NO, C.CRTFC_ENROLL_DATE, 
+               E1.EMP_NAME_KOR AS REQUESTOR_NAME, E2.EMP_NAME_KOR AS ISSUE_NAME, CP.COMPANY_NAME, CPI.BUSINESS_ADDRESS, 
+               E1.EMP_RESIDENT_NO, E1.EMP_ADDRESS, E1.EMP_PHONE, E1.ENROLL_DATE, E1.RETIRE_DATE,
+               E2.EMP_PHONE AS ISSUE_PHONE,
+               CH.EMP_DEPT_CODE,
+			   CH.EMP_POSITION_CODE,
+			   D1.DEPT_NAME AS EMP_DEPT_NAME,
+			   P1.POSITION_NAME AS EMP_POSITION_NAME,
+			   D2.DEPT_NAME AS ISSUE_DEPT_NAME,
+			   CPI.REPRESENT_NAME AS CEO_NAME,
+		       CPI.BUSINESS_TEL AS CEO_PHONE,
+			   P2.POSITION_NAME AS ISSUE_POSITION_NAME   
+  		  FROM CRTFC_HISTORY CH
+          JOIN CRTFC C ON (CH.CRTFC_NO = C.CRTFC_NO)
+          JOIN COMPANY_TB CP ON(CH.COMPANY_NO = CP.COMPANY_NO)
+          JOIN COMPANY_INFO CPI ON(CH.COMPANY_NO = CPI.COMPANY_NO)
+          JOIN EMPLOYEE E1 ON(CH.EMP_NO_SEQ = E1.EMP_NO_SEQ)
+          LEFT JOIN POSITION P1 ON(CH.EMP_POSITION_CODE = P1.POSITION_SEQ)
+          LEFT JOIN DEPARTMENT D1 ON(CH.EMP_DEPT_CODE = D1.DEPT_CODE_SEQ)
+          LEFT JOIN EMPLOYEE E2 ON(CH.ISSUE_EMP_NO = E2.EMP_NO_SEQ)
+          LEFT JOIN POSITION P2 ON(E2.EMP_POSITION_CODE = P2.POSITION_SEQ)
+          LEFT JOIN DEPARTMENT D2 ON(E2.EMP_DEPT_CODE = D2.DEPT_CODE_SEQ)
+         WHERE CH.CRTFC_HISTORY_SEQ = #{crtfcSeq}
+	</select>
+	
+	<select id="selectOneCrtfcDetailBefore" resultMap="crtfcResultSet3">
+		SELECT CH.CRTFC_HISTORY_SEQ, CH.EMP_NO_SEQ, CH.APPLY_DATE, CH.ISSUE_EMP_NO, CH.ISSUE_DATE, CH.ISSUE_REASON, CH.PROCESS_STATUS, 
+               CH.COMPANY_NO, CH.CRTFC_NO, C.CRTFC_TYPE, C.COMPANY_NO, C.CEO_EMP_NO, C.CRTFC_ENROLL_DATE, 
+               E1.EMP_NAME_KOR AS REQUESTOR_NAME, E2.EMP_NAME_KOR AS ISSUE_NAME, CP.COMPANY_NAME, CPI.BUSINESS_ADDRESS, 
+               E1.EMP_RESIDENT_NO, E1.EMP_ADDRESS, E1.EMP_PHONE, E1.ENROLL_DATE, E1.RETIRE_DATE,
+               E2.EMP_PHONE AS ISSUE_PHONE,
+               CH.EMP_DEPT_CODE,
+			   CH.EMP_POSITION_CODE,
+			   D1.DEPT_NAME AS EMP_DEPT_NAME,
+			   P1.POSITION_NAME AS EMP_POSITION_NAME,
+			   D2.DEPT_NAME AS ISSUE_DEPT_NAME,
+			   CPI.REPRESENT_NAME AS CEO_NAME,
+		       CPI.BUSINESS_TEL AS CEO_PHONE,
+			   P2.POSITION_NAME AS ISSUE_POSITION_NAME   
+  		  FROM CRTFC_HISTORY CH
+          JOIN CRTFC C ON (CH.CRTFC_NO = C.CRTFC_NO)
+          JOIN COMPANY_TB CP ON(CH.COMPANY_NO = CP.COMPANY_NO)
+          JOIN COMPANY_INFO CPI ON(CH.COMPANY_NO = CPI.COMPANY_NO)
+          JOIN EMPLOYEE E1 ON(CH.EMP_NO_SEQ = E1.EMP_NO_SEQ)
+          LEFT JOIN POSITION P1 ON(CH.EMP_POSITION_CODE = P1.POSITION_SEQ)
+          LEFT JOIN DEPARTMENT D1 ON(CH.EMP_DEPT_CODE = D1.DEPT_CODE_SEQ),
+          EMPLOYEE E2
+          LEFT JOIN POSITION P2 ON(E2.EMP_POSITION_CODE = P2.POSITION_SEQ)
+          LEFT JOIN DEPARTMENT D2 ON(E2.EMP_DEPT_CODE = D2.DEPT_CODE_SEQ)
+         WHERE CH.CRTFC_HISTORY_SEQ = #{crtfcSeq} AND E2.EMP_NO_SEQ = #{issueEmpSeq}
+	</select>
+	
+	<!-- <select id="selectOneCrtfcDetailBefore" resultMap="crtfcResultSet3">
+		SELECT CH.CRTFC_HISTORY_SEQ, CH.EMP_NO_SEQ, CH.APPLY_DATE, CH.ISSUE_EMP_NO, CH.ISSUE_DATE, CH.ISSUE_REASON, CH.PROCESS_STATUS, 
+               CH.COMPANY_NO, CH.CRTFC_NO, C.CRTFC_TYPE, C.COMPANY_NO, C.CEO_EMP_NO, C.CRTFC_ENROLL_DATE, 
+               E1.EMP_NAME_KOR AS REQUESTOR_NAME, E2.EMP_NAME_KOR AS ISSUE_NAME, CP.COMPANY_NAME, CPI.BUSINESS_ADDRESS, 
+               E1.EMP_RESIDENT_NO, E1.EMP_ADDRESS, E1.EMP_PHONE, E1.ENROLL_DATE, E1.RETIRE_DATE,
+               CH.EMP_DEPT_CODE,
+			   CH.EMP_POSITION_CODE		   
+  		  FROM CRTFC_HISTORY CH
+          JOIN CRTFC C ON (CH.CRTFC_NO = C.CRTFC_NO)
+          JOIN COMPANY_TB CP ON(CH.COMPANY_NO = CP.COMPANY_NO)
+          JOIN COMPANY_INFO CPI ON(CH.COMPANY_NO = CPI.COMPANY_NO)
+          JOIN EMPLOYEE E1 ON(CH.EMP_NO_SEQ = E1.EMP_NO_SEQ)
+          JOIN POSITION P1 ON(CH.EMP_POSITION_CODE = P1.POSITION_SEQ)
+          JOIN DEPARTMENT D1 ON(CH.EMP_DEPT_CODE = D1.DEPT_CODE_SEQ)
+          JOIN EMPLOYEE E2 ON(CH.ISSUE_EMP_NO = E2.EMP_NO_SEQ)
+          JOIN POSITION P2 ON(E2.EMP_POSITION_CODE = P2.POSITION_SEQ)
+          JOIN DEPARTMENT D2 ON(E2.EMP_DEPT_CODE = D2.DEPT_CODE_SEQ)
+         WHERE CH.CRTFC_HISTORY_SEQ = #{crtfcSeq}
+	</select> -->
+	
+	<!-- EMP_NO_SEQ	NUMBER
+	APPLY_DATE	DATE
+	ISSUE_EMP_NO	NUMBER
+	ISSUE_DATE	DATE
+	ISSUE_REASON	VARCHAR2(300 BYTE)
+	PROCESS_STATUS	VARCHAR2(5 BYTE)
+	COMPANY_NO	NUMBER
+	CRTFC_NO	NUMBER -->
+	
+	<!-- <id property="crtfcSeq" column="CRTFC_HISTORY_SEQ"></id>
+		<result property="empNoSeq" column="EMP_NO_SEQ" />
+		<result property="applyDate" column="APPLY_DATE" />
+		<result property="issueEmpNo" column="ISSUE_EMP_NO" />
+		<result property="issueDate" column="ISSUE_DATE" />
+		<result property="issueReason" column="ISSUE_REASON" />
+		<result property="processStatus" column="PROCESS_STATUS" />
+		<result property="companyNo" column="COMPANY_NO" />
+		<result property="crtfcNo" column="CRTFC_NO" />		 -->		
+	<!-- <update id="updateCrtfc">
+		UPDATE CRTFC_HISTORY SET EMP_NO_SEQ = #{empNoSeq}, APPLY_DATE = #{applyDate}, ISSUE_EMP_NO = #{issueEmpNo}, ISSUE_DATE = SYSDATE, ISSUE_REASON = #{issueReason}, PROCESS_STATUS = 'Y', COMPANY_NO = #{companyNo}, CRTFC_NO = #{crtfcNo}, 
+				                 EMP_DEPT_CODE = #{empDeptCode},
+		                         EMP_POSITION_CODE = #{positionCode}
+		       WHERE CRTFC_HISTORY_SEQ = #{crtfcSeq}
+	</update> -->
+	
+	<!-- EMP_DEPT_CODE = #{empDeptCode},
+		                         EMP_POSITION_CODE = #{positionCode} -->
+	<update id="updateCrtfc">
+		UPDATE CRTFC_HISTORY SET ISSUE_EMP_NO = #{issueEmpNo}, ISSUE_DATE = SYSDATE, PROCESS_STATUS = 'Y'
+		       WHERE CRTFC_HISTORY_SEQ = #{crtfcSeq}
+	</update>
+	
+	<insert id="insertReWriteCrtfc">
+		INSERT INTO CRTFC_HISTORY 
+		VALUES(CRTFC_SEQ.NEXTVAL, 
+		       #{empNoSeq}, 
+		       #{applyDate}, 
+		       #{issueEmpNo}, 
+		       SYSDATE, 
+		       #{issueReason}, 
+		       'Y', 
+		       #{companyNo}, 
+		       #{crtfcNo},
+		       #{empDeptCode},
+		       #{empPositionCode})
+	</insert>	
+	
+	<update id="updateCancleCrtfc">
+		UPDATE CRTFC_HISTORY SET ISSUE_EMP_NO = #{issueEmpNo}, ISSUE_DATE = SYSDATE, PROCESS_STATUS = 'D'
+		       WHERE CRTFC_HISTORY_SEQ = #{crtfcSeq}
+	</update>
+	
+	<insert id="insertLeavingCancle">
+		INSERT INTO CRTFC_HISTORY 
+		VALUES(CRTFC_SEQ.NEXTVAL, 
+		       #{empNoSeq}, 
+		       #{applyDate}, 
+		       #{issueEmpNo}, 
+		       SYSDATE, 
+		       #{issueReason}, 
+		       'D', 
+		       #{companyNo}, 
+		       #{crtfcNo},
+		       #{empDeptCode},
+		       #{empPositionCode})
+	</insert>
+	
+	<select id="selectListEmp" resultMap="crtfcListResultSet">
+		<!-- SELECT * FROM CRTFC_HISTORY WHERE COMPANY_NO = #{companyNo} -->
+		SELECT CH.CRTFC_HISTORY_SEQ, CH.EMP_NO_SEQ, CH.APPLY_DATE, CH.ISSUE_EMP_NO, CH.ISSUE_DATE, CH.ISSUE_REASON, CH.PROCESS_STATUS, 
+               CH.COMPANY_NO, CH.CRTFC_NO, C.CRTFC_TYPE, C.COMPANY_NO, C.CEO_EMP_NO, C.CRTFC_ENROLL_DATE, 
+               E1.EMP_NAME_KOR AS REQUESTOR_NAME, E2.EMP_NAME_KOR AS ISSUE_NAME
+  		  FROM CRTFC_HISTORY CH
+          JOIN CRTFC C ON (CH.CRTFC_NO = C.CRTFC_NO)
+          JOIN EMPLOYEE E1 ON(CH.EMP_NO_SEQ = E1.EMP_NO_SEQ)          
+          LEFT JOIN EMPLOYEE E2 ON(CH.ISSUE_EMP_NO = E2.EMP_NO_SEQ)
+         WHERE CH.COMPANY_NO = #{companyNo} AND CH.EMP_NO_SEQ = #{empNoSeq}
+	</select>
+	
+	<select id="selectSpecificListEmp" resultMap="crtfcResultSet3">
+		<!-- SELECT * FROM CRTFC_HISTORY WHERE COMPANY_NO = #{companyNo} AND CRTFC_NO = #{crtfcNo} -->
+		SELECT CH.CRTFC_HISTORY_SEQ, CH.EMP_NO_SEQ, CH.APPLY_DATE, CH.ISSUE_EMP_NO, CH.ISSUE_DATE, CH.ISSUE_REASON, CH.PROCESS_STATUS, 
+               CH.COMPANY_NO, CH.CRTFC_NO, C.CRTFC_TYPE, C.COMPANY_NO, C.CEO_EMP_NO, C.CRTFC_ENROLL_DATE, 
+               E1.EMP_NAME_KOR AS REQUESTOR_NAME, E2.EMP_NAME_KOR AS ISSUE_NAME
+  		  FROM CRTFC_HISTORY CH
+          JOIN CRTFC C ON (CH.CRTFC_NO = C.CRTFC_NO)
+          JOIN EMPLOYEE E1 ON(CH.EMP_NO_SEQ = E1.EMP_NO_SEQ)
+          LEFT JOIN EMPLOYEE E2 ON(CH.ISSUE_EMP_NO = E2.EMP_NO_SEQ)
+         WHERE CH.COMPANY_NO = #{companyNo} AND C.CRTFC_TYPE = #{crtfcType} AND CH.EMP_NO_SEQ = #{empNoSeq}
+	</select>
+	
+	<select id="selectRetireEmp" resultMap="retireEmpResultSet">
+		SELECT * FROM EMPLOYEE WHERE COMPANY_NO = #{companyNo} AND EMP_STATUS = 'R'
+	</select>
+</mapper>

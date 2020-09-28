@@ -1,0 +1,1449 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Employee">
+
+
+
+	<resultMap type="Employee" id="employeeResultSet">
+		<id property="empNoSeq" column="EMP_NO_SEQ" />
+		<result property="empNo" column="EMP_NO" />
+		<result property="companyNo" column="COMPANY_NO" />
+		<result property="empPwd" column="EMP_PWD" />
+		<result property="empNameKor" column="EMP_NAME_KOR" />
+		<result property="empNameEng" column="EMP_NAME_ENG" />
+		<result property="enrollDate" column="ENROLL_DATE" />
+		<result property="empResidentNo" column="EMP_RESIDENT_NO" />
+		<result property="empLocationCode" column="EMP_LOCATION_CODE" />
+		<result property="locationName" column="LOCATION_NAME" />
+		<result property="empDeptCode" column="EMP_DEPT_CODE" />
+		<result property="deptName" column="DEPT_NAME" />
+		<result property="empPositionCode" column="EMP_POSITION_CODE" />
+		<result property="positionName" column="POSITION_NAME" />
+		<result property="empRspofcCode" column="EMP_RSPOFC_CODE" />
+		<result property="rspofcName" column="RSPOFC_NAME" />
+		<result property="payStepCode" column="EMP_PAY_STEP_CODE" />
+		<result property="payStep" column="PAY_STEP" />
+		<result property="empAddress" column="EMP_ADDRESS" />
+		<result property="retireDate" column="RETIRE_DATE" />
+		<result property="empBirthday" column="EMP_BIRTHDAY" />
+		<result property="lunarSor" column="LUNAR_SOR" />
+		<result property="gender" column="GENDER" />
+		<result property="empHomeTel" column="EMP_HOME_TEL" />
+		<result property="empPhone" column="EMP_PHONE" />
+		<result property="empOfficeTel" column="EMP_OFFICE_TEL" />
+		<result property="empForm" column="EMP_FORM" />
+		<result property="empOccupation" column="EMP_OCCUPATION" />
+		<result property="empSpot" column="EMP_SPOT" />
+		<result property="empProject" column="EMP_PROJECT" />
+		<result property="empStatus" column="EMP_STATUS" />
+	</resultMap>
+
+
+<!-- 	<select id="loginEmployeeCheck" resultMap="employeeResultSet"
+		parameterType="Employee">
+		SELECT * /*+ 정상현 ::com.kh.insane.employee.model.dao.EmployeeDaoImpl.loginCheck*/
+		FROM EMPLOYEE
+		WHERE EMP_NO = #{empNo}
+		AND EMP_PWD = #{empPwd}
+		AND COMPANY_NO = #{companyNo}
+		AND EMP_STATUS = 'Y'
+	</select> -->
+
+
+	
+	<resultMap type="Location" id="locationResultSet">
+		<id property="locationSeq" column="LOCATION_SEQ"/>
+		<result property="locationName" column="LOCATION_NAME"/>
+		<result property="officeAddress" column="OFFICE_ADDRESS"/>
+		<result property="companyNo" column="COMPANY_NO"/>
+	</resultMap>
+	
+	<resultMap type="Department" id="departmentResultSet">
+		<id property="deptCodeSeq" column="DEPT_CODE_SEQ"/>
+		<result property="deptName" column="DEPT_NAME"/>
+		<result property="companyNo" column="COMPANY_NO"/>
+		<result property="deptStep" column="DEPT_STEP"/>
+		<result property="upperDeptCode" column="UPPER_DEPT_CODE"/>
+		<result property="deptTel" column="DEPT_TEL"/>
+		<result property="usageStatus" column="USAGE_STATUS"/>
+		<result property="genDate" column="GEN_DATE"/>
+		<result property="delDate" column="DEL_DATE"/>
+		<result property="deptLimit" column="DEPT_LIMIT"/>
+		<result property="deptPresent" column="DEPT_PRESENT"/>
+		<result property="cngDate" column="CNG_DATE"/>
+	</resultMap>
+	
+	<resultMap type="Position" id="positionResultSet">
+		<id property="positionSeq" column="POSITION_SEQ"/>
+		<result property="positionName" column="POSITION_NAME"/>
+		<result property="companyNo" column="COMPANY_NO"/>
+		<result property="addYearlyVacAmount" column="ADD_YEARLY_VAC_AMOUNT"/>
+	</resultMap>
+	
+	<resultMap type="Rspofc" id="rspofcResultSet">
+		<id property="rspofcSeq" column="RSPOFC_SEQ"/>
+		<result property="rspofcName" column="RSPOFC_NAME"/>
+		<result property="companyNo" column="COMPANY_NO"/>
+	</resultMap>
+	
+	<resultMap type="PayStep" id="payStepResultSet">
+		<id property="payStepSeq" column="PAY_STEP_SEQ"/>
+		<result property="payStep" column="PAY_STEP"/>
+		<result property="companyNo" column="COMPANY_NO"/>
+	</resultMap>
+	
+	<resultMap type="ProfileAttachment" id="attachmentResultSet">
+		<id property="attachmentSeq" column="ATTACHMENT_SEQ"/>
+		<result property="companyNo" column="COMPANY_NO"/>
+		<result property="empNoSeq" column="EMP_NO_SEQ"/>
+		<result property="filePath" column="FILE_PATH"/>
+		<result property="originName" column="ORIGIN_NAME"/>
+		<result property="changeName" column="CHANGE_NAME"/>
+		<result property="attStatus" column="ATT_STATUS"/>
+		<result property="boardSeq" column="BOARD_SEQ"/>
+		<result property="documentHistorySeq" column="DOCUMENT_HISTORY_SEQ"/>
+	</resultMap>
+	
+	<resultMap type="FourInsurance" id="fourInsuranceResultSet">
+		<id property="fourInsSeq" column="FOUR_INS_SEQ"/>
+		<result property="empNoSeq" column="EMP_NO_SEQ"/>
+		<result property="companyNo" column="COMPANY_NO"/>
+		<result property="ntnEnrollDate" column="NTN_ENROLL_DATE"/>
+		<result property="hltEnrollDate" column="HLT_ENROLL_DATE"/>
+		<result property="empEnrollDate" column="EMP_ENROLL_DATE"/>
+		<result property="accEnrollDate" column="ACC_ENROLL_DATE"/>
+		<result property="ntnLossDate" column="NTN_LOSS_DATE"/>
+		<result property="hltLossDate" column="HLT_LOSS_DATE"/>
+		<result property="empLossDate" column="EMP_LOSS_DATE"/>
+		<result property="accLossDate" column="ACC_LOSS_DATE"/>
+		<result property="enrollDate" column="ENROLL_DATE"/>
+		<result property="hltLimitDate" column="HLT_LIMIT_DATE"/>
+		<result property="etcLimitDate" column="ETC_LIMIT_DATE"/>
+	</resultMap>
+	
+	<resultMap type="Family" id="familyResultSet">
+		<id property="familySeq" column="FAMILY_SEQ"/>
+		<result property="insertDate" column="INSERT_DATE"/>
+		<result property="empNoSeq" column="EMP_NO_SEQ"/>
+		<result property="relation" column="RELATION"/>
+		<result property="residentNo" column="RESIDENT_NO"/>
+		<result property="basicDeductionYN" column="BASIC_DEDUCTION_YN"/>
+		<result property="hshldrYN" column="HSHLDR_YN"/>
+		<result property="womenHshldrYN" column="WOMEN_HSHLDR_YN"/>
+		<result property="onePrntYN" column="ONE_PRNT_YN"/>
+		<result property="disorderYN" column="DISORDER_YN"/>
+		<result property="olderYN" column="OLDER_YN"/>
+		<result property="ageSixYN" column="AGE_SIX_YN"/>
+		<result property="childAdoptYN" column="CHILD_ADOPT_YN"/>
+		<result property="companyNo" column="COMPANY_NO"/>
+		<result property="famName" column="FAM_NAME"/>
+	</resultMap>
+	
+	<resultMap type="AcademicCareer" id="academicCareerResultSet">
+		<id property="academicCareerSeq" column="ACADEMIC_CAREER_SEQ"/>
+		<result property="empNoSeq" column="EMP_NO_SEQ"/>
+		<result property="institutionName" column="INSTITUTION_NAME"/>
+		<result property="major" column="MAJOR"/>
+		<result property="subMajor" column="SUB_MAJOR"/>
+		<result property="entscDate" column="ENTSC_DATE"/>
+		<result property="graduDate" column="GRADU_DATE"/>
+		<result property="graduYN" column="GRADU_YN"/>
+		<result property="degree" column="DEGREE"/>
+		<result property="companyNo" column="COMPANY_NO"/>
+	</resultMap>
+	
+	<resultMap type="Health" id="healthResultSet">
+		<id property="healthSeq" column="HEALTH_SEQ"/>
+		<result property="empNoSeq" column="EMP_NO_SEQ"/>
+		<result property="healthCheckDate" column="HEALTH_CHECK_DATE"/>
+		<result property="institutionName" column="INSTITUTION_NAME"/>
+		<result property="height" column="HEIGHT"/>
+		<result property="weight" column="WEIGHT"/>
+		<result property="bloodType" column="BLOOD_TYPE"/>
+		<result property="leftSight" column="LEFT_SIGHT"/>
+		<result property="rightSight" column="RIGHT_SIGHT"/>
+		<result property="colorBlindYN" column="COLOR_BLIND_YN"/>
+		<result property="leftHear" column="LEFT_HEAR"/>
+		<result property="rightHear" column="RIGHT_HEAR"/>
+		<result property="bloodPresureType" column="BLOOD_PRESSURE_TYPE"/>
+		<result property="recheckYN" column="RECHECK_YN"/>
+		<result property="disorderStep" column="DISORDER_STEP"/>
+		<result property="companyNo" column="COMPANY_NO"/>
+	</resultMap>
+	
+	<resultMap type="Career" id="careerResultSet">
+		<id property="careerSeq" column="CAREER_SEQ"/>
+		<result property="empNoSeq" column="EMP_NO_SEQ"/>
+		<result property="lastCompanyName" column="LAST_COMPANY_NAME"/>
+		<result property="enrollDate" column="ENROLL_DATE"/>
+		<result property="retireDate" column="RETIRE_DATE"/>
+		<result property="recogMonths" column="RECOG_MONTHS"/>
+		<result property="job" column="JOB"/>
+		<result property="lastPosition" column="LAST_POSITION"/>
+		<result property="retireReason" column="RETIRE_REASON"/>
+		<result property="companyNo" column="COMPANY_NO"/>
+	</resultMap>
+	
+	<resultMap type="License" id="licenseResultSet">
+		<id property="licenseSeq" column="LICENSE_SEQ"/>
+		<result property="empNoSeq" column="EMP_NO_SEQ"/>
+		<result property="licenseAcqDate" column="LICENSE_ACQ_DATE"/>
+		<result property="licenseCode" column="LICENSE_CODE"/>
+		<result property="licenseName" column="LICENSE_NAME"/>
+		<result property="licenseNo" column="LICENSE_NO"/>
+		<result property="licenseIssued" column="LICENSE_ISSUED"/>
+		<result property="companyNo" column="COMPANY_NO"/>
+	</resultMap>
+	
+	<resultMap type="Appointment" id="gvofodResultSet">
+		<id property="gvofodHistorySeq" column="GVOFOD_HISTORY_SEQ"/>
+		<result property="targetEmpNo" column="TARGET_EMP_NO"/>
+		<result property="companyNo" column="COMPANY_NO"/>
+		<result property="gvofodDate" column="GVOFOD_DATE"/>
+		<result property="gvofodCode" column="GVOFOD_CODE"/>
+		<result property="codeName" column="CODE_NAME"/>
+		<result property="locationCode" column="LOCATION_CODE"/>
+		<result property="locationName" column="LOCATION_NAME"/>
+		<result property="departmentCode" column="DEPARTMENT_CODE"/>
+		<result property="deptName" column="DEPT_NAME"/>
+		<result property="repofcCode" column="RSPOFC_CODE"/>
+		<result property="repofcName" column="RSPOFC_NAME"/>
+		<result property="positionCode" column="POSITION_CODE"/>
+		<result property="positionName" column="POSITION_NAME"/>
+		<result property="remark" column="REMARK"/>
+	</resultMap>
+	
+	<resultMap type="RewardPunish" id="RewardPunishResultSet">
+		<id property="rwrdPnshHistorySeq" column="RWRD_PNSH_HISTORY_SEQ"/>
+		<result property="targetEmpNo" column="TARGET_EMP_NO"/>
+		<result property="companyNo" column="COMPANY_NO"/>
+		<result property="rwrdPnshType" column="RWRD_PNSH_TYPE"/>
+		<result property="pnshStartDate" column="PNSH_START_DATE"/>
+		<result property="pnsgEndDate" column="PNSH_END_DATE"/>
+		<result property="rpReason" column="RP_REASON"/>
+		<result property="rpContent" column="RP_CONTENT"/>
+	</resultMap>
+	
+	<resultMap type="HRReview" id="HRReviewResultSet">
+		<id property="prsnlExmHistorySeq" column="PRSNL_EXM_HISTORY_SEQ"/>
+		<result property="targetEmpNo" column="TARGET_EMP_NO"/>
+		<result property="exmType" column="EXM_TYPE"/>
+		<result property="exmResult" column="EXM_RESULT"/>
+		<result property="companyNo" column="COMPANY_NO"/>
+		<result property="exmOpnion" column="EXM_OPNION"/>
+	</resultMap>
+	
+	<resultMap type="PayStepHistory" id="payStepHistoryResultSet">
+		<id property="payStepHistorySeq" column="PAY_STEP_HISTORY_SEQ"/>
+		<result property="targetEmpNo" column="TARGET_EMP_NO"/>
+		<result property="companyNo" column="COMPANY_NO"/>
+		<result property="positionCode" column="POSITION_CODE"/>
+		<result property="positionName" column="POSITION_NAME"/>
+		<result property="changePayStep" column="CHANGE_PAY_STEP"/>
+		<result property="payStep" column="PAY_STEP"/>
+		<result property="reason" column="REASON"/>
+	</resultMap>
+	
+	<resultMap type="Military" id="militaryResultSet">
+		<id property="militaryServiceSeq" column="MILITARY_SERVICE_SEQ"/>
+		<result property="empNoSeq" column="EMP_NO_SEQ"/>
+		<result property="endsType" column="ENDS_TYPE"/>
+		<result property="exmpReason" column="EXMP_REASON"/>
+		<result property="milPosition" column="MIL_POSITION"/>
+		<result property="milSpecies" column="MIL_SPECIES"/>
+		<result property="lastClass" column="LAST_CLASS"/>
+		<result property="servStartDate" column="SERV_START_DATE"/>
+		<result property="servEndDate" column="SERV_END_DATE"/>
+		<result property="companyNo" column="COMPANY_NO"/>
+	</resultMap>
+	
+	<resultMap type="LicenseCompany" id="licenseCompanyResultSet">
+		<id property="licenseCompanySeq" column="LICENSE_COMPANY_SEQ"/>
+		<result property="licenseName" column="LICENSE_NAME"/>
+		<result property="usageStatus" column="USAGE_STATUS"/>
+		<result property="provisionAmount" column="PROVISION_AMOUNT"/>
+		<result property="companyNo" column="COMPANY_NO"/>
+	</resultMap>
+	
+	<resultMap type="EducationEmployee" id="EducationEmployeeResultSet">
+		<id property="eduScheduleSeq" column="EDU_SCHEDULE_SEQ"/>
+		<result property="eduTitle" column="EDU_TITLE"/>
+		<result property="eduStartDate" column="EDU_START_DATE"/>
+		<result property="eduEndDate" column="EDU_END_DATE"/>
+		<result property="empNoSeq" column="EMP_NO_SEQ"/>
+		<result property="passFail" column="PASS_FAIL"/>
+		<result property="remark" column="REMARK"/>
+		<result property="companyNo" column="COMPANY"/>
+	</resultMap>
+	
+	<select id="loginManagerCheck" resultMap="employeeResultSet" parameterType="Employee">
+		SELECT *
+		  FROM EMPLOYEE
+		 WHERE EMP_NO = #{empNo}
+		   AND EMP_PWD = #{empPwd}
+		   AND COMPANY_NO = NULL
+		   AND EMP_STATUS = 'Y'
+	</select>
+	
+	<select id="loginEmployeeCheck" resultMap="employeeResultSet" parameterType="Employee">
+		SELECT *
+		  FROM EMPLOYEE
+		 WHERE EMP_NO = #{empNo}
+		   AND EMP_PWD = #{empPwd}
+		   AND COMPANY_NO = #{companyNo}
+		   AND( EMP_STATUS = 'Y'
+		    OR EMP_STATUS = 'D')
+	</select>
+	
+	<select id="selectPwd" resultType="java.lang.String" parameterType="Employee">
+		SELECT EMP_PWD
+
+		FROM EMPLOYEE
+		WHERE EMP_NO = #{empNo}
+		 AND( EMP_STATUS = 'Y'
+		    OR EMP_STATUS = 'D')
+		 AND COMPANY_NO = #{companyNo}
+	</select>
+
+	<select id="selectLoginUser" resultMap="employeeResultSet"
+		parameterType="Employee">
+		
+		SELECT /*+ 정상현::com.kh.insane.employee.model.dao.EmployeeDaoImpl.selectEmployee 고종현 0904수정*/
+               E.EMP_NO_SEQ
+             , E.EMP_NO
+             , E.COMPANY_NO
+             , E.EMP_PWD
+             , E.EMP_NAME_KOR
+             , E.EMP_NAME_ENG
+             , TO_CHAR(E.ENROLL_DATE, 'YYYY-MM-DD') AS ENROLL_DATE
+             , E.EMP_RESIDENT_NO
+             , E.EMP_LOCATION_CODE
+             , L.LOCATION_NAME
+             , E.EMP_DEPT_CODE
+             , D.DEPT_NAME
+             , E.EMP_POSITION_CODE
+             , P.POSITION_NAME
+             , E.EMP_RSPOFC_CODE
+             , R.RSPOFC_NAME
+             , E.EMP_PAY_STEP_CODE
+             , S.PAY_STEP
+             , E.EMP_ADDRESS
+             , E.RETIRE_DATE
+             , E.EMP_BIRTHDAY
+             , E.LUNAR_SOR
+             , E.GENDER
+             , E.EMP_HOME_TEL
+             , E.EMP_PHONE
+             , E.EMP_OFFICE_TEL
+             , E.EMP_FORM
+             , E.EMP_OCCUPATION
+             , E.EMP_SPOT
+             , E.EMP_PROJECT
+             , E.EMP_STATUS
+          FROM EMPLOYEE E
+          LEFT JOIN LOCATION L ON(E.EMP_LOCATION_CODE = L.LOCATION_SEQ)
+          LEFT JOIN DEPARTMENT D ON(E.EMP_DEPT_CODE = D.DEPT_CODE_SEQ)
+          LEFT JOIN POSITION P ON(E.EMP_POSITION_CODE = P.POSITION_SEQ)
+          LEFT JOIN RSPOFC R ON(E.EMP_RSPOFC_CODE = R.RSPOFC_SEQ)
+          LEFT JOIN PAY_STEP S ON(E.EMP_PAY_STEP_CODE = S.PAY_STEP_SEQ)
+         WHERE E.EMP_NO = #{empNo}
+           AND( EMP_STATUS = 'Y'
+		    OR EMP_STATUS = 'D')
+		   AND E.COMPANY_NO = #{companyNo}
+	</select>
+
+
+	<insert id="insertEmployee" parameterType="Employee">
+		INSERT INTO EMPLOYEE
+		VALUES(<!-- EMP_NO_SEQ.NEXTVAL -->
+		#{empNo}, #{empNo}, #{companyNo}, #{empPwd}
+		, '홍길동', 'HONGGILDONG',
+		TO_DATE('20181212', 'YYYYMMDD')
+		, '123456-1234567', 1, 'D1', 'J1',
+		'RS1', 'S1', '서울시 강동구'
+		, SYSDATE, TO_DATE('1990-01-01', 'YYYY-MM-DD'),
+		'LUNA', 'M'
+		, '02-1234-1234', '010-1234-1234', '070-1234-1234', 'F1',
+		'OC1'
+		, 'SAMU', 'NEW', 'Y')
+	</insert>
+	
+
+	
+	<update id="insertEmpInfo" parameterType="Employee">
+		UPDATE /*+ 이재형::com.kh.insane.member.dao.MemberDaoImpl.insertEmployee*/
+		       EMPLOYEE
+		   SET EMP_NAME_KOR = #{empNameKor}
+		     , EMP_NAME_ENG = #{empNameEng}
+		     , ENROLL_DATE = #{enrollDate}
+		     , EMP_RESIDENT_NO = #{empResidentNo}
+		     , EMP_LOCATION_CODE = #{empLocationCode}
+		     , EMP_DEPT_CODE = #{empDeptCode}
+		     , EMP_POSITION_CODE = #{empPositionCode}
+		     , EMP_RSPOFC_CODE = #{empRspofcCode}
+		     , EMP_PAY_STEP_CODE = #{payStepCode}
+		     , EMP_ADDRESS = #{empAddress}
+		     , EMP_BIRTHDAY = #{empBirthday}
+		     , LUNAR_SOR = #{lunarSor}
+		     , GENDER = #{gender}
+		     , EMP_HOME_TEL = #{empHomeTel}
+		     , EMP_PHONE = #{empPhone}
+		     , EMP_OFFICE_TEL = #{empOfficeTel}
+		     , EMP_FORM = #{empForm}
+		     , EMP_OCCUPATION = #{empOccupation}
+		     , EMP_SPOT = #{empSpot}
+		     , EMP_PROJECT = #{empProject}
+		     , EMP_STATUS = 'Y'
+		 WHERE EMP_NO_SEQ = #{empNoSeq}	
+	</update>	
+	
+	<insert id="insertEmpProfile" parameterType="ProfileAttachment">
+		INSERT /*+ 이재형::com.kh.insane.member.dao.MemberDaoImpl.insertEmpProfile*/
+		  INTO ATTACHMENTS
+		(
+		  ATTACHMENT_SEQ
+		, COMPANY_NO
+		, EMP_NO_SEQ
+		, FILE_PATH
+		, ORIGIN_NAME
+		, CHANGE_NAME
+		, ATT_STATUS
+		)
+		VALUES
+		(
+		  ATTACHMENT_SEQ.NEXTVAL
+		, #{companyNo}
+		, #{empNoSeq}
+		, #{filePath}
+		, #{originName}
+		, #{changeName}
+		, #{attStatus}
+		)
+	</insert>
+	
+	<select id="getListCount" parameterType="_int" resultType="_int">
+		SELECT /*+ 이재형::com.kh.insane.member.dao.MemberDaoImpl.getListCount*/
+		       COUNT(*)
+		  FROM EMPLOYEE
+		 WHERE EMP_STATUS = 'Y'
+		   AND COMPANY_NO = #{companyNo}
+	</select>
+	
+	<select id="selectEmpList" parameterType="_int" resultMap="employeeResultSet">
+		SELECT /*+ 이재형::com.kh.insane.member.dao.MemberDaoImpl.selectEmpList*/
+		       E.EMP_NO_SEQ
+		     , E.EMP_NO
+		     , E.COMPANY_NO
+		     , E.EMP_PWD
+		     , E.EMP_NAME_KOR
+		     , E.EMP_NAME_ENG
+			 , TO_CHAR(E.ENROLL_DATE, 'YYYY-MM-DD') AS ENROLL_DATE
+		     , E.EMP_RESIDENT_NO
+		     , E.EMP_LOCATION_CODE
+		     , L.LOCATION_NAME
+		     , E.EMP_DEPT_CODE
+		     , D.DEPT_NAME
+		     , E.EMP_POSITION_CODE
+		     , P.POSITION_NAME
+		     , E.EMP_RSPOFC_CODE
+		     , R.RSPOFC_NAME
+		     , E.EMP_PAY_STEP_CODE
+		     , S.PAY_STEP
+		     , E.EMP_ADDRESS
+		     , E.RETIRE_DATE
+		     , E.EMP_BIRTHDAY
+		     , E.LUNAR_SOR
+		     , E.GENDER
+		     , E.EMP_HOME_TEL
+		     , E.EMP_PHONE
+		     , E.EMP_OFFICE_TEL
+		     , E.EMP_FORM
+		     , E.EMP_OCCUPATION
+		     , E.EMP_SPOT
+		     , E.EMP_PROJECT
+		     , E.EMP_STATUS
+		  FROM EMPLOYEE E
+		  LEFT JOIN LOCATION L ON(E.EMP_LOCATION_CODE = L.LOCATION_SEQ)
+		  LEFT JOIN DEPARTMENT D ON(E.EMP_DEPT_CODE = D.DEPT_CODE_SEQ)
+		  LEFT JOIN POSITION P ON(E.EMP_POSITION_CODE = P.POSITION_SEQ)
+		  LEFT JOIN RSPOFC R ON(E.EMP_RSPOFC_CODE = R.RSPOFC_SEQ)
+		  LEFT JOIN PAY_STEP S ON(E.EMP_PAY_STEP_CODE = S.PAY_STEP_SEQ)
+		 WHERE E.EMP_STATUS = 'Y'
+		   AND E.COMPANY_NO = #{companyNo}
+		 ORDER BY EMP_NO_SEQ DESC
+	</select>
+	
+	<select id="selectEmpList2" parameterType="_int" resultMap="employeeResultSet">
+		SELECT /*+ 이재형::com.kh.insane.member.dao.MemberDaoImpl.selectEmpList*/
+		       E.EMP_NO_SEQ
+		     , E.EMP_NO
+		     , E.COMPANY_NO
+		     , E.EMP_PWD
+		     , E.EMP_NAME_KOR
+		     , E.EMP_NAME_ENG
+			 , TO_CHAR(E.ENROLL_DATE, 'YYYY-MM-DD') AS ENROLL_DATE
+		     , E.EMP_RESIDENT_NO
+		     , E.EMP_LOCATION_CODE
+		     , L.LOCATION_NAME
+		     , E.EMP_DEPT_CODE
+		     , D.DEPT_NAME
+		     , E.EMP_POSITION_CODE
+		     , P.POSITION_NAME
+		     , E.EMP_RSPOFC_CODE
+		     , R.RSPOFC_NAME
+		     , E.EMP_PAY_STEP_CODE
+		     , S.PAY_STEP
+		     , E.EMP_ADDRESS
+		     , E.RETIRE_DATE
+		     , E.EMP_BIRTHDAY
+		     , E.LUNAR_SOR
+		     , E.GENDER
+		     , E.EMP_HOME_TEL
+		     , E.EMP_PHONE
+		     , E.EMP_OFFICE_TEL
+		     , E.EMP_FORM
+		     , E.EMP_OCCUPATION
+		     , E.EMP_SPOT
+		     , E.EMP_PROJECT
+		     , E.EMP_STATUS
+		  FROM EMPLOYEE E
+		  LEFT JOIN LOCATION L ON(E.EMP_LOCATION_CODE = L.LOCATION_SEQ)
+		  LEFT JOIN DEPARTMENT D ON(E.EMP_DEPT_CODE = D.DEPT_CODE_SEQ)
+		  LEFT JOIN POSITION P ON(E.EMP_POSITION_CODE = P.POSITION_SEQ)
+		  LEFT JOIN RSPOFC R ON(E.EMP_RSPOFC_CODE = R.RSPOFC_SEQ)
+		  LEFT JOIN PAY_STEP S ON(E.EMP_PAY_STEP_CODE = S.PAY_STEP_SEQ)
+		 WHERE E.EMP_STATUS = 'D'
+		   AND E.COMPANY_NO = #{companyNo}
+		 ORDER BY EMP_NO_SEQ DESC
+	</select>
+	
+	<select id="selectLocationList" parameterType="_int" resultMap="locationResultSet">
+		SELECT /*+ 이재형::com.kh.insane.member.dao.MemberDaoImpl.selectLocationList*/
+		       *
+		  FROM LOCATION
+		 WHERE COMPANY_NO = #{companyNo}
+	</select>
+	
+	<select id="selectDepartmentList" resultMap="departmentResultSet">
+		SELECT /*+ 이재형::com.kh.insane.member.dao.MemberDaoImpl.selectDepartmentList*/
+		       *
+		  FROM DEPARTMENT
+		 WHERE COMPANY_NO = #{companyNo}
+	</select>
+	
+	<select id="selectPositionList" resultMap="positionResultSet">
+		SELECT /*+ 이재형::com.kh.insane.member.dao.MemberDaoImpl.selectPositionList*/
+		       *
+		  FROM POSITION
+		 WHERE COMPANY_NO = #{companyNo}
+	</select>
+	
+	<select id="selectRspofcList" resultMap="rspofcResultSet">
+		SELECT /*+ 이재형::com.kh.insane.member.dao.MemberDaoImpl.selectPositionList*/
+		       *
+		  FROM RSPOFC
+		 WHERE COMPANY_NO = #{companyNo}
+	</select>
+	
+	<select id="selectPayStepList" resultMap="payStepResultSet">
+		SELECT /*+ 이재형::com.kh.insane.member.dao.MemberDaoImpl.selectPositionList*/
+		       *
+		  FROM PAY_STEP
+		 WHERE COMPANY_NO = #{companyNo}
+	</select>
+	
+	<!-- 김지철 증명서 발급 관련.-->
+	<select id="selectEmployeeUseSeq" parameterType="_int" resultMap="employeeResultSet">
+		SELECT * FROM EMPLOYEE WHERE EMP_NO_SEQ = #{empNoSeq}
+	</select> 
+	
+	<select id="retiredListCount" parameterType="Employee" resultType="_int">
+		SELECT COUNT(*)
+		  FROM EMPLOYEE
+		 WHERE EMP_STATUS = #{empStatus} 
+		 <if test="empNameKor != null">
+		   AND EMP_NAME_KOR = #{empNameKor}
+		 </if>
+	</select>
+	
+	<select id="selectRetiredList" parameterType="Employee" resultMap="employeeResultSet">
+		SELECT *
+		  FROM EMPLOYEE
+		 WHERE EMP_STATUS = #{empStatus} 
+		   AND COMPANY_NO = #{companyNo}
+		 <if test="empNameKor != null">
+		   AND EMP_NAME_KOR = #{empNameKor}
+		 </if>
+	</select>
+	
+	<select id="selectEmpOneInfo" parameterType="_int" resultMap="employeeResultSet">
+		SELECT /*+ 이재형::com.kh.insane.member.dao.MemberDaoImpl.selectEmpOneInfo*/
+		       E.EMP_NO_SEQ
+		     , E.EMP_NO
+		     , E.COMPANY_NO
+		     , E.EMP_PWD
+		     , E.EMP_NAME_KOR
+		     , E.EMP_NAME_ENG
+			 , TO_CHAR(E.ENROLL_DATE, 'YYYY-MM-DD') AS ENROLL_DATE
+		     , E.EMP_RESIDENT_NO
+		     , E.EMP_LOCATION_CODE
+		     , L.LOCATION_NAME
+		     , E.EMP_DEPT_CODE
+		     , D.DEPT_NAME
+		     , E.EMP_POSITION_CODE
+		     , P.POSITION_NAME
+		     , E.EMP_RSPOFC_CODE
+		     , R.RSPOFC_NAME
+		     , E.EMP_PAY_STEP_CODE
+		     , S.PAY_STEP
+		     , E.EMP_ADDRESS
+		     , E.RETIRE_DATE
+		     , TO_CHAR(E.RETIRE_DATE, 'YYYY-MM-DD') AS RETIRE_DATE
+		     , TO_CHAR(E.EMP_BIRTHDAY, 'YYYY-MM-DD') AS EMP_BIRTHDAY
+		     , E.LUNAR_SOR
+		     , E.GENDER
+		     , E.EMP_HOME_TEL
+		     , E.EMP_PHONE
+		     , E.EMP_OFFICE_TEL
+		     , E.EMP_FORM
+		     , E.EMP_OCCUPATION
+		     , E.EMP_SPOT
+		     , E.EMP_PROJECT
+		     , E.EMP_STATUS
+		  FROM EMPLOYEE E
+		  LEFT JOIN LOCATION L ON(E.EMP_LOCATION_CODE = L.LOCATION_SEQ)
+		  LEFT JOIN DEPARTMENT D ON(E.EMP_DEPT_CODE = D.DEPT_CODE_SEQ)
+		  LEFT JOIN POSITION P ON(E.EMP_POSITION_CODE = P.POSITION_SEQ)
+		  LEFT JOIN RSPOFC R ON(E.EMP_RSPOFC_CODE = R.RSPOFC_SEQ)
+		  LEFT JOIN PAY_STEP S ON(E.EMP_PAY_STEP_CODE = S.PAY_STEP_SEQ)
+		 WHERE E.EMP_STATUS = 'Y'
+		   AND E.EMP_NO_SEQ = #{empNoSeq}
+	</select>
+	
+	<select id="selectEmpOneProfile" parameterType="ProfileAttachment" resultMap="attachmentResultSet">
+		SELECT /*+ 이재형::com.kh.insane.member.dao.MemberDaoImpl.selectEmpOneProfile*/
+		       ATTACHMENT_SEQ
+		     , COMPANY_NO
+		     , EMP_NO_SEQ
+		     , FILE_PATH
+		     , ORIGIN_NAME
+		     , CHANGE_NAME
+		     , ATT_STATUS
+		     , BOARD_SEQ
+		     , DOCUMENT_HISTORY_SEQ
+		  FROM (SELECT ATTACHMENT_SEQ
+		             , COMPANY_NO
+		             , EMP_NO_SEQ
+		             , FILE_PATH
+		             , ORIGIN_NAME
+		             , CHANGE_NAME
+		             , ATT_STATUS
+		             , BOARD_SEQ
+		             , DOCUMENT_HISTORY_SEQ
+		          FROM ATTACHMENTS
+		         WHERE EMP_NO_SEQ = #{empNoSeq}
+		           AND ATT_STATUS = #{attStatus}
+		         ORDER BY ATTACHMENT_SEQ DESC)
+		 WHERE ROWNUM = 1		
+	</select>
+	
+	<insert id="insertFourInsurance" parameterType="Employee">
+		INSERT /*+ 이재형::com.kh.insane.member.dao.MemberDaoImpl.insertFourInsurance*/
+		  INTO FOUR_INSURANCE
+		(
+		  FOUR_INS_SEQ
+		, EMP_NO_SEQ
+		, COMPANY_NO
+		)
+		VALUES
+		(
+		  FOUR_INS_SEQ.NEXTVAL
+		, #{empNoSeq}
+		, #{companyNo}
+		)
+	</insert>
+	
+	<select id="selectInsInfo" parameterType="_int" resultMap="fourInsuranceResultSet">
+		SELECT /*+ 이재형::com.kh.insane.member.dao.MemberDaoImpl.selectInsInfo*/
+		       F.FOUR_INS_SEQ
+		     , F.EMP_NO_SEQ
+		     , F.COMPANY_NO
+		     , TO_CHAR(F.NTN_ENROLL_DATE, 'YYYY-MM-DD') AS NTN_ENROLL_DATE
+		     , TO_CHAR(F.HLT_ENROLL_DATE, 'YYYY-MM-DD') AS HLT_ENROLL_DATE
+		     , TO_CHAR(F.EMP_ENROLL_DATE, 'YYYY-MM-DD') AS EMP_ENROLL_DATE
+		     , TO_CHAR(F.ACC_ENROLL_DATE, 'YYYY-MM-DD') AS ACC_ENROLL_DATE
+		     , TO_CHAR(F.NTN_LOSS_DATE, 'YYYY-MM-DD') AS NTN_LOSS_DATE
+		     , TO_CHAR(F.HLT_LOSS_DATE, 'YYYY-MM-DD') AS HLT_LOSS_DATE
+		     , TO_CHAR(F.EMP_LOSS_DATE, 'YYYY-MM-DD') AS EMP_LOSS_DATE
+		     , TO_CHAR(F.ACC_LOSS_DATE, 'YYYY-MM-DD') AS ACC_LOSS_DATE
+		     , TO_CHAR(E.ENROLL_DATE, 'YYYY-MM-DD') AS ENROLL_DATE
+		     , TO_CHAR(E.ENROLL_DATE + 14, 'YYYY-MM-DD') AS HLT_LIMIT_DATE
+		     , TO_CHAR(ADD_MONTHS(E.ENROLL_DATE, 1), 'YYYY-MM')||-15 AS ETC_LIMIT_DATE
+		  FROM FOUR_INSURANCE F
+		  JOIN EMPLOYEE E ON (E.EMP_NO_SEQ = F.EMP_NO_SEQ)
+		 WHERE F.EMP_NO_SEQ = #{reqEmpNoSeq}
+	</select>
+	
+	<update id="updateHltIns" parameterType="_int">
+		UPDATE /*+ 이재형::com.kh.insane.member.dao.MemberDaoImpl.updateHltIns*/
+		       FOUR_INSURANCE
+		   SET HLT_ENROLL_DATE = SYSDATE
+		 WHERE EMP_NO_SEQ = #{reqEmpNoSeq}
+	</update>
+	
+	<update id="updateAccIns" parameterType="_int">
+		UPDATE /*+ 이재형::com.kh.insane.member.dao.MemberDaoImpl.updateAccIns*/
+		       FOUR_INSURANCE
+		   SET ACC_ENROLL_DATE = SYSDATE
+		 WHERE EMP_NO_SEQ = #{reqEmpNoSeq}
+	</update>
+	
+	<update id="updateEmpIns" parameterType="_int">
+		UPDATE /*+ 이재형::com.kh.insane.member.dao.MemberDaoImpl.updateEmpIns*/
+		       FOUR_INSURANCE
+		   SET EMP_ENROLL_DATE = SYSDATE
+		 WHERE EMP_NO_SEQ = #{reqEmpNoSeq}
+	</update>
+	
+	<update id="updateNtnIns" parameterType="_int">
+		UPDATE /*+ 이재형::com.kh.insane.member.dao.MemberDaoImpl.updateNtnIns*/
+		       FOUR_INSURANCE
+		   SET NTN_ENROLL_DATE = SYSDATE
+		 WHERE EMP_NO_SEQ = #{reqEmpNoSeq}
+	</update>
+	
+	<select id="selectFamInfo" parameterType="_int" resultMap="familyResultSet">
+		SELECT /*+ 이재형::com.kh.insane.member.dao.MemberDaoImpl.selectFamInfo*/
+		       FAMILY_SEQ
+		     , INSERT_DATE
+		     , EMP_NO_SEQ
+		     , RELATION
+		     , RESIDENT_NO
+		     , BASIC_DEDUCTION_YN
+		     , HSHLDR_YN
+		     , WOMEN_HSHLDR_YN
+		     , ONE_PRNT_YN
+		     , DISORDER_YN
+		     , OLDER_YN
+		     , AGE_SIX_YN
+		     , CHILD_ADOPT_YN
+		     , COMPANY_NO
+		     , FAM_NAME
+		  FROM FAMILY
+		 WHERE EMP_NO_SEQ = #{reqEmpNoSeq}
+	</select>
+	
+	<select id="selectAcaInfo" parameterType="_int" resultMap="academicCareerResultSet">
+		SELECT /*+ 이재형::com.kh.insane.member.dao.MemberDaoImpl.selectAcaInfo*/
+		       ACADEMIC_CAREER_SEQ
+		     , EMP_NO_SEQ
+		     , INSTITUTION_NAME
+		     , MAJOR
+		     , SUB_MAJOR
+		     , TO_CHAR(ENTSC_DATE, 'YYYY-MM') AS ENTSC_DATE
+		     , TO_CHAR(GRADU_DATE, 'YYYY-MM') AS GRADU_DATE
+		     , GRADU_YN
+		     , DEGREE
+		     , COMPANY_NO
+		  FROM ACADEMIC_CAREER
+		 WHERE EMP_NO_SEQ = #{reqEmpNoSeq}
+		 ORDER BY ENTSC_DATE DESC
+	</select>
+	
+	<select id="selectHealthInfo" parameterType="_int" resultMap="healthResultSet">
+		SELECT /*+ 이재형::com.kh.insane.member.dao.MemberDaoImpl.selectHealthInfo*/
+		       HEALTH_SEQ
+		     , EMP_NO_SEQ
+		     , TO_CHAR(HEALTH_CHECK_DATE, 'YYYY-MM-DD') AS HEALTH_CHECK_DATE
+		     , INSTITUTION_NAME
+		     , HEIGHT
+		     , WEIGHT
+		     , BLOOD_TYPE
+		     , LEFT_SIGHT
+		     , RIGHT_SIGHT
+		     , COLOR_BLIND_YN
+		     , LEFT_HEAR
+		     , RIGHT_HEAR
+		     , BLOOD_PRESSURE_TYPE
+		     , RECHECK_YN
+		     , DISORDER_STEP
+		     , COMPANY_NO
+		  FROM HEALTH
+		 WHERE EMP_NO_SEQ = #{reqEmpNoSeq}
+		 ORDER BY HEALTH_CHECK_DATE DESC	
+	</select>
+	
+	<select id="selectCareerInfo" parameterType="_int" resultMap="careerResultSet">
+		SELECT /*+ 이재형::com.kh.insane.member.dao.MemberDaoImpl.selectCareerInfo*/
+		       CAREER_SEQ
+		     , EMP_NO_SEQ
+		     , LAST_COMPANY_NAME
+		     , TO_CHAR(ENROLL_DATE, 'YYYY-MM') AS ENROLL_DATE
+		     , TO_CHAR(RETIRE_DATE, 'YYYY-MM') AS RETIRE_DATE
+		     , RECOG_MONTHS
+		     , JOB
+		     , LAST_POSITION
+		     , RETIRE_REASON
+		     , COMPANY_NO
+		  FROM CAREER
+		 WHERE EMP_NO_SEQ = #{reqEmpNoSeq}
+		 ORDER BY RETIRE_DATE DESC
+	</select>
+	
+	<select id="selectLicenseInfo" parameterType="_int" resultMap="licenseResultSet">
+		SELECT /*+ 이재형::com.kh.insane.member.dao.MemberDaoImpl.selectLicenseInfo*/
+		       L.LICENSE_SEQ
+		     , L.EMP_NO_SEQ
+		     , TO_CHAR(L.LICENSE_ACQ_DATE, 'YYYY-MM') AS LICENSE_ACQ_DATE
+		     , L.LICENSE_CODE
+		     , LC.LICENSE_NAME
+		     , L.LICENSE_NO
+		     , L.LICENSE_ISSUED
+		     , L.COMPANY_NO
+		  FROM LICENSE L
+		  JOIN LICENSE_COMPANY LC ON(LC.LICENSE_COMPANY_SEQ = L.LICENSE_CODE)
+		 WHERE L.EMP_NO_SEQ = #{reqEmpNoSeq}
+		 ORDER BY L.LICENSE_ACQ_DATE DESC
+	</select>
+	
+	<select id="selectAppointInfo" parameterType="_int" resultMap="gvofodResultSet">
+		SELECT /*+ 이재형::com.kh.insane.member.dao.MemberDaoImpl.selectAppointInfo*/
+		       G.GVOFOD_HISTORY_SEQ
+		     , G.TARGET_EMP_NO
+		     , G.COMPANY_NO
+		     , TO_CHAR(G.GVOFOD_DATE, 'YYYY-MM-DD') AS GVOFOD_DATE
+		     , G.GVOFOD_CODE
+		     , C.CODE_NAME
+		     , G.LOCATION_CODE
+		     , L.LOCATION_NAME
+		     , G.DEPARTMENT_CODE
+		     , D.DEPT_NAME
+		     , G.RSPOFC_CODE
+		     , R.RSPOFC_NAME
+		     , G.POSITION_CODE
+		     , P.POSITION_NAME
+		     , G.REMARK
+		  FROM GVOFOD_HISTORY G
+		  JOIN COMMON_CODE C ON (C.COMMON_CODE_SEQ = G.GVOFOD_CODE)
+		  JOIN LOCATION L ON (L.LOCATION_SEQ = G.LOCATION_CODE)
+		  JOIN DEPARTMENT D ON (D.DEPT_CODE_SEQ = G.DEPARTMENT_CODE)
+		  LEFT JOIN RSPOFC R ON (R.RSPOFC_SEQ = G.RSPOFC_CODE)
+		  JOIN POSITION P ON (P.POSITION_SEQ = G.POSITION_CODE)
+		 WHERE G.TARGET_EMP_NO = #{reqEmpNoSeq}
+		 ORDER BY GVOFOD_DATE DESC
+	</select>
+	
+	<select id="selectRPInfo" parameterType="_int" resultMap="RewardPunishResultSet">
+		SELECT /*+ 이재형::com.kh.insane.member.dao.MemberDaoImpl.selectRPInfo*/
+		       RWRD_PNSH_HISTORY_SEQ
+		     , TARGET_EMP_NO
+		     , COMPANY_NO
+		     , RWRD_PNSH_TYPE
+		     , TO_CHAR(PNSH_START_DATE, 'YYYY-MM-DD') AS PNSH_START_DATE
+		     , TO_CHAR(PNSH_END_DATE, 'YYYY-MM-DD') AS PNSH_END_DATE
+		     , RP_REASON
+		     , RP_CONTENT
+		  FROM RWRD_PNSH_HISTORY
+		 WHERE TARGET_EMP_NO = #{reqEmpNoSeq}
+		 ORDER BY RWRD_PNSH_TYPE DESC
+		        , PNSH_START_DATE DESC
+	</select>
+	
+	<select id="selectHRreviewInfo" parameterType="_int" resultMap="HRReviewResultSet">
+		SELECT /*+ 이재형::com.kh.insane.member.dao.MemberDaoImpl.selectHRreviewInfo*/
+		       PRSNL_EXM_HISTORY_SEQ
+		     , TARGET_EMP_NO
+		     , EXM_TYPE
+		     , EXM_RESULT
+		     , COMPANY_NO
+		     , EXM_OPNION
+		  FROM PRSNL_EXM_HISTORY
+		 WHERE TARGET_EMP_NO = #{reqEmpNoSeq}
+		 ORDER BY PRSNL_EXM_HISTORY_SEQ DESC
+	</select>
+	
+	<select id="selectPayStepInfo" parameterType="_int" resultMap="payStepHistoryResultSet">
+		SELECT /*+ 이재형::com.kh.insane.member.dao.MemberDaoImpl.selectPayStepInfo*/
+		       H.PAY_STEP_HISTORY_SEQ
+		     , H.TARGET_EMP_NO
+		     , H.COMPANY_NO
+		     , H.POSITION_CODE
+		     , P.POSITION_NAME
+		     , H.CHANGE_PAY_STEP
+		     , S.PAY_STEP
+		     , H.REASON
+		  FROM PAY_STEP_HISTORY H
+		  JOIN POSITION P ON (P.POSITION_SEQ = H.POSITION_CODE)
+		  JOIN PAY_STEP S ON (S.PAY_STEP_SEQ = H.CHANGE_PAY_STEP)
+		 WHERE H.TARGET_EMP_NO = #{reqEmpNoSeq}
+		 ORDER BY H.PAY_STEP_HISTORY_SEQ DESC
+	</select>
+	
+	<select id="selectMiliInfo" parameterType="_int" resultMap="militaryResultSet">
+		SELECT /*+ 이재형::com.kh.insane.member.dao.MemberDaoImpl.selectMiliInfo*/
+		       MILITARY_SERVICE_SEQ
+		     , EMP_NO_SEQ
+		     , ENDS_TYPE
+		     , EXMP_REASON
+		     , MIL_POSITION
+		     , MIL_SPECIES
+		     , LAST_CLASS
+		     , TO_CHAR(SERV_START_DATE, 'YYYY-MM-DD') AS SERV_START_DATE
+		     , TO_CHAR(SERV_END_DATE, 'YYYY-MM-DD') AS SERV_END_DATE
+		     , COMPANY_NO
+		  FROM MILITARY_SERVICE
+		 WHERE EMP_NO_SEQ = #{reqEmpNoSeq}
+	</select>
+	
+	<update id="updateEmpInfo" parameterType="Employee">
+		UPDATE /*+ 이재형::com.kh.insane.member.dao.MemberDaoImpl.updateEmpInfo*/
+		       EMPLOYEE
+		   SET EMP_NAME_KOR = #{empNameKor}
+		     , EMP_NAME_ENG = #{empNameEng}
+		     , EMP_RESIDENT_NO = #{empResidentNo}
+		     , EMP_LOCATION_CODE = #{empLocationCode}
+		     , EMP_DEPT_CODE = #{empDeptCode}
+		     , EMP_POSITION_CODE = #{empPositionCode}
+		     , EMP_RSPOFC_CODE = #{empRspofcCode}
+		     , EMP_PAY_STEP_CODE = #{payStepCode}
+		     , EMP_ADDRESS = #{empAddress}
+		     , EMP_BIRTHDAY = #{empBirthday}
+		     , LUNAR_SOR = #{lunarSor}
+		     , GENDER = #{gender}
+		     , EMP_HOME_TEL = #{empHomeTel}
+		     , EMP_PHONE = #{empPhone}
+		     , EMP_OFFICE_TEL = #{empOfficeTel}
+		     , EMP_FORM = #{empForm}
+		     , EMP_OCCUPATION = #{empOccupation}
+		     , EMP_SPOT = #{empSpot}
+		     , EMP_PROJECT = #{empProject}
+		 WHERE EMP_NO_SEQ = #{empNoSeq}
+	</update>
+	
+	<insert id="insertMiliInfo" parameterType="Military">
+		INSERT /*+ 이재형::com.kh.insane.member.dao.MemberDaoImpl.insertMiliInfo*/
+		  INTO MILITARY_SERVICE
+		(
+		  MILITARY_SERVICE_SEQ
+		, EMP_NO_SEQ
+		, ENDS_TYPE
+		, EXMP_REASON
+		, MIL_POSITION
+		, MIL_SPECIES
+		, LAST_CLASS
+		, SERV_START_DATE
+		, SERV_END_DATE
+		, COMPANY_NO
+		)
+		VALUES 
+		(
+		  MILITARY_SERVICE_SEQ.NEXTVAL
+		, #{empNoSeq}
+		, #{endsType}
+		, #{exmpReason}
+		, #{milPosition}
+		, #{milSpecies}
+		, #{lastClass}
+		, #{servStartDate}
+		, #{servEndDate}
+		, #{companyNo}
+		)
+	</insert>
+	
+	<insert id="insertFamInfo" parameterType="Family">
+		INSERT /*+ 이재형::com.kh.insane.member.dao.MemberDaoImpl.insertFamInfo*/
+		  INTO FAMILY
+		(
+		  FAMILY_SEQ
+		, INSERT_DATE
+		, EMP_NO_SEQ
+		, RELATION
+		, RESIDENT_NO
+		, BASIC_DEDUCTION_YN
+		, HSHLDR_YN
+		, WOMEN_HSHLDR_YN
+		, ONE_PRNT_YN
+		, DISORDER_YN
+		, OLDER_YN
+		, AGE_SIX_YN
+		, CHILD_ADOPT_YN
+		, COMPANY_NO
+		, FAM_NAME
+		)
+		VALUES
+		(
+		  FAMILY_SEQ.NEXTVAL
+		, SYSDATE
+		, #{empNoSeq}
+		, #{relation}
+		, #{residentNo}
+		, #{basicDeductionYN}
+		, #{hshldrYN}
+		, #{womenHshldrYN}
+		, #{onePrntYN}
+		, #{disorderYN}
+		, #{olderYN}
+		, #{ageSixYN}
+		, #{childAdoptYN}
+		, #{companyNo}
+		, #{famName}
+		)
+	</insert>
+	
+	<delete id="deleteFamInfo" parameterType="_int">
+		DELETE /*+ 이재형::com.kh.insane.member.dao.MemberDaoImpl.deleteFamInfo*/
+		       FAMILY
+		 WHERE FAMILY_SEQ = #{familySeq}
+	</delete>
+	
+	<insert id="insertAcaInfo" parameterType="AcademicCareer">
+		INSERT /*+ 이재형::com.kh.insane.member.dao.MemberDaoImpl.insertAcaInfo*/
+		  INTO ACADEMIC_CAREER
+		(
+		  ACADEMIC_CAREER_SEQ
+		, EMP_NO_SEQ
+		, INSTITUTION_NAME
+		, MAJOR
+		, SUB_MAJOR
+		, ENTSC_DATE
+		, GRADU_DATE
+		, GRADU_YN
+		, DEGREE
+		, COMPANY_NO
+		)
+		VALUES
+		(
+		  ACADEMIC_CAREER_SEQ.NEXTVAL
+		, #{empNoSeq}
+		, #{institutionName}
+		, #{major}
+		, #{subMajor}
+		, #{entscDate}
+		, #{graduDate}
+		, #{graduYN}
+		, #{degree}
+		, #{companyNo}
+		)
+	</insert>
+	
+	<delete id="deleteAcaInfo" parameterType="_int">
+		DELETE /*+ 이재형::com.kh.insane.member.dao.MemberDaoImpl.deleteAcaInfo*/
+		       ACADEMIC_CAREER
+		 WHERE ACADEMIC_CAREER_SEQ = #{academicCareerSeq}
+	</delete>
+	
+	<insert id="insertHealthInfo" parameterType="Health">
+		INSERT /*+ 이재형::com.kh.insane.member.dao.MemberDaoImpl.insertHealthInfo*/
+		  INTO HEALTH
+		(
+		  HEALTH_SEQ
+		, EMP_NO_SEQ
+		, HEALTH_CHECK_DATE
+		, INSTITUTION_NAME
+		, HEIGHT
+		, WEIGHT
+		, BLOOD_TYPE
+		, LEFT_SIGHT
+		, RIGHT_SIGHT
+		, COLOR_BLIND_YN
+		, LEFT_HEAR
+		, RIGHT_HEAR
+		, BLOOD_PRESSURE_TYPE
+		, RECHECK_YN
+		, DISORDER_STEP
+		, COMPANY_NO
+		)
+		VALUES
+		(
+		  HEALTH_SEQ.NEXTVAL
+		, #{empNoSeq}
+		, #{healthCheckDate}
+		, #{institutionName}
+		, #{height}
+		, #{weight}
+		, #{bloodType}
+		, #{leftSight}
+		, #{rightSight}
+		, #{colorBlindYN}
+		, #{leftHear}
+		, #{rightHear}
+		, #{bloodPresureType}
+		, #{recheckYN}
+		, #{disorderStep}
+		, #{companyNo}
+		)
+	</insert>
+	
+	<delete id="deleteHealthInfo" parameterType="_int">
+		DELETE /*+ 이재형::com.kh.insane.member.dao.MemberDaoImpl.deleteHealthInfo*/
+		       HEALTH
+		 WHERE HEALTH_SEQ = #{healthSeq}
+	</delete>
+	
+	<insert id="insertCareerInfo" parameterType="Career">
+		INSERT /*+ 이재형::com.kh.insane.member.dao.MemberDaoImpl.insertCareerInfo*/
+		  INTO CAREER
+		(
+		  CAREER_SEQ
+		, EMP_NO_SEQ
+		, LAST_COMPANY_NAME
+		, ENROLL_DATE
+		, RETIRE_DATE
+		, RECOG_MONTHS
+		, JOB
+		, LAST_POSITION
+		, RETIRE_REASON
+		, COMPANY_NO
+		)
+		VALUES
+		(
+		  CAREER_SEQ.NEXTVAL
+		, #{empNoSeq}
+		, #{lastCompanyName}
+		, #{enrollDate}
+		, #{retireDate}
+		, #{recogMonths}
+		, #{job}
+		, #{lastPosition}
+		, #{retireReason}
+		, #{companyNo}
+		)
+	</insert>
+	
+	<delete id="deleteCareerInfo" parameterType="_int">
+		DELETE /*+ 이재형::com.kh.insane.member.dao.MemberDaoImpl.deleteCareerInfo*/
+		       CAREER
+		 WHERE CAREER_SEQ = #{careerSeq}
+	</delete>
+	
+	<select id="selectLicenseCompanyInfo" parameterType="_int" resultMap="licenseCompanyResultSet">
+		SELECT /*+ 이재형::com.kh.insane.member.dao.MemberDaoImpl.selectLicenseCompanyInfo*/
+		       LICENSE_COMPANY_SEQ
+		     , LICENSE_NAME
+		     , USAGE_STATUS
+		     , PROVISION_AMOUNT
+		     , COMPANY_NO
+		  FROM LICENSE_COMPANY
+		 WHERE COMPANY_NO = #{companyNo}
+	</select>
+	
+	<insert id="insertLicenseInfo" parameterType="License">
+		INSERT /*+ 이재형::com.kh.insane.member.dao.MemberDaoImpl.insertLicenseInfo*/
+		  INTO LICENSE
+		(
+		  LICENSE_SEQ
+		, EMP_NO_SEQ
+		, LICENSE_ACQ_DATE
+		, LICENSE_CODE
+		, LICENSE_NO
+		, LICENSE_ISSUED
+		, COMPANY_NO
+		)
+		VALUES
+		(
+		  LICENSE_SEQ.NEXTVAL
+		, #{empNoSeq}
+		, #{licenseAcqDate}
+		, #{licenseCode}
+		, #{licenseNo}
+		, #{licenseIssued}
+		, #{companyNo}
+		)
+	</insert>
+	
+	<delete id="deleteLicenseInfo" parameterType="_int">
+		DELETE /*+ 이재형::com.kh.insane.member.dao.MemberDaoImpl.deleteLicenseInfo*/
+		       LICENSE
+		 WHERE LICENSE_SEQ = #{licenseSeq}
+	</delete>
+	
+	<insert id="insertAppointmentInfo" parameterType="Appointment">
+		INSERT /*+ 이재형::com.kh.insane.member.dao.MemberDaoImpl.insertAppointmentInfo*/
+		  INTO GVOFOD_HISTORY
+		(
+		  GVOFOD_HISTORY_SEQ
+		, TARGET_EMP_NO
+		, COMPANY_NO
+		, GVOFOD_DATE
+		, GVOFOD_CODE
+		, LOCATION_CODE
+		, DEPARTMENT_CODE
+		, RSPOFC_CODE
+		, POSITION_CODE
+		, REMARK
+		)
+		VALUES
+		(
+		  GVOFOD_HISTORY_SEQ.NEXTVAL
+		, #{targetEmpNo}
+		, #{companyNo}
+		, #{gvofodDate}
+		, #{gvofodCode}
+		, #{locationCode}
+		, #{departmentCode}
+		, #{repofcCode}
+		, #{positionCode}
+		, #{remark}
+		)
+	</insert>
+	
+	<delete id="deleteAppointmentInfo" parameterType="_int">
+		DELETE /*+ 이재형::com.kh.insane.member.dao.MemberDaoImpl.deleteAppointmentInfo*/
+		       GVOFOD_HISTORY
+		 WHERE GVOFOD_HISTORY_SEQ = #{gvofodHistorySeq}
+	</delete>
+	
+	<insert id="insertRewardPunishInfo" parameterType="RewardPunish">
+		INSERT /*+ 이재형::com.kh.insane.member.dao.MemberDaoImpl.insertRewardPunishInfo*/
+		  INTO RWRD_PNSH_HISTORY
+		(
+		  RWRD_PNSH_HISTORY_SEQ
+		, TARGET_EMP_NO
+		, COMPANY_NO
+		, RWRD_PNSH_TYPE
+		, PNSH_START_DATE
+		, PNSH_END_DATE
+		, RP_REASON
+		, RP_CONTENT
+		)
+		VALUES
+		(
+		  RWRD_PNSH_HISTORY_SEQ.NEXTVAL
+		, #{targetEmpNo}
+		, #{companyNo}
+		, #{rwrdPnshType}
+		, #{pnshStartDate}
+		, #{pnsgEndDate}
+		, #{rpReason}
+		, #{rpContent}
+		)
+	</insert>
+	
+	<delete id="deleteRewardPunishInfo" parameterType="_int">
+		DELETE /*+ 이재형::com.kh.insane.member.dao.MemberDaoImpl.deleteRewardPunishInfo*/
+		       RWRD_PNSH_HISTORY
+		 WHERE RWRD_PNSH_HISTORY_SEQ = #{rwrdPnshHistorySeq}
+	</delete>
+	
+	<insert id="insertHRreviewInfo" parameterType="HRReview">
+		INSERT /*+ 이재형::com.kh.insane.member.dao.MemberDaoImpl.insertHRreviewInfo*/
+		  INTO PRSNL_EXM_HISTORY
+		(
+		  PRSNL_EXM_HISTORY_SEQ
+		, TARGET_EMP_NO
+		, EXM_TYPE
+		, EXM_RESULT
+		, COMPANY_NO
+		, EXM_OPNION
+		)
+		VALUES 
+		(
+		  PRSNL_EXM_HISTORY_SEQ.NEXTVAL
+		, #{targetEmpNo}
+		, #{exmType}
+		, #{exmResult}
+		, #{companyNo}
+		, #{exmOpnion}
+		)
+	</insert>
+	
+	<delete id="deleteHRreviewInfo" parameterType="_int">
+		DELETE /*+ 이재형::com.kh.insane.member.dao.MemberDaoImpl.deleteHRreviewInfo*/
+		       PRSNL_EXM_HISTORY
+		 WHERE PRSNL_EXM_HISTORY_SEQ = #{prsnlExmHistorySeq}
+	</delete>
+	
+	<insert id="insertPayStepInfo" parameterType="PayStepHistory">
+		INSERT /*+ 이재형::com.kh.insane.member.dao.MemberDaoImpl.insertPayStepInfo*/
+		  INTO PAY_STEP_HISTORY
+		(
+		  PAY_STEP_HISTORY_SEQ
+		, TARGET_EMP_NO
+		, COMPANY_NO
+		, POSITION_CODE
+		, CHANGE_PAY_STEP
+		, REASON
+		)
+		VALUES
+		(
+		  PAY_STEP_HISTORY_SEQ.NEXTVAL
+		, #{targetEmpNo}
+		, #{companyNo}
+		, #{positionCode}
+		, #{changePayStep}
+		, #{reason}
+		)
+	</insert>
+	
+	<delete id="deletePayStepInfo" parameterType="_int">
+		DELETE /*+ 이재형::com.kh.insane.member.dao.MemberDaoImpl.deletePayStepInfo*/
+		       PAY_STEP_HISTORY
+		 WHERE PAY_STEP_HISTORY_SEQ = #{payStepHistorySeq}
+	</delete>
+	
+	<select id="selectEducationInfo" parameterType="_int" resultMap="EducationEmployeeResultSet">
+		SELECT /*+ 이재형::com.kh.insane.member.dao.MemberDaoImpl.selectEducationInfo*/
+		       D.EDU_SCHEDULE_SEQ
+		     , S.EDU_TITLE
+		     , TO_CHAR(S.EDU_START_DATE, 'YYYY-MM-DD') AS EDU_START_DATE
+		     , TO_CHAR(S.EDU_END_DATE, 'YYYY-MM-DD') AS EDU_END_DATE
+		     , D.EMP_NO_SEQ
+		     , D.PASS_FAIL
+		     , D.REMARK
+		     , D.COMPANY
+		  FROM EDU_SCHE_EMP D
+		  JOIN EDU_SCHEDULE S ON (S.EDU_SCHEDULE_SEQ = D.EDU_SCHEDULE_SEQ)
+		 WHERE D.EMP_NO_SEQ = #{reqEmpNoSeq}
+	</select>
+	
+	<select id="searchEmployeeList" parameterType="SearchEmployee" resultMap="employeeResultSet">
+		SELECT /*+ 이재형::com.kh.insane.member.dao.MemberDaoImpl.searchEmployeeList*/
+		       E.EMP_NO_SEQ
+		     , E.EMP_NO
+		     , E.COMPANY_NO
+		     , E.EMP_PWD
+		     , E.EMP_NAME_KOR
+		     , E.EMP_NAME_ENG
+			 , TO_CHAR(E.ENROLL_DATE, 'YYYY-MM-DD') AS ENROLL_DATE
+		     , E.EMP_RESIDENT_NO
+		     , E.EMP_LOCATION_CODE
+		     , L.LOCATION_NAME
+		     , E.EMP_DEPT_CODE
+		     , D.DEPT_NAME
+		     , E.EMP_POSITION_CODE
+		     , P.POSITION_NAME
+		     , E.EMP_RSPOFC_CODE
+		     , R.RSPOFC_NAME
+		     , E.EMP_PAY_STEP_CODE
+		     , S.PAY_STEP
+		     , E.EMP_ADDRESS
+		     , E.RETIRE_DATE
+		     , E.EMP_BIRTHDAY
+		     , E.LUNAR_SOR
+		     , E.GENDER
+		     , E.EMP_HOME_TEL
+		     , E.EMP_PHONE
+		     , E.EMP_OFFICE_TEL
+		     , E.EMP_FORM
+		     , E.EMP_OCCUPATION
+		     , E.EMP_SPOT
+		     , E.EMP_PROJECT
+		     , E.EMP_STATUS
+		  FROM EMPLOYEE E
+		  LEFT JOIN LOCATION L ON(E.EMP_LOCATION_CODE = L.LOCATION_SEQ)
+		  LEFT JOIN DEPARTMENT D ON(E.EMP_DEPT_CODE = D.DEPT_CODE_SEQ)
+		  LEFT JOIN POSITION P ON(E.EMP_POSITION_CODE = P.POSITION_SEQ)
+		  LEFT JOIN RSPOFC R ON(E.EMP_RSPOFC_CODE = R.RSPOFC_SEQ)
+		  LEFT JOIN PAY_STEP S ON(E.EMP_PAY_STEP_CODE = S.PAY_STEP_SEQ)
+		 WHERE E.EMP_STATUS = 'Y'
+		   AND E.COMPANY_NO = #{companyNo}
+		<if test="empNo != null and empNo != ''">
+		   AND E.EMP_NO LIKE '%' || #{empNo} || '%'
+		</if>
+		<if test="empNameKor != null and empNameKor != ''">
+		   AND E.EMP_NAME_KOR LIKE '%' || #{empNameKor} || '%'
+		</if>
+		<if test="empForm != null and empForm != ''">
+		   AND E.EMP_FORM LIKE '%' || #{empForm} || '%'
+		</if>
+		<if test="locationName != null and locationName != ''">
+		   AND L.LOCATION_NAME LIKE '%' || #{locationName} || '%'
+		</if>
+		<if test="deptName != null and deptName != ''">
+		   AND D.DEPT_NAME LIKE '%' || #{deptName} || '%'
+		</if>
+		<if test="positionName != null and positionName != ''">
+		   AND P.POSITION_NAME LIKE '%' || #{positionName} || '%'
+		</if>
+		<if test="rspofcName != null and rspofcName != ''">
+		   AND R.RSPOFC_NAME LIKE '%' || #{rspofcName} || '%'
+		</if>
+		<if test="empOfficeTel != null and empOfficeTel != ''">
+		   AND E.EMP_OFFICE_TEL LIKE '%' || #{empOfficeTel} || '%'
+		</if>
+		<if test="empPhone != null and empPhone != ''">
+		   AND E.EMP_PHONE LIKE '%' || #{empPhone} || '%'
+		</if>
+		<if test="enrollDate != null and enrollDate != ''">
+		   AND TO_CHAR(E.ENROLL_DATE, 'YYYY-MM-DD') LIKE '%' || #{enrollDate} || '%'
+		</if>
+		 ORDER BY EMP_NO_SEQ DESC
+	</select>
+	
+	<select id="getSearchEmpListCount" parameterType="SearchEmployee" resultType="_int">
+		SELECT /*+ 이재형::com.kh.insane.member.dao.MemberDaoImpl.getSearchEmpListCount*/
+		       COUNT(*)
+		  FROM EMPLOYEE E
+		  LEFT JOIN LOCATION L ON(E.EMP_LOCATION_CODE = L.LOCATION_SEQ)
+		  LEFT JOIN DEPARTMENT D ON(E.EMP_DEPT_CODE = D.DEPT_CODE_SEQ)
+		  LEFT JOIN POSITION P ON(E.EMP_POSITION_CODE = P.POSITION_SEQ)
+		  LEFT JOIN RSPOFC R ON(E.EMP_RSPOFC_CODE = R.RSPOFC_SEQ)
+		  LEFT JOIN PAY_STEP S ON(E.EMP_PAY_STEP_CODE = S.PAY_STEP_SEQ)
+		 WHERE E.EMP_STATUS = 'Y'
+		   AND E.COMPANY_NO = #{companyNo}
+		<if test="empNo != null and empNo != ''">
+		   AND E.EMP_NO LIKE '%' || #{empNo} || '%'
+		</if>
+		<if test="empNameKor != null and empNameKor != ''">
+		   AND E.EMP_NAME_KOR LIKE '%' || #{empNameKor} || '%'
+		</if>
+		<if test="empForm != null and empForm != ''">
+		   AND E.EMP_FORM LIKE '%' || #{empForm} || '%'
+		</if>
+		<if test="locationName != null and locationName != ''">
+		   AND L.LOCATION_NAME LIKE '%' || #{locationName} || '%'
+		</if>
+		<if test="deptName != null and deptName != ''">
+		   AND D.DEPT_NAME LIKE '%' || #{deptName} || '%'
+		</if>
+		<if test="positionName != null and positionName != ''">
+		   AND P.POSITION_NAME LIKE '%' || #{positionName} || '%'
+		</if>
+		<if test="rspofcName != null and rspofcName != ''">
+		   AND R.RSPOFC_NAME LIKE '%' || #{rspofcName} || '%'
+		</if>
+		<if test="empOfficeTel != null and empOfficeTel != ''">
+		   AND E.EMP_OFFICE_TEL LIKE '%' || #{empOfficeTel} || '%'
+		</if>
+		<if test="empPhone != null and empPhone != ''">
+		   AND E.EMP_PHONE LIKE '%' || #{empPhone} || '%'
+		</if>
+		<if test="enrollDate != null and enrollDate != ''">
+		   AND TO_CHAR(E.ENROLL_DATE, 'YYYY-MM-DD') LIKE '%' || #{enrollDate} || '%'
+		</if>
+	</select>
+	
+	<select id="selectAppointOneInfo" parameterType="_int" resultMap="gvofodResultSet">
+		SELECT /*+ 이재형::com.kh.insane.member.dao.MemberDaoImpl.selectAppointOneInfo*/
+		       *
+		  FROM (
+		        SELECT G.GVOFOD_HISTORY_SEQ
+		             , G.TARGET_EMP_NO
+		             , G.COMPANY_NO
+		             , TO_CHAR(G.GVOFOD_DATE, 'YYYY-MM-DD') AS GVOFOD_DATE
+		             , G.GVOFOD_CODE
+		             , C.CODE_NAME
+		             , G.LOCATION_CODE
+		             , L.LOCATION_NAME
+		             , G.DEPARTMENT_CODE
+		             , D.DEPT_NAME
+		             , G.RSPOFC_CODE
+		             , R.RSPOFC_NAME
+		             , G.POSITION_CODE
+		             , P.POSITION_NAME
+		             , G.REMARK
+		          FROM GVOFOD_HISTORY G
+		          JOIN COMMON_CODE C ON (C.COMMON_CODE_SEQ = G.GVOFOD_CODE)
+		          JOIN LOCATION L ON (L.LOCATION_SEQ = G.LOCATION_CODE)
+		          JOIN DEPARTMENT D ON (D.DEPT_CODE_SEQ = G.DEPARTMENT_CODE)
+		          LEFT JOIN RSPOFC R ON (R.RSPOFC_SEQ = G.RSPOFC_CODE)
+		          JOIN POSITION P ON (P.POSITION_SEQ = G.POSITION_CODE)
+		         WHERE G.TARGET_EMP_NO = #{empNoSeq}
+		         ORDER BY GVOFOD_DATE DESC
+		       )
+		 WHERE ROWNUM = 1
+	</select>
+	
+</mapper>

@@ -1,0 +1,355 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Attendance">
+
+	<resultMap type="AttendancePolicy" id="AttendancePolicyResultSet">
+		<id property="companyNo" column="COMPANY_NO"/>
+		<result property="workStart" column="WORK_START"/>
+		<result property="workEnd" column="WORK_END"/>
+		<result property="lunchStart" column="LUNCH_START"/>
+		<result property="lunchEnd" column="LUNCH_END"/>
+		<result property="allowedWorkStart" column="ALLOWED_WORK_START"/>
+		<result property="allowedWorkEnd" column="ALLOWED_WORK_END"/>
+		<result property="commuteWay" column="COMMUTE_WAY"/>
+		<result property="holidayYn" column="HOLIDAY_YN"/>
+		<result property="holidayFirst" column="HOLIDAY_FIRST"/>
+		<result property="holidaySecond" column="HOLIDAY_SECOND"/>
+	</resultMap>
+	
+	<resultMap type="VacationSetting" id="VacationSettingResultSet">
+		<id property="vacationSeq" column="VACATION_SEQ"/>
+		<result property="vacationName" column="VACATION_NAME"/>
+		<result property="paidUnpaid" column="PAID_UNPAID"/>
+		<result property="vacationAmount" column="VACATION_AMOUNT"/>
+		<result property="vacationOccurUnit" column="VACATION_OCCUR_UNIT"/>
+		<result property="criteriaType" column="CRITERIA_TYPE"/>
+		<result property="vacStatus" column="VAC_STATUS"/>
+		<result property="companyNo" column="COMPANY_NO"/>
+	</resultMap>
+
+	<select id="selectBaseSetting" parameterType="_int" resultMap="AttendancePolicyResultSet">
+		SELECT *
+		  FROM DCLZ_POLICY
+		 WHERE COMPANY_NO = #{companyNo} 
+	</select>
+
+	<update id="updateBaseSetting" parameterType="AttendancePolicy">
+		UPDATE /*+ 김범근 ::com.kh.insane.attendance.model.dao.AttendanceDaoImpl.updateBaseSetting*/
+			   DCLZ_POLICY
+		   SET WORK_START = #{workStart}
+		     , WORK_END = #{workEnd}
+		     , LUNCH_START = #{lunchStart}
+		     , LUNCH_END = #{lunchEnd}
+		     , ALLOWED_WORK_START = #{allowedWorkStart}
+		     , ALLOWED_WORK_END = #{allowedWorkEnd}
+		     , COMMUTE_WAY = #{commuteWay}
+		     , HOLIDAY_YN = #{holidayYn}
+		     , HOLIDAY_FIRST = #{holidayFirst}
+		     , HOLIDAY_SECOND = #{holidaySecond}
+		 WHERE COMPANY_NO = #{companyNo}    
+	</update>
+
+	<select id="selectVacationSetting" parameterType="_int" resultMap="VacationSettingResultSet">
+		SELECT
+			   VACATION_SEQ
+		     , VACATION_NAME
+		     , PAID_UNPAID
+		     , VACATION_AMOUNT
+		     , VACATION_OCCUR_UNIT
+		     , CRITERIA_TYPE
+		  FROM VACATION
+		 WHERE VAC_STATUS = 'Y'
+		   AND COMPANY_NO = #{companyNo} 
+		 ORDER BY 1 DESC
+	</select>
+
+	<insert id="insertVacationSetting" parameterType="VacationSetting">
+		INSERT INTO VACATION 
+		VALUES (VACATION_SEQ.NEXTVAL, #{vacationName}, #{paidUnpaid}
+			 , #{vacationAmount}, #{vacationOccurUnit}, #{criteriaType}, 'Y', #{companyNo})
+	</insert>
+	
+	<update id="deleteVacationSetting" parameterType="_int">
+		UPDATE
+			   VACATION
+		   SET VAC_STATUS = 'N'
+		 WHERE VACATION_SEQ = #{vacationSeq}
+	</update>
+	
+	<resultMap type="HolidaySetting" id="HolidaySettingResultSet">
+		<id property="holidaySeq" column="HOLIDAY_SEQ"/>
+		<result property="holidayName" column="HOLIDAY_NAME"/>
+		<result property="holidayType" column="HOLIDAY_TYPE"/>
+		<result property="holidayDate" column="HOLIDAY_DATE"/>
+		<result property="remark" column="remark"/>
+		<result property="companyNo" column="COMPANY_NO"/>
+	</resultMap>
+	
+	<select id="selectHolidaySetting" parameterType="_int" resultMap="HolidaySettingResultSet">
+		SELECT
+		       HOLIDAY_SEQ
+		     , HOLIDAY_NAME
+		     , HOLIDAY_TYPE
+		     , HOLIDAY_DATE
+		     , REMARK
+		     , COMPANY_NO
+		  FROM HOLIDAY
+		 WHERE COMPANY_NO = #{companyNo}
+		 ORDER BY 1 DESC
+	</select>
+	
+	<insert id="insertHolidaySetting" parameterType="HolidaySetting">
+		INSERT INTO HOLIDAY
+		VALUES (HOLIDAY_SEQ.NEXTVAL, #{holidayName}, #{holidayType},
+				#{holidayDate}, #{remark}, #{companyNo})
+	</insert>
+	
+	<delete id="deleteHolidaySetting" parameterType="_int">
+		DELETE HOLIDAY
+		 WHERE HOLIDAY_SEQ = #{i}
+	</delete>
+	
+	<select id="selectAttHistoryCount" parameterType="java.lang.String" resultType="_int">
+		SELECT
+		       COUNT(*)
+		  FROM EMP_ATT_HISTORY
+		 WHERE ATT_DATE = TO_DATE(#{attToday}, 'YYYY-MM-DD')
+	</select>
+	
+	<resultMap type="Employee" id="selectEmpNo">
+		<id property="empNoSeq" column="EMP_NO_SEQ"/>
+		<result property="empNameKor" column="EMP_NAME_KOR"/>
+		<result property="deptName" column="DEPT_NAME"/>
+		<result property="positionName" column="POSITION_NAME"/>
+		<result property="companyNo" column="COMPANY_NO"/>
+	</resultMap>
+	
+	<select id="selectAllEmpNo" resultMap="selectEmpNo">
+		SELECT
+		       EMP_NO_SEQ
+		     , COMPANY_NO 
+		  FROM EMPLOYEE
+		 WHERE EMP_STATUS != 'N'
+		 ORDER BY 1 DESC
+	</select>
+	
+	<insert id="insertAttHistory" parameterType="EmpAttHistory">
+		INSERT
+		       INTO EMP_ATT_HISTORY
+		       (ATT_HISTORY_SEQ, EMP_NO_SEQ, ATT_DATE,
+		        DAYS_ENDS, ATT_CODE, COMPANY_NO, CLOSE_STATUS)
+		VALUES (ATT_HISTORY_SEQ.NEXTVAL, #{empNo}, TO_DATE(#{attDate}, 'RRRR-MM-DD'),
+				#{daysEnds}, 'N', #{companyNo}, 'N')
+	</insert>
+	
+	<update id="updateAttTime" parameterType="EmpAttHistory">
+		UPDATE EMP_ATT_HISTORY
+		   SET ATT_TIME = #{attTime},
+		       ATT_CODE = 'ING',
+		       REMARK = #{remark}
+		 WHERE EMP_NO_SEQ = #{empNo}
+		   AND ATT_DATE = TO_DATE(#{attDate}, 'RRRR-MM-DD')
+		   AND ATT_CODE = 'N'
+	</update>
+	
+	<resultMap type="EmpAttHistory" id="OneEmpAttHistoryResult">
+		<id property="attHistorySeq" column="ATT_HISTORY_SEQ"/>
+		<result property="empNo" column="EMP_NO_SEQ"/>
+		<result property="attDate" column="ATT_DATE"/>
+		<result property="daysEnds" column="DAYS_ENDS"/>
+		<result property="attCode" column="ATT_CODE"/>
+		<result property="attTime" column="ATT_TIME"/>
+		<result property="leaveTime" column="LEAVE_TIME"/>
+		<result property="outTime" column="OUT_TIME"/>
+		<result property="backTime" column="BACK_TIME"/>
+		<result property="remark" column="REMARK"/>
+		<result property="companyNo" column="COMPANY_NO"/>
+		<result property="closeStatus" column="CLOSE_STATUS"/>
+	</resultMap>
+	
+	<select id="selectTodayOneEmpAttHistory" parameterType="EmpAttHistory" resultMap="OneEmpAttHistoryResult">
+		SELECT
+		       ATT_HISTORY_SEQ
+		     , EMP_NO_SEQ
+		     , ATT_DATE
+		     , ATT_TIME
+		     , LEAVE_TIME
+		     , OUT_TIME
+		     , BACK_TIME
+		     , REMARK
+		     , COMPANY_NO
+		     , CLOSE_STATUS
+		  FROM EMP_ATT_HISTORY
+		 WHERE ATT_DATE = TO_DATE(#{attDate}, 'RRRR-MM-DD')
+		   AND EMP_NO_SEQ = #{empNo}
+	</select>
+	
+	<update id="updateLeaveTime" parameterType="EmpAttHistory">
+		UPDATE EMP_ATT_HISTORY
+		   SET LEAVE_TIME = #{leaveTime},
+		       ATT_CODE = 'LV',
+		       REMARK = #{remark}
+		 WHERE EMP_NO_SEQ = #{empNo}
+		   AND ATT_DATE = TO_DATE(#{attDate}, 'RRRR-MM-DD')
+		   AND ATT_CODE = 'ING'
+	</update>
+	
+	<select id="selectMonthAtt" parameterType="EmpAttHistory" resultMap="OneEmpAttHistoryResult">
+		SELECT
+		       ATT_HISTORY_SEQ
+		     , EMP_NO_SEQ
+		     , ATT_DATE
+		     , DAYS_ENDS
+		     , ATT_CODE
+		     , ATT_TIME
+		     , LEAVE_TIME
+		     , OUT_TIME
+		     , BACK_TIME
+		     , REMARK
+		     , COMPANY_NO
+		     , CLOSE_STATUS
+		  FROM EMP_ATT_HISTORY
+		 WHERE EMP_NO_SEQ = #{empNo}
+		   AND ATT_DATE BETWEEN #{startDate} AND #{endDate}
+		 ORDER BY 1
+	</select>
+	
+	<select id="selectDeptEmp" parameterType="_int" resultMap="selectEmpNo">
+		SELECT
+		       E.EMP_NO_SEQ
+		     , E.EMP_NAME_KOR
+		     , (SELECT DEPT_NAME FROM DEPARTMENT WHERE DEPT_CODE_SEQ = (SELECT EMP_DEPT_CODE FROM EMPLOYEE WHERE EMP_NO_SEQ = E.EMP_NO_SEQ)) DEPT_NAME
+		     , (SELECT POSITION_NAME FROM POSITION WHERE POSITION_SEQ = (SELECT EMP_POSITION_CODE FROM EMPLOYEE WHERE EMP_NO_SEQ = E.EMP_NO_SEQ)) POSITION_NAME
+		  FROM EMPLOYEE E
+		 WHERE EMP_DEPT_CODE = #{empDeptCode}
+	</select>
+	
+	<resultMap type="VacationSetting" id="empVacationResult">
+		<id property="vacationSeq" column="VACATION_SEQ"/>
+		<result property="vacationName" column="VACATION_NAME"/>
+		<result property="totalAmount" column="TOTAL_AMOUNT"/>
+	</resultMap>
+	
+	<select id="selectEmpVacation" parameterType="_int" resultMap="empVacationResult">
+		SELECT
+		       V.VACATION_SEQ
+		     , V.VACATION_NAME
+		     , E.TOTAL_AMOUNT
+		  FROM EMP_VACATION E
+		  JOIN VACATION V ON (E.VACATION_SEQ = V.VACATION_SEQ)
+		 WHERE EMP_NO_SEQ = #{empNoSeq}
+	</select>
+	
+	<insert id="insertVacationRequest" parameterType="VacationSetting">
+		INSERT
+		  INTO VACATION_HISTORY
+		VALUES (VACATION_HISTORY_SEQ.NEXTVAL, #{empNoSeq}, #{reqDate},'N',
+				#{vacationSeq}, TO_DATE(#{vacStartDate}, 'RRRR-MM-DD'), TO_DATE(#{vacEndDate}, 'RRRR-MM-DD'),
+				#{vacReason}, #{companyNo}, #{ampm}, #{decreaseDays})
+	</insert>
+	
+	<resultMap type="VacationSetting" id="empVacationHistoryResult">
+		<id property="vacHisSeq" column="VACATION_HISTORY_SEQ"/>
+		<result property="empNoSeq" column="EMP_NO_SEQ"/>
+		<result property="empNameKor" column="EMP_NAME_KOR"/>
+		<result property="processStatus" column="PROCESS_STATUS"/>
+		<result property="vacationSeq" column="VACATION_SEQ"/>
+		<result property="vacationName" column="VACATION_NAME"/>
+		<result property="reqDate" column="REQ_DATE"/>
+		<result property="vacStartDate" column="VAC_START_DATE"/>
+		<result property="vacEndDate" column="VAC_END_DATE"/>
+		<result property="vacReason" column="VAC_REASON"/>
+		<result property="companyNo" column="COMPANY_NO"/>
+		<result property="deptName" column="DEPT_NAME"/>
+		<result property="positionName" column="POSITION_NAME"/>
+		<result property="ampm" column="AMPM"/>
+		<result property="decreaseDays" column="DECREASE_DAYS"/>		
+	</resultMap>
+	
+	<select id="selectAllowedEmpVacationHistory" parameterType="VacationSetting" resultMap="empVacationHistoryResult">
+		SELECT
+			   H.VACATION_HISTORY_SEQ,
+			   H.EMP_NO_SEQ,
+			   H.PROCESS_STATUS,
+			   H.VACATION_SEQ,
+			   H.AMPM,
+			   V.VACATION_NAME,
+			   H.VAC_START_DATE,
+			   H.VAC_END_DATE,
+			   H.VAC_REASON,
+			   H.COMPANY_NO
+		  FROM VACATION_HISTORY H
+		  JOIN VACATION V ON (H.VACATION_SEQ = V.VACATION_SEQ)
+		 WHERE H.PROCESS_STATUS != 'N'
+		   AND H.EMP_NO_SEQ = #{empNoSeq}
+		   AND H.VAC_START_DATE > #{check}
+		 ORDER BY 1 DESC
+	</select>
+	
+	<select id="selectVacationRequestList" parameterType="_int" resultMap="empVacationHistoryResult">
+		SELECT
+		       H.VACATION_HISTORY_SEQ,
+		       H.EMP_NO_SEQ,
+		       (SELECT EMP_NAME_KOR FROM EMPLOYEE WHERE EMP_NO_SEQ = H.EMP_NO_SEQ) EMP_NAME_KOR,
+		       (SELECT DEPT_NAME FROM DEPARTMENT WHERE DEPT_CODE_SEQ = (SELECT EMP_DEPT_CODE FROM EMPLOYEE WHERE EMP_NO_SEQ = H.EMP_NO_SEQ)) DEPT_NAME,
+		       (SELECT POSITION_NAME FROM POSITION WHERE POSITION_SEQ = (SELECT EMP_POSITION_CODE FROM EMPLOYEE WHERE EMP_NO_SEQ = H.EMP_NO_SEQ)) POSITION_NAME,
+			   H.PROCESS_STATUS,
+			   H.VACATION_SEQ,
+			   V.VACATION_NAME,
+			   H.REQ_DATE,
+			   H.VAC_START_DATE,
+			   H.VAC_END_DATE,
+			   H.VAC_REASON,
+			   H.COMPANY_NO,
+			   H.AMPM,
+			   H.DECREASE_DAYS
+		  FROM VACATION_HISTORY H
+		  JOIN VACATION V ON (H.VACATION_SEQ = V.VACATION_SEQ)
+		 WHERE H.COMPANY_NO = #{companyNo}
+		 ORDER BY 1 DESC
+	</select>
+	
+	<update id="updateVacationHistoryApp" parameterType="_int">
+		UPDATE
+		       VACATION_HISTORY
+		   SET PROCESS_STATUS = 'Y'
+		 WHERE VACATION_HISTORY_SEQ = #{vacHisSeq}
+	</update>
+	
+	<select id="selectVacHis" parameterType="_int" resultMap="empVacationHistoryResult">
+		SELECT
+		       EMP_NO_SEQ,
+		       DECREASE_DAYS,
+		       VACATION_SEQ
+		  FROM VACATION_HISTORY
+		 WHERE VACATION_HISTORY_SEQ = #{vacHisSeq}
+	</select>
+	
+	<update id="updateEmpVacation" parameterType="VacationSetting">
+		UPDATE
+		       EMP_VACATION
+		   SET TOTAL_AMOUNT = (TOTAL_AMOUNT - #{ decreaseDays })
+		 WHERE EMP_NO_SEQ = #{ empNoSeq }
+		   AND VACATION_SEQ = #{ vacationSeq }
+	</update>
+	
+	<update id="updateVacationHistoryDen" parameterType="_int">
+		UPDATE
+		       VACATION_HISTORY
+		   SET PROCESS_STATUS = 'D'
+		 WHERE VACATION_HISTORY_SEQ = #{vacHisSeq}
+	</update>
+	
+	<!-- <select id="selectAllEmpInfo" parameterType="_int" resultMap="selectEmpNo">
+		SELECT
+		       EMP_NO_SEQ
+		     , (SELECT DEPT_NAME FROM DEPARTMENT WHERE DEPT_CODE_SEQ = (SELECT EMP_DEPT_CODE FROM EMPLOYEE WHERE EMP_NO_SEQ = EMP_NO_SEQ)) DEPT_NAME
+		     , (SELECT POSITION_NAME FROM POSITION WHERE POSITION_SEQ = (SELECT EMP_POSITION_CODE FROM EMPLOYEE WHERE EMP_NO_SEQ = EMP_NO_SEQ)) POSITION_NAME
+		     , EMP_NAME_KOR
+		  FROM EMPLOYEE
+		 WHERE COMPANY_NO = #{companyNo}
+	</select> -->
+
+</mapper>
